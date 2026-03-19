@@ -1,0 +1,48 @@
+# Dynamic theme colors
+config-file = ?"~/.config/omarchy/current/theme/ghostty.conf"
+
+# Font
+font-family = "JetBrainsMono Nerd Font"
+font-style = Regular
+font-size = 15
+font-synthetic-style = false
+
+# Window
+window-theme = ghostty
+resize-overlay = never
+gtk-toolbar-style = flat
+window-padding-x = 9
+window-padding-color = extend
+bell-features = no-title
+confirm-close-surface = false
+unfocused-split-opacity = 0.93
+scrollback-limit = 50000
+quit-after-last-window-closed = false
+quit-after-last-window-closed-delay = 3m
+
+# Cursor
+shell-integration-features = no-cursor
+cursor-style = "block"
+cursor-style-blink = false
+mouse-hide-while-typing = true
+copy-on-select = true
+mouse-shift-capture = true
+# right-click-action = ignore
+cursor-opacity = 0.93
+
+# Keyboard bindings
+keybind = shift+insert=paste_from_clipboard
+keybind = control+insert=copy_to_clipboard
+keybind = super+control+shift+alt+arrow_down=resize_split:down,100
+keybind = super+control+shift+alt+arrow_up=resize_split:up,100
+keybind = super+control+shift+alt+arrow_left=resize_split:left,100
+keybind = super+control+shift+alt+arrow_right=resize_split:right,100
+keybind = ctrl+shift+a=new_tab
+keybind = ctrl+shift+r=prompt_surface_title
+# Undo last action https://ghostty.org/docs/config/keybind/reference#undo
+
+# Mouse scrolling
+mouse-scroll-multiplier = 2
+
+# Fix general slowness on hyprland (https://github.com/ghostty-org/ghostty/discussions/3224)
+async-backend = epoll

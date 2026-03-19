@@ -1,0 +1,20 @@
+# Size of map tiles
+tile_cell_pixels = 42
+
+# Main UI font
+tile_font_size = 28
+
+tile_font_crt_size  = 22
+tile_font_stat_size = 20
+tile_font_msg_size  = 18
+tile_font_tip_size  = 19
+tile_font_lbl_size  = 18
+
+tile_map_pixels = 0
+
+tile_font = JetBrainsMono Nerd Font Mono
+tile_font_stat = JetBrainsMono Nerd Font Mono
+tile_font_crt = JetBrainsMono Nerd Font Mono
+tile_font_label = JetBrainsMono Nerd Font Mono
+
+show_travel_trail = true

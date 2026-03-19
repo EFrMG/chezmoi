@@ -1,0 +1,175 @@
+// Zed keymap
+//
+// For information on binding keys, see the Zed
+// documentation: https://zed.dev/docs/key-bindings
+//
+// To see the default key bindings run `zed: open default keymap`
+// from the command palette.
+[
+  {
+    "context": "Editor",
+    "bindings": {
+      // "ctrl-shift-a": "editor::ToggleComments",
+      "ctrl-shift-alt-f": "editor::Format",
+      "ctrl-shift-q": "editor::DeleteLine",
+      "ctrl-alt-a": "editor::SelectAllMatches",
+      "alt-h": "editor::MoveToBeginningOfLine",
+      "alt-l": "editor::MoveToEndOfLine"
+    }
+  },
+  {
+    "context": "os != macos && Editor && edit_prediction_conflict",
+    "bindings": {
+      // alt-l is provided as an alternative to tab/alt-tab. and will be displayed in the UI. This
+      // is because alt-tab may not be available, as it is often used for window switching on Linux
+      // and Windows.
+      "alt-e": "editor::AcceptEditPrediction"
+    }
+  },
+  {
+    "context": "Workspace",
+    "bindings": {
+      "ctrl-alt-shift-e": "zed::Extensions",
+      "ctrl-alt-x": "workspace::ToggleLeftDock",
+      "ctrl-shift-x": "workspace::ToggleBottomDock",
+      "ctrl-alt-c": "workspace::ToggleRightDock"
+    }
+  },
+  {
+    "context": "vim_mode == normal || vim_mode == visual",
+    "bindings": {
+      "s": "vim::PushSneak",
+      "shift-s": "vim::PushSneakBackward"
+    }
+  },
+  {
+    "context": "Editor && !menu",
+    "bindings": {
+      "ctrl-c": "editor::Copy", // vim default: return to normal mode
+      "ctrl-x": "editor::Cut", // vim default: decrement
+      "ctrl-s": "workspace::Save", // vim default: show signature
+      "ctrl-a": "editor::SelectAll" // vim default: increment
+    }
+  },
+  {
+    "context": "vim_mode == visual",
+    "bindings": {
+      "g s": "vim::PushAddSurrounds"
+    }
+  },
+  {
+    "bindings": {
+      "ctrl-shift-w": null
+    }
+  },
+  {
+    "context": "Workspace",
+    "bindings": {
+      "ctrl-shift-w": "workspace::CloseActiveDock"
+    }
+  },
+  {
+    "context": "Workspace",
+    "bindings": {
+      "ctrl-w": null
+    }
+  },
+  {
+    "context": "Pane",
+    "bindings": {
+      "ctrl-shift-w": [
+        "pane::CloseActiveItem",
+        {
+          "close_pinned": false
+        }
+      ]
+    }
+  },
+  {
+    "context": "Pane",
+    "bindings": {
+      "ctrl-w": null
+    }
+  },
+  {
+    "context": "Terminal",
+    "bindings": {
+      "ctrl-shift-w": "pane::CloseActiveItem"
+    }
+  },
+  {
+    "bindings": {
+      "ctrl-alt-m": "workspace::MoveItemToPaneInDirection"
+    }
+  },
+  {
+    "context": "Workspace",
+    "bindings": {
+      "ctrl-shift-n": "workspace::NewFile"
+    }
+  },
+  {
+    "context": "ProjectPanel",
+    "bindings": {
+      "ctrl-shift-n": "project_panel::NewFile"
+    }
+  },
+  {
+    "context": "Workspace",
+    "bindings": {
+      "ctrl-n": null
+    }
+  },
+  {
+    "context": "ProjectPanel",
+    "bindings": {
+      "ctrl-n": null
+    }
+  },
+  {
+    "context": "Editor",
+    "bindings": {
+      "ctrl-shift-k": null
+    }
+  },
+  {
+    "context": "Editor",
+    "bindings": {
+      "ctrl-k": null
+    }
+  },
+  {
+    "context": "AgentPanel",
+    "bindings": {
+      "ctrl-alt-y": null
+    }
+  },
+  {
+    "context": "Workspace",
+    "bindings": {
+      "ctrl-shift-j": "terminal_panel::Toggle"
+    }
+  },
+  {
+    "bindings": {
+      "ctrl-q": null
+    }
+  },
+  {
+    "bindings": {
+      "ctrl-shift-exclamdown": "editor::ToggleRelativeLineNumbers"
+    }
+  },
+  {
+    "context": "Editor",
+    "bindings": {
+      "ctrl-shift-j": null
+    }
+  },
+  {
+    "context": "Editor",
+    "bindings": {
+      "ctrl-shift-j": "terminal_panel::Toggle"
+    }
+  }
+]

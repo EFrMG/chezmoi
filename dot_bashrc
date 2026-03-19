@@ -1,0 +1,24 @@
+# If not running interactively, don't do anything (leave this at the top of this file)
+[[ $- != *i* ]] && return
+
+# Disable terminal flow control
+stty -ixon
+
+# Omarchy aliases and functions
+source ~/.local/share/omarchy/default/bash/rc
+
+# Binding fzf
+bind '"\C-a": "\C-r"' # Ctrl + A: History widget
+bind '"\C-s": "\C-t"' # Ctrl + S: File widget
+bind '"\C-x": "\ec"'  # Ctrl + X: CD widget
+
+# Clear and exit bindings
+bind '"\C-q": "exit\n"'
+bind '"\C-w": "clear\n"'
+
+# Sourcing from a single directory
+if [[ -d "${HOME}/.bashrc.d" ]]; then
+  for default in "${HOME}/.bashrc.d/"*.bashrc; do
+    [[ -f "${default}" ]] && source "${default}"
+  done
+fi

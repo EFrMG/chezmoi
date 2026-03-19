@@ -1,0 +1,166 @@
+@import "../omarchy/current/theme/waybar.css";
+
+* {
+  background-color: @background;
+  color: @foreground;
+
+  border: none;
+  border-radius: 0;
+  min-height: 0;
+  font-family: "JetBrainsMono Nerd Font";
+  font-size: 15px;
+}
+
+.modules-left {
+  margin-left: 9px;
+}
+
+.modules-right {
+  margin-right: 9px;
+}
+
+#workspaces button {
+  all: initial;
+  padding: 0 6px;
+  margin: 0 2.5px;
+  min-width: 9px;
+}
+
+#workspaces button.empty {
+  opacity: 0.5;
+}
+
+#network,
+#bluetooth,
+#cpu,
+#temperature,
+#battery,
+#pulseaudio,
+#custom-omarchy,
+#custom-update {
+  min-width: 15px;
+}
+
+#network,
+#pulseaudio,
+#bluetooth,
+#custom-omarchy,
+#custom-update {
+  margin: 0 9px;
+}
+
+#battery.charging {
+  background-color: #296f23;
+}
+
+#battery.charging.warning {
+  color: @foreground;
+  background-image: linear-gradient(75deg, #b88925, #296f23 55%);
+}
+
+#battery.charging.critical {
+  background-image: linear-gradient(75deg, #aa264b, #296f23 55%);
+}
+
+#battery.warning {
+  color: #181824;
+  background-color: #b88925;
+}
+
+#battery.critical {
+  background-color: #aa264b;
+}
+
+#tray {
+  margin-right: 13px;
+}
+
+#custom-expand-icon {
+  margin-right: 18px;
+}
+
+tooltip {
+  padding: 2px;
+}
+
+#custom-update {
+  font-size: 10px;
+}
+
+#clock {
+  margin: 0 9px;
+}
+
+.hidden {
+  opacity: 0;
+}
+
+#custom-screenrecording-indicator,
+#custom-idle-indicator,
+#custom-notification-silencing-indicator {
+  font-size: 14px;
+  min-width: 12px;
+  margin-left: 12px;
+  margin-right: 3px;
+  padding-bottom: 1px;
+}
+
+#custom-screenrecording-indicator.active {
+  color: #c52351;
+}
+
+#temperature {
+  margin: 0 9px 0 3px;
+}
+
+#cpu {
+  margin: 0 13px 0 3px;
+}
+
+#temperature,
+#battery {
+  padding: 0 7px;
+  margin: 2px 8px;
+  border-radius: 5px;
+}
+
+#temperature.critical {
+  background-color: #aa264b;
+  font-weight: bold;
+}
+
+#battery.charging:not(.high):not(.warning):not(.critical) {
+  animation: blink-green 630ms linear alternate infinite;
+}
+
+@keyframes blink-green {
+  0% {
+    background-color: #296f23;
+  }
+  100% {
+    background-color: transparent;
+  }
+}
+
+#custom-voxtype {
+  min-width: 12px;
+  margin: 0 9px;
+  padding-bottom: 1px;
+}
+
+#custom-voxtype.recording {
+  color: #f38ba8;
+}
+
+#custom-voxtype.transcribing {
+  color: #a6e3a1;
+}
+
+#custom-voxtype.idle {
+  color: rgba(205, 214, 244, 0.53);
+}
+
+#custom-idle-indicator.active,
+#custom-notification-silencing-indicator.active {
+  color: #f38ba8;
+}

@@ -1,0 +1,8 @@
+**/node_modules/
+dist/
+note.md
+todo.md
+review.md
+.zed/
+AGENTS.md
+GEMINI.md

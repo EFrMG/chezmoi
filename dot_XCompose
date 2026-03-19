@@ -1,0 +1,201 @@
+# include "%H/.local/share/omarchy/default/xcompose"
+include "%L"
+
+# Identification
+<Multi_key> <i> <a> : "Erwin Francisco Macias Ghiglione"
+
+# Coding
+<Multi_key> <l> <a> : "λ"
+<Multi_key> <f> <n> : "ƒ"
+<Multi_key> <n> <u> <l> : "∅"   # null/empty
+<Multi_key> <c> <q> : "``"
+<Multi_key> <c> <C> : "```"
+<Multi_key> <c> <m> : "Edit the following document in appropriate markdown format, with sections with headings, lists, and labeled code blocks for improved readability; make sure not to alter the content of it, just keep it the same:"
+
+# ffmpeg compress / convert
+# Compress video with Intel hardware acceleration
+<Multi_key> <c> <v> : "ffmpeg -hwaccel vaapi -hwaccel_output_format vaapi -i input.mp4 -c:v h264_vaapi -qp 33 -c:a copy output.mp4"
+# Compress MP3
+<Multi_key> <c> <a> : "ffmpeg -i input.mp3 -map 0:a:0 -b:a 96k output.mp3"
+# Variable to constant bit-rate MP3
+<Multi_key> <c> <b> : "ffmpeg -i input.flac -c:a libmp3lame -b:a 128k output_cbr.mp3"
+# Compress JPG
+<Multi_key> <c> <i> : "ffmpeg -i input.jpg -q-v 16 output.jpg"
+
+# Typography
+<Multi_key> <space> <space> : "—"   # em dash
+<Multi_key> <minus> <minus> : "–"   # en dash
+<Multi_key> <apostrophe> <apostrophe> : "′"   # prime
+<Multi_key> <apostrophe> <quotedbl> : "″"   # double prime
+<Multi_key> <less> <less> : "«"   # left guillemet
+<Multi_key> <greater> <greater> : "»"   # right guillemet
+<Multi_key> <b> <p> : "•"   # bullet point
+<Multi_key> <b> <h> : "◦"   # hollow bullet
+<Multi_key> <asterisk> <asterisk> : "⁂"   # asterism
+<Multi_key> <s> <e> : "§"   # section sign
+<Multi_key> <p> <p> : "¶"   # pilcrow
+
+# Status
+<Multi_key> <s> <y> : "✓"
+<Multi_key> <s> <n> : "✗"
+<Multi_key> <s> <w> : "⚠"
+<Multi_key> <s> <i> : "ℹ"
+<Multi_key> <s> <s> : "★"
+<Multi_key> <s> <h> : "☆"
+
+# Arrows
+<Multi_key> <a> <l> : "←"
+<Multi_key> <a> <r> : "→"
+<Multi_key> <a> <u> : "↑"
+<Multi_key> <a> <d> : "↓"
+<Multi_key> <space> <a> <l> <r> : "↔"   # left-right
+<Multi_key> <space> <a> <u> <d> : "↕"   # up-down
+<Multi_key> <a> <n> <w> : "↖"   # northwest
+<Multi_key> <a> <n> <e> : "↗"   # northeast
+<Multi_key> <a> <s> <w> : "↙"   # southwest
+<Multi_key> <a> <s> <e> : "↘"   # southeast
+<Multi_key> <a> <a> <l> : "⇐"   # double left
+<Multi_key> <a> <a> <r> : "⇒"   # double right
+<Multi_key> <a> <a> <u> : "⇑"   # double up
+<Multi_key> <a> <a> <d> : "⇓"   # double down
+<Multi_key> <a> <a> <l> <r> : "⇔"   # double left-right
+<Multi_key> <a> <c> <l> : "↩"   # curve left (return)
+<Multi_key> <a> <c> <r> : "↪"   # curve right
+
+# Logic & Math
+<Multi_key> <n> <e> : "≠"
+<Multi_key> <m> <e> : "≈"
+<Multi_key> <8> <8> : "∞"
+<Multi_key> <asterisk> <asterisk> : "×"   # multiplication
+<Multi_key> <slash> <slash> : "÷"   # division
+<Multi_key> <m> <i> : "−"   # minus sign (proper)
+<Multi_key> <m> <d> : "·"   # middle dot
+<Multi_key> <s> <q> <r> : "√"   # square root
+<Multi_key> <s> <u> <m> : "∑"   # summation
+<Multi_key> <p> <r> <o> : "∏"   # product
+<Multi_key> <i> <n> <t> : "∫"   # integral
+<Multi_key> <p> <a> <r> : "∂"   # partial derivative
+<Multi_key> <d> <e> <l> : "∇"   # nabla/del
+<Multi_key> <a> <n> <d> : "∧"   # logical and
+<Multi_key> <o> <r> : "∨"   # logical or
+<Multi_key> <n> <o> <t> : "¬"   # logical not
+<Multi_key> <f> <a> : "∀"   # for all
+<Multi_key> <e> <x> : "∃"   # exists
+<Multi_key> <e> <m> <p> : "∅"   # empty set
+<Multi_key> <i> <n> : "∈"   # element of
+<Multi_key> <n> <i> : "∉"   # not element of
+<Multi_key> <s> <u> <b> : "⊂"   # subset
+<Multi_key> <s> <u> <p> : "⊃"   # superset
+<Multi_key> <u> <n> <i> : "∪"   # union
+<Multi_key> <i> <n> <t> <e> : "∩"   # intersection
+<Multi_key> <t> <h> <e> : "∴"   # therefore
+<Multi_key> <b> <e> <c> : "∵"   # because
+<Multi_key> <p> <r> <o> <p> : "∝"   # proportional to
+
+# Greek Letters (lowercase)
+<Multi_key> <g> <a> : "α"   # alpha
+<Multi_key> <g> <b> : "β"   # beta
+<Multi_key> <g> <g> : "γ"   # gamma
+<Multi_key> <g> <d> : "δ"   # delta
+<Multi_key> <g> <e> : "ε"   # epsilon
+<Multi_key> <g> <z> : "ζ"   # zeta
+<Multi_key> <g> <h> : "η"   # eta
+<Multi_key> <g> <t> : "θ"   # theta
+<Multi_key> <g> <i> : "ι"   # iota
+<Multi_key> <g> <k> : "κ"   # kappa
+<Multi_key> <g> <l> : "λ"   # lambda
+<Multi_key> <g> <m> : "μ"   # mu
+<Multi_key> <g> <n> : "ν"   # nu
+<Multi_key> <g> <x> : "ξ"   # xi
+<Multi_key> <g> <o> : "ο"   # omicron
+<Multi_key> <g> <p> : "π"   # pi
+<Multi_key> <g> <r> : "ρ"   # rho
+<Multi_key> <g> <s> : "σ"   # sigma
+<Multi_key> <g> <u> : "τ"   # tau
+<Multi_key> <g> <y> : "υ"   # upsilon
+<Multi_key> <g> <f> : "φ"   # phi
+<Multi_key> <g> <c> : "χ"   # chi
+<Multi_key> <g> <q> : "ψ"   # psi
+<Multi_key> <g> <w> : "ω"   # omega
+
+# Greek Letters (uppercase)
+<Multi_key> <g> <G> : "Γ"   # Gamma
+<Multi_key> <g> <D> : "Δ"   # Delta
+<Multi_key> <g> <T> : "Θ"   # Theta
+<Multi_key> <g> <L> : "Λ"   # Lambda
+<Multi_key> <g> <X> : "Ξ"   # Xi
+<Multi_key> <g> <P> : "Π"   # Pi
+<Multi_key> <g> <S> : "Σ"   # Sigma
+<Multi_key> <g> <F> : "Φ"   # Phi
+<Multi_key> <g> <Q> : "Ψ"   # Psi
+<Multi_key> <g> <W> : "Ω"   # Omega
+
+# Superscripts
+<Multi_key> <asciicircum> <0> : "⁰"
+<Multi_key> <asciicircum> <1> : "¹"
+<Multi_key> <asciicircum> <2> : "²"
+<Multi_key> <asciicircum> <3> : "³"
+<Multi_key> <asciicircum> <4> : "⁴"
+<Multi_key> <asciicircum> <5> : "⁵"
+<Multi_key> <asciicircum> <6> : "⁶"
+<Multi_key> <asciicircum> <7> : "⁷"
+<Multi_key> <asciicircum> <8> : "⁸"
+<Multi_key> <asciicircum> <9> : "⁹"
+<Multi_key> <asciicircum> <plus> : "⁺"
+<Multi_key> <asciicircum> <minus> : "⁻"
+<Multi_key> <asciicircum> <equal> : "⁼"
+<Multi_key> <asciicircum> <parenleft> : "⁽"
+<Multi_key> <asciicircum> <parenright> : "⁾"
+<Multi_key> <asciicircum> <n> : "ⁿ"
+
+# Currency
+<Multi_key> <e> <u> : "€"   # euro
+<Multi_key> <l> <l> : "£"   # pounds
+<Multi_key> <y> <y> : "¥"   # yuan
+<Multi_key> <c> <c> : "¢"   # cents
+<Multi_key> <r> <u> : "₽"   # ruble
+<Multi_key> <r> <s> : "₹"   # rupee
+<Multi_key> <b> <t> : "₿"   # bitcoin
+
+# Musical
+<Multi_key> <m> <f> : "♭"   # flat
+<Multi_key> <m> <s> : "♯"   # sharp
+<Multi_key> <m> <n> : "♮"   # natural
+<Multi_key> <m> <8> : "♪"   # eighth note
+<Multi_key> <m> <1> <6> : "♬"   # sixteenth notes
+
+# Box Drawing
+<Multi_key> <b> <x> <h> : "─"   # horizontal
+<Multi_key> <b> <x> <v> : "│"   # vertical
+<Multi_key> <b> <x> <d> <r> : "┌"   # down-right
+<Multi_key> <b> <x> <d> <l> : "┐"   # down-left
+<Multi_key> <b> <x> <u> <r> : "└"   # up-right
+<Multi_key> <b> <x> <u> <l> : "┘"   # up-left
+<Multi_key> <b> <x> <c> : "┼"   # cross
+<Multi_key> <b> <x> <t> : "┬"   # tee down
+<Multi_key> <b> <x> <b> : "┴"   # tee up
+<Multi_key> <b> <x> <l> : "├"   # tee right
+<Multi_key> <b> <x> <r> : "┤"   # tee left
+
+# Miscellaneous Symbols
+<Multi_key> <h> <e> <a> : "♥"   # heart
+<Multi_key> <s> <p> <a> : "♠"   # spade
+<Multi_key> <d> <i> <a> : "♦"   # diamond
+<Multi_key> <c> <l> <u> : "♣"   # club
+<Multi_key> <s> <u> <n> : "☀"   # sun
+<Multi_key> <c> <l> <o> : "☁"   # cloud
+<Multi_key> <u> <m> <b> : "☂"   # umbrella
+<Multi_key> <s> <n> <o> : "☃"   # snowman
+<Multi_key> <m> <o> <o> : "☾"   # moon
+<Multi_key> <f> <e> <m> : "♀"   # female
+<Multi_key> <m> <a> <l> : "♂"   # male
+<Multi_key> <r> <e> <c> : "⌘"   # command key
+<Multi_key> <a> <p> <p> : "⌥"   # option key
+<Multi_key> <s> <h> <i> : "⇧"   # shift
+<Multi_key> <r> <e> <t> : "⏎"   # return
+<Multi_key> <d> <e> <l> : "⌫"   # delete
+<Multi_key> <e> <s> <c> : "⎋"   # escape
+<Multi_key> <t> <a> <b> : "⇥"   # tab
+<Multi_key> <p> <l> <a> : "▶"   # play
+<Multi_key> <p> <a> <u> : "⏸"   # pause
+<Multi_key> <s> <t> <o> : "⏹"   # stop

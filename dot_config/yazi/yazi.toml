@@ -1,0 +1,13 @@
+[mgr]
+show_hidden = true
+sort_by = "mtime"
+sort_reverse = true
+
+[preview]
+wrap = "yes"
+
+[opener]
+edit = [
+  { run = 'nvim "$@"', block = true, desc = "Edit with NeoVim" },
+  { run = 'zed "$@"', detached = true, desc = "Edit with Zed" },
+]
