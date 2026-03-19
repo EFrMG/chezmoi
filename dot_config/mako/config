@@ -1,7 +1,7 @@
 include=~/.local/share/omarchy/default/mako/core.ini
 
 text-color=#cad3f5
-border-color=#CDD6F4
+border-color=#9ba5c5
 background-color=#181825
 font=JetBrainsMono Nerd Font Mono 14
 border-radius=8
