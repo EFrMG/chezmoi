@@ -1,7 +1,3 @@
-#
-# ~/.bash_profile
-#
-
 # Nvim man mode for man
 export MANPAGER='nvim +Man!'
 
