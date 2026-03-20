@@ -1,6 +1,9 @@
 # exec-once = [workspace 3 silent] program_name
-# exec-once = brightnessctl set 1%
-
+{{ if eq .role "monitor-M" -}}
+exec-once = brightnessctl set 0
+{{ else if eq .role "monitor-S" -}}
+exec-once = brightnessctl set 50
+{{ end }}
 # Restart waybar to prevent ocassional race conditions from the workspace module
 # trying to connect before the compositor's IPC is ready
 exec-once = sh -c 'sleep 5 && omarchy-restart-waybar'
