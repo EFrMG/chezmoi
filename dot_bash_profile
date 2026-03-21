@@ -20,3 +20,5 @@ alt-bg:-1,query:-1,nth:italic,nomatch:-1"'
 
 # Interactive settings
 [[ -f ~/.bashrc ]] && source "$HOME/.bashrc"
+
+export BROWSER=brave

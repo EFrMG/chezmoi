@@ -40,6 +40,8 @@ keybind = super+control+shift+alt+arrow_right=resize_split:right,100
 keybind = ctrl+shift+a=new_tab
 keybind = ctrl+shift+r=prompt_surface_title
 # Undo last action https://ghostty.org/docs/config/keybind/reference#undo
+keybind = ctrl+tab=previous_tab
+keybind = ctrl+alt+tab=next_tab
 
 # Mouse scrolling
 mouse-scroll-multiplier = 2
