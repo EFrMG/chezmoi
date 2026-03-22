@@ -1,0 +1,23 @@
+#!/bin/bash
+# Get the status of monitors and toggle between them
+if hyprctl monitors | rg -q "HDMI-A-1"; then
+  # Laptop monitor is off
+  hyprctl keyword monitor "eDP-1, preferred, auto, 1.33"
+  sleep 2
+
+  brightnessctl set 50
+  hyprctl keyword monitor "HDMI-A-1, disable"
+
+  sed -i 's/theme = "walker-M"/theme = "walker-S"/' /home/francisco/dotfiles/omarchy/.config/walker/config.toml
+  omarchy-restart-walker
+else
+  # Laptop monitor is on
+  hyprctl keyword monitor "HDMI-A-1, preferred, auto, 1, bitdepth, 8, cm, auto"
+  sleep 2
+
+  hyprctl keyword monitor "eDP-1, disable"
+  brightnessctl set 0
+
+  sed -i 's/theme = "walker-S"/theme = "walker-M"/' /home/francisco/dotfiles/omarchy/.config/walker/config.toml
+  omarchy-restart-walker
+fi

@@ -1,0 +1,245 @@
+#!/usr/bin/env bash
+
+# -------------------------------------------
+# | todo — an interactive todo list manager |
+# -------------------------------------------
+
+TODO_DIR="${TODO_DIR:-$HOME/.todos}"
+
+# Helper functions --.
+
+todo_requires() {
+  if ! command -v gum &>/dev/null; then
+    echo -e "error: 'gum' is not installed.\nInstall it with: pacman -S gum\n" >&2
+    return 1
+  fi
+
+  if ! command -v fd &>/dev/null; then
+    echo -e "error: 'fd' is not installed.\nInstall it with: pacman -S fd\n" >&2
+    return 1
+  fi
+
+  if ! command -v rg &>/dev/null; then
+    echo -e "error: 'rg' (ripgrep) is not installed.\nInstall it with: pacman -S ripgrep\n" >&2
+    return 1
+  fi
+}
+
+todo_pick_file() {
+  mkdir -p "$TODO_DIR"
+  local files new_opt choice
+
+  mapfile -t files < <(fd --base-directory "$TODO_DIR" -e md -t f 2>/dev/null | sed 's/\.md$//' | sort)
+  new_opt="+ New list…"
+
+  choice=$(printf '%s\n' "${files[@]}" "$new_opt" |
+    gum choose --header "Todo lists:")
+
+  [[ -z "$choice" ]] && return 1 # user cancelled
+
+  if [[ "$choice" == "$new_opt" ]]; then
+    choice=$(gum input --placeholder "List name (e.g. work, shopping)")
+    [[ -z "$choice" ]] && return 1
+  fi
+
+  echo "$TODO_DIR/${choice}.md"
+}
+
+todo_add_items() {
+  local file="$1"
+  gum style --foreground="#A6E3A1" --bold "Add items (empty line to stop)"
+
+  while true; do
+    local item
+    item=$(gum input --placeholder "New todo…" --width 60)
+
+    [[ -z "$item" ]] && break
+
+    echo "- [ ] $item" >>"$file"
+    gum style --foreground="#6C7086" "  ✓ added: $item"
+  done
+}
+
+todo_toggle_items() {
+  local file="$1"
+  [[ ! -s "$file" ]] && gum style --foreground="#F38BA8" "List is empty." && return
+
+  # Build display lines (strip markdown prefix for display)
+  local -a raw_lines display_lines
+  mapfile -t raw_lines <"$file"
+
+  for line in "${raw_lines[@]}"; do
+    if [[ "$line" == "- [x]"* ]]; then
+      display_lines+=("  ${line#- \[x\] }")
+    elif [[ "$line" == "- [ ]"* ]]; then
+      display_lines+=("  ${line#- \[ \] }")
+    else
+      display_lines+=("   $line") # headers or blank lines
+    fi
+  done
+
+  # Let user pick items to toggle
+  local chosen
+  chosen=$(printf '%s\n' "${display_lines[@]}" |
+    gum choose --no-limit \
+      --header "Space to toggle · Enter to confirm · Esc to cancel" \
+      --height 20)
+
+  [[ -z "$chosen" ]] && return
+
+  # Write updated file
+  local tmp
+  tmp=$(mktemp)
+
+  for line in "${raw_lines[@]}"; do
+    local label_done label_undone matched=0
+
+    if [[ "$line" == "- [x]"* ]]; then
+      label_done="  ${line#- \[x\] }"
+      if rg -xFq "$label_done" <<<"$chosen"; then
+        echo "- [ ] ${line#- \[x\] }" >>"$tmp"
+        matched=1
+      fi
+    elif [[ "$line" == "- [ ]"* ]]; then
+      label_undone="  ${line#- \[ \] }"
+      if rg -xFq "$label_undone" <<<"$chosen"; then
+        echo "- [x] ${line#- \[ \] }" >>"$tmp"
+        matched=1
+      fi
+    fi
+
+    [[ $matched -eq 0 ]] && echo "$line" >>"$tmp"
+  done
+
+  mv "$tmp" "$file"
+}
+
+todo_show() {
+  local file="$1"
+  local name
+  name=$(basename "$file" .md)
+
+  gum style \
+    --border rounded \
+    --border-foreground="#89B4FA" \
+    --padding "0 2" \
+    --bold \
+    --foreground="#CDD6F4" \
+    "$name"
+
+  echo ""
+
+  if [[ ! -s "$file" ]]; then
+    gum style --foreground="#6C7086" --italic "  No items yet."
+    echo ""
+    return
+  fi
+
+  while IFS= read -r line || [[ -n "$line" ]]; do
+    if [[ "$line" == "- [x]"* ]]; then
+      gum style --foreground="#6C7086" --strikethrough "  ${line#- \[x\] }"
+    elif [[ "$line" == "- [ ]"* ]]; then
+      gum style --foreground="#CDD6F4" "  ${line#- \[ \] }"
+    else
+      gum style --foreground="#89DCEB" --bold "$line"
+    fi
+  done <"$file"
+
+  echo ""
+}
+
+todo_action_menu() {
+  local file="$1"
+  local name
+  name=$(basename "$file" .md)
+
+  while true; do
+    clear
+    todo_show "$file"
+    local action
+    action=$(gum choose \
+      --header "$name list actions:" \
+      "Add items" \
+      "Toggle done / undone" \
+      "Clear completed" \
+      "Delete list" \
+      "Quit")
+
+    case "$action" in
+    "Add items")
+      todo_add_items "$file"
+      ;;
+    "Toggle done / undone")
+      todo_toggle_items "$file"
+      ;;
+    "Clear completed")
+      sed -i '/^- \[x\]/d' "$file"
+      gum style --foreground="#A6E3A1" "Cleared completed items."
+      gum spin --title "Removing…" sleep 2
+      ;;
+    "Delete list")
+      if gum confirm "Delete '$name' permanently?"; then
+        rm "$file"
+        gum style --foreground="#F38BA8" "Deleted $name."
+        gum spin --title "Removing…" sleep 2
+        return 0 # Exit, since file is gone
+      fi
+      ;;
+    "Quit")
+      return 0
+      ;;
+    *) # Catches empty selection from Esc
+      return 0
+      ;;
+    esac
+  done
+}
+
+# Main function --.
+
+todo() {
+  todo_requires || return 1
+  mkdir -p "$TODO_DIR"
+
+  local file
+
+  case "${1:-}" in
+  --help | -h)
+    gum style --border rounded --padding "1 3" --border-foreground="#89B4FA" \
+      "$(
+        cat <<'EOF'
+todo [name|--list|--help]
+
+  todo            open / create default list in current directory
+  todo work       open / create 'work' list
+  todo --list     pick a list interactively
+  todo --help     show this help
+
+Lists are stored as markdown in $TODO_DIR (~/.todos/).
+EOF
+      )"
+    return 0
+    ;;
+  --list | -l)
+    file=$(todo_pick_file) || return 0
+    ;;
+  "")
+    file="./todo.md"
+    ;;
+  *)
+    file="$TODO_DIR/${1}.md"
+    ;;
+  esac
+
+  touch "$file"
+
+  # If file is brand new / empty, directly add items
+  if [[ ! -s "$file" ]]; then
+    gum style --foreground="#89DCEB" --bold "New list: $(basename "$file" .md)"
+    todo_add_items "$file"
+  fi
+
+  todo_action_menu "$file"
+}
+
+todo "$@"

@@ -5,12 +5,14 @@ include "%L"
 <Multi_key> <i> <a> : "Erwin Francisco Macias Ghiglione"
 
 # Coding
+<Multi_key> <Tab> : Tab
+# <Multi_key> <Tab> : U0009
 <Multi_key> <l> <a> : "λ"
 <Multi_key> <f> <n> : "ƒ"
 <Multi_key> <n> <u> <l> : "∅"   # null/empty
 <Multi_key> <c> <q> : "``"
-<Multi_key> <c> <C> : "```"
-<Multi_key> <c> <m> : "Edit the following document in appropriate markdown format, with sections with headings, lists, and labeled code blocks for improved readability; make sure not to alter the content of it, just keep it the same:"
+<Multi_key> <c> <b> : "```"
+<Multi_key> <c> <m> : "Edit the following document in appropriate markdown format, with sections with headings, lists, and labeled code blocks for improved readability; make sure not to alter the content of it, just keep it the same: "
 
 # ffmpeg compress / convert
 # Compress video with Intel hardware acceleration
@@ -18,7 +20,7 @@ include "%L"
 # Compress MP3
 <Multi_key> <c> <a> : "ffmpeg -i input.mp3 -map 0:a:0 -b:a 96k output.mp3"
 # Variable to constant bit-rate MP3
-<Multi_key> <c> <b> : "ffmpeg -i input.flac -c:a libmp3lame -b:a 128k output_cbr.mp3"
+<Multi_key> <c> <B> : "ffmpeg -i input.flac -c:a libmp3lame -b:a 128k output_cbr.mp3"
 # Compress JPG
 <Multi_key> <c> <i> : "ffmpeg -i input.jpg -q-v 16 output.jpg"
 

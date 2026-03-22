@@ -18,7 +18,11 @@ input-label:#94E2D5,header-label:#94E2D5,footer-label:#94E2D5 \
 scrollbar:#b895e3,preview-scrollbar:#b895e3,separator:#585b70,gap-line:#585b70 \
 alt-bg:-1,query:-1,nth:italic,nomatch:-1"'
 
+export BROWSER=brave
+
+# Go lang
+export GOPATH="$HOME/go"
+export PATH="$PATH:$GOPATH/bin"
+
 # Interactive settings
 [[ -f ~/.bashrc ]] && source "$HOME/.bashrc"
-
-export BROWSER=brave
