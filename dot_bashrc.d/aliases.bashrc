@@ -66,6 +66,7 @@ alias ya='yazi'
 alias zat='zathura'
 alias ca='gemini'
 alias co='copilot'
+alias cq='qwen'
 alias py='python3'
 alias de='delta'
 
