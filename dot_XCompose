@@ -5,14 +5,14 @@ include "%L"
 <Multi_key> <i> <a> : "Erwin Francisco Macias Ghiglione"
 
 # Coding
-<Multi_key> <Tab> : Tab
-# <Multi_key> <Tab> : U0009
+# <Multi_key> <Tab> : Tab
+<Multi_key> <Tab> : U0009
 <Multi_key> <l> <a> : "λ"
 <Multi_key> <f> <n> : "ƒ"
 <Multi_key> <n> <u> <l> : "∅"   # null/empty
 <Multi_key> <c> <q> : "``"
 <Multi_key> <c> <b> : "```"
-<Multi_key> <c> <m> : "Edit the following document in appropriate markdown format, with sections with headings, lists, and labeled code blocks for improved readability; make sure not to alter the content of it, just keep it the same: "
+<Multi_key> <c> <m> : "Edit the following document in markdown format. Include headings, bullet lists, labeled code blocks and horizontal rules when approriate for improved readability; make sure not to alter the present textual content, just edit the file with the mentioned markdown aditions: "
 
 # ffmpeg compress / convert
 # Compress video with Intel hardware acceleration

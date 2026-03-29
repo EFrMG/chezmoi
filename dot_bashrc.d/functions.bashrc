@@ -21,11 +21,11 @@ ok() {
 }
 
 oka() {
-  local selection
-  selection=$(fzf -m)
+  local selected
+  selected=$(fd -t f -d 1 -e pdf | fzf -m)
 
-  if [[ -n "$selection" ]]; then
-    echo "$selection" | xargs -d '\n' -r uwsm-app -- okular &>/dev/null &
+  if [[ -n "$selected" ]]; then
+    echo "$selected" | xargs -d '\n' -r uwsm-app -- okular &>/dev/null &
   fi
 }
 
@@ -74,7 +74,7 @@ unexif() {
 # Fzf search Omarchy commands + bat
 omaf() {
   local selected
-  selected=$(fd -t f --max-depth 1 . "$OMARCHY_PATH/bin" | xargs basename -a | sed "s/^omarchy-//" | fzf -m \
+  selected=$(fd -t f -d 1 . "$OMARCHY_PATH/bin" | xargs basename -a | sed "s/^omarchy-//" | fzf -m \
     --preview "bat --force-colorization --language=bash $OMARCHY_PATH/bin/omarchy-{}" \
     --bind "alt-p:toggle-preview" \
     --bind "alt-d:preview-half-page-down,alt-u:preview-half-page-up" \
@@ -135,11 +135,11 @@ ttslf() {
 
 # Fzf + bat
 bata() {
-  local selection
-  selection="$(fzf -m)"
+  local selected
+  selected="$(fzf -m)"
 
-  if [[ -n $selection ]]; then
-    bat "$selection"
+  if [[ -n $selected ]]; then
+    bat "$selected"
   fi
 }
 
