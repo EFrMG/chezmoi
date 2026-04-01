@@ -8,6 +8,27 @@ wrap = "yes"
 
 [opener]
 edit = [
-  { run = 'nvim "$@"', block = true, desc = "Edit with NeoVim" },
-  { run = 'zed "$@"', detached = true, desc = "Edit with Zed" },
+  { run = 'nvim %s', block = true, desc = "Edit with Neovim" },
+  { run = 'zed %s', orphan = true, desc = "Edit with Zed" },
+]
+
+[open]
+prepend_rules = [
+  { mime = "application/json", use = "edit" },
+  { mime = "application/javascript", use = "edit" },
+  { mime = "application/toml", use = "edit" },
+  { mime = "application/x-sh", use = "edit" },
+  { mime = "application/wine-extension-ini", use = "edit" },
+
+  { mime = "text/*", use = "edit" },
+
+  { url = "*.json", use = "edit" },
+  { url = "*.toml", use = "edit" },
+  { url = "*.yaml", use = "edit" },
+  { url = "*.yml", use = "edit" },
+  { url = "*.md",   use = "edit" },
+  { url = "*.conf", use = "edit" },
+  { url = "*.py",   use = "edit" },
+  { url = "*.js",   use = "edit" },
+  { url = "*.go",   use = "edit" },
 ]
