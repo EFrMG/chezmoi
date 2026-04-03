@@ -1,0 +1,58 @@
+#!/usr/bin/env bash
+
+# sudo pacman -S --needed zstd lz4 lzip ncompress unzip 7zip cabextract rpmextract pax bzip2 gzip xz binutils tar
+
+if [[ $# -lt 1 ]]; then
+  echo -e "\nUsage: $(basename "$0") <compressed_file_1> [compressed_file_2 ...]"
+  exit 1
+fi
+
+extract_file() {
+  local file="$1"
+
+  if [[ ! -f "$file" ]]; then
+      echo "Error: '$file' is not a valid file"
+      return 1
+  fi
+
+  case "$file" in
+    *.tar.bz2)   tar -xvf -- "$file"                                   ;;
+    *.tar.gz)    tar -xvf -- "$file"                                   ;;
+    *.tar.xz)    tar -xvf -- "$file"                                   ;;
+    *.tar.Z)     tar -xvf -- "$file"                                   ;;
+    *.tar)       tar -xvf -- "$file"                                   ;;
+    *.tbz2)      tar -xvf -- "$file"                                   ;;
+    *.tgz)       tar -xvf -- "$file"                                   ;;
+    *.tar.zst)   tar --zstd -xvf -- "$file"                            ;;
+    *.tar.lzma)  tar --lzma -xvf -- "$file"                            ;;
+    *.tar.lz)    tar --lzip -xvf -- "$file"                            ;;
+    *.tar.lz4)   tar --use-compress-program=lz4 -xvf -- "$file"        ;;
+    *.bz2)       bunzip2 -- "$file"                                    ;;
+    *.gz)        gunzip -- "$file"                                     ;;
+    *.xz)        xz -d -- "$file"                                      ;;
+    *.zst)       zstd -d -- "$file"                                    ;;
+    *.lz4)       lz4 -d -- "$file"                                     ;;
+    *.lzma)      unlzma -- "$file"                                     ;;
+    *.lz)        lzip -d -- "$file"                                    ;;
+    *.zip)       unzip -- "$file"                                      ;;
+    *.rar)       7z x -- "$file"                                       ;;
+    *.7z)        7z x -- "$file"                                       ;;
+    *.iso)       7z x -- "$file"                                       ;;
+    *.deb)       ar x -- "$file"                                       ;;
+    *.rpm)       rpm2cpio -- "$file" | cpio -idmv                      ;;
+    *.cab)       cabextract -- "$file"                                 ;;
+    *.pax)       pax -r < "$file"                                      ;;
+    *.pax.Z)     uncompress -c -- "$file" | pax -r                     ;;
+    *.Z)         uncompress -- "$file"                                 ;;
+    *.AppImage)  chmod +x -- "$file" && ./"$file" --appimage-extract   ;;
+    *)           echo "Error: '$file' cannot be extracted (unknown format)" ; return 1 ;;
+  esac
+}
+
+exit_code=0
+
+for file in "$@"; do
+    extract_file "$file" || exit_code=1
+done
+
+exit $exit_code
