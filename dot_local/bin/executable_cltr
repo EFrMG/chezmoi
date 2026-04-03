@@ -1,0 +1,23 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+count=$(gio trash --list | wc -l)
+
+if [[ "$count" -eq 0 ]]; then
+  echo -e "\nTrash is already empty 󰄬"
+  exit 0
+fi
+
+label="files"
+
+[[ "$count" -eq 1 ]] && label="file"
+
+echo ""
+
+if gum confirm "Empty trash containing $count $label?"; then
+  gum spin --title "Emptying..." -- gio trash --empty
+  echo -e "Cleared $count $label."
+else
+  echo -e "Cancelled."
+fi
