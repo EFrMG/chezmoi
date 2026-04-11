@@ -157,4 +157,30 @@ function M.close_all_normal_buff()
   end
 end
 
+-- Toggle cursor line highlight
+function M.toggle_cursor_line_highlight()
+  vim.wo.cursorline = not vim.wo.cursorline
+end
+
+-- Temporary buffer with filetype selection
+function M.create_temp_with_picker()
+  local filetypes = vim.fn.getcompletion('', 'filetype')
+
+  Snacks.picker.select(filetypes, {
+    prompt = " 󰈚 Temporary Buffer Filetype ",
+  }, function(choice)
+    -- On Esc / nil
+    if not choice then return end
+
+    vim.cmd("enew")
+    local bufnr = vim.api.nvim_get_current_buf()
+
+    vim.api.nvim_set_option_value("buftype", "nofile", { buf = bufnr })
+    vim.api.nvim_set_option_value("swapfile", false, { buf = bufnr })
+    vim.api.nvim_set_option_value("bufhidden", "wipe", { buf = bufnr })
+    vim.api.nvim_set_option_value("filetype", choice, { buf = bufnr })
+    vim.api.nvim_buf_set_name(bufnr, choice:upper())
+  end)
+end
+
 return M

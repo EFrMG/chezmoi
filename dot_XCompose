@@ -36,6 +36,7 @@ include "%L"
 <Multi_key> <asterisk> <asterisk> : "⁂"   # asterism
 <Multi_key> <s> <e> : "§"   # section sign
 <Multi_key> <p> <p> : "¶"   # pilcrow
+<Multi_key> <bracketleft> : "- [ ] "   # MD checkbox
 
 # Status
 <Multi_key> <s> <y> : "✓"

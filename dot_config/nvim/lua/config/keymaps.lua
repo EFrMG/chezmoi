@@ -2,7 +2,7 @@ local map = vim.keymap.set
 -- local del = vim.keymap.del
 
 -- Utils module
-local utils = require("config.utils")
+local utils = require("utils.utils")
 
 -- SYSTEM --.
 
@@ -156,3 +156,13 @@ end, { desc = "Query visual selection" })
 map("n", "<leader>bA", function()
   utils.close_all_normal_buff()
 end, { desc = "Close all normal buffers" })
+
+-- Toggle cursor line highlight
+map("n", "<leader>ah", function()
+  utils.toggle_cursor_line_highlight()
+end, { desc = "Toggle cursor line highlight" })
+
+-- Temporary buffer with filetype selection
+map("n", "<leader>bs", function()
+  utils.create_temp_with_picker()
+end, { desc = "Temporary buffer" })
