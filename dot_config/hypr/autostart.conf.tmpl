@@ -1,16 +1,16 @@
-# Foot server for footclient
-# exec-once = foot --server
-# systemctl --user enable foot-server.socket
+# Foot server for footclient: systemctl --user enable foot-server.socket
+{{ if has "laptop" .role -}}
 exec-once = sleep 5; footclient -- tmux-init
-
-{{ if eq .role "monitor-M" -}}
+  {{ if has "monitor-M" .role -}}
 exec-once = brightnessctl set 0
-{{ else if eq .role "monitor-S" -}}
-exec-once = brightnessctl set 50
-{{ end }}
+  {{ end -}}
+  
 # Restart waybar to prevent ocassional race conditions from the workspace module
 # trying to connect before the compositor's IPC is ready
 exec-once = sleep 3; omarchy-restart-waybar
+{{ else if has "box" .role -}}
+exec-once = sleep 3; footclient -- tmux-init
+{{ end -}}
 
 # Ensure plugins load on boot
 # exec-once = hyprpm reload

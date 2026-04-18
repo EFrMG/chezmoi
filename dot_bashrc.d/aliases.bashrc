@@ -88,7 +88,7 @@ alias ba="upower -i /org/freedesktop/UPower/devices/battery_BAT0 | grep -E 'perc
 
 # Git
 alias glo='git log --all --graph --oneline --date=rfc \
---pretty=format:"%C(auto)%h%C(reset) %C(auto)%d%C(reset) |%C(dim white)%ad%C(reset)| %C(green)%an%C(reset): %s --."'
+--pretty=format:"%C(auto)%h%C(reset) %C(auto)%d%C(reset) %C(dim white)%ad%C(reset) %C(green)%an%C(reset): %s %C(cyan)--.%C(reset)"'
 
 # JS development
 alias lsr='live-server'

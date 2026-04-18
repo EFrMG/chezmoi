@@ -50,7 +50,7 @@ function M.view_git_version()
   -- 1. Select Branch
   Snacks.picker.git_branches({
     layout = "select",
-    title = "Select Branch",
+    title = " 󰘬 Select Branch ",
     confirm = function(picker, item)
       picker:close()
       if not item then
@@ -63,7 +63,7 @@ function M.view_git_version()
       Snacks.picker.git_log({
         cmd_args = { branch, "--", relative_path },
         layout = "select",
-        title = string.format("Select Rev (%s): %s", branch, relative_path),
+        title = string.format(" 󱓍 Select Rev (%s): %s", branch, relative_path),
         confirm = function(picker2, item2)
           picker2:close()
           if item2 then
@@ -112,7 +112,7 @@ end
 
 -- Run shell command
 function M.run_shell_cmd()
-  vim.ui.input({ prompt = "Run Shell Command: " }, function(input)
+  vim.ui.input({ prompt = "  Run Shell Command: " }, function(input)
     if input and input ~= "" then
       vim.cmd("term " .. input)
     end
@@ -123,7 +123,7 @@ end
 function M.db_query_visual()
   local clients = { "psql", "sqlite3", "mysql" }
 
-  vim.ui.select(clients, { prompt = "Select DB client:" }, function(choice)
+  vim.ui.select(clients, { prompt = " 󰆼 Select DB client:" }, function(choice)
     if not choice then
       return
     end

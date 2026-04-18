@@ -12,12 +12,17 @@
 
 # Straight 1x setup for low-resolution displays like 1080p or 1440p
 env = GDK_SCALE,1
-{{ if eq .role "monitor-M" -}}
+{{ if has "laptop" .role -}}
+  {{ if has "monitor-M" .role -}}
 monitor=HDMI-A-1, preferred, auto, 1, bitdepth, 8, cm, auto
-monitor=eDP-1,disable
-{{ else if eq .role "monitor-S" -}}
+monitor=eDP-1, disable
+  {{ else if has "monitor-S" .role -}}
 monitor=eDP-1, preferred, auto, 1
-{{ end }}
+monitor=HDMI-A-1, disable
+  {{ end -}}
+{{ else if has "box" .role -}}
+monitor=DP-1, preferred, auto, 1, bitdepth, 8, cm, auto
+{{ end -}}
 # Example for Framework 13 w/ 6K XDR Apple display
 # monitor = DP-5, 6016x3384@60, auto, 2
 # monitor = eDP-1, 2880x1920@120, auto, 2
