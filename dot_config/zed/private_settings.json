@@ -17,8 +17,16 @@
   "ui_font_size": 19.0,
   "buffer_font_size": 20,
   "bottom_dock_layout": "contained",
-  "icon_theme": "Catppuccin Mocha",
-  "theme": "Catppuccin Mocha",
+  "icon_theme": {
+    "mode": "dark",
+    "light": "Catppuccin Mocha",
+    "dark": "Catppuccin Mocha"
+  },
+  "theme": {
+    "mode": "system",
+    "light": "One Light",
+    "dark": "Catppuccin Mocha"
+  },
   "agent_buffer_font_size": 18.0,
   "calls": {
     "mute_on_join": false,
@@ -145,8 +153,8 @@
     "dock": "left",
     "default_profile": "ask",
     "default_model": {
-      "provider": "google",
-      "model": "gemini-3-flash-preview",
+      "provider": "ollama",
+      "model": "codegemma:2b",
     },
     "model_parameters": [],
   },

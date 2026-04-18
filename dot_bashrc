@@ -5,7 +5,8 @@
 stty -ixon
 
 # Omarchy aliases and functions
-source ~/.local/share/omarchy/default/bash/rc
+source "$HOME/.local/share/omarchy/default/bash/rc"
+source "$HOME/.local/share/../bin/env"
 
 # Binding fzf
 bind '"\C-a": "\C-r"' # Ctrl + A: History widget
