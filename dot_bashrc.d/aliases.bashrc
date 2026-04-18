@@ -67,7 +67,6 @@ alias zat='zathura'
 alias ca='gemini'
 alias car='gemini -r'
 alias co='copilot'
-alias cq='qwen'
 alias py='python3'
 alias de='delta'
 

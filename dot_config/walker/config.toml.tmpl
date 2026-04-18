@@ -1,6 +1,6 @@
-{{ if eq .role "monitor-M" -}}
+{{ if has "monitor-M" .role -}}
 theme = "walker-M"
-{{ else if eq .role "monitor-S" -}}
+{{ else if has "monitor-S" .role -}}
 theme = "walker-S"
 {{ end -}}
 # theme = "omarchy-default"
