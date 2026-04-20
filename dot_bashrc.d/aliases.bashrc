@@ -64,11 +64,14 @@ alias gal='uwsm-app -- gthumb ./ &>/dev/null &'
 alias lzg='lazygit'
 alias ya='yazi'
 alias zat='zathura'
+alias py='python3'
+alias de='delta'
+
 alias ca='gemini'
 alias car='gemini -r'
 alias co='copilot'
-alias py='python3'
-alias de='delta'
+alias oll1='ollama run gemma4:e2b'
+alias oll2='ollama run gemma4:e4b'
 
 alias ytvid='mpv --ytdl-format="best[height<=480]"'
 alias ytaud='mpv --ytdl-format="best" --no-video'
@@ -82,6 +85,10 @@ alias chA='chezmoi re-add'
 alias chi='chezmoi diff'
 alias che='chezmoi edit'
 alias chl='chezmoi apply'
+
+alias wlcp='wl-copy'
+alias wlps='wl-paste'
+alias wlpsw='wl-paste -w'
 
 alias ba="upower -i /org/freedesktop/UPower/devices/battery_BAT0 | grep -E 'percentage:|time to empty:|state:' | awk '{print $NF}'"
 

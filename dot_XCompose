@@ -15,14 +15,18 @@ include "%L"
 <Multi_key> <c> <m> : "Edit the following document in markdown format. Include headings, bullet lists, labeled code blocks and horizontal rules when approriate for improved readability; make sure not to alter the present textual content, just edit the file with the mentioned markdown aditions: "
 
 # ffmpeg compress / convert
-# Compress video with Intel hardware acceleration
-<Multi_key> <c> <v> : "ffmpeg -hwaccel vaapi -hwaccel_output_format vaapi -i input.mp4 -c:v h264_vaapi -qp 33 -c:a copy output.mp4"
+# Compress video with VAAPI hardware acceleration for AMD (23x)
+<Multi_key> <c> <v> : "ffmpeg -init_hw_device vaapi=va:/dev/dri/renderD128 -filter_hw_device va -i INPUT.mp4 -vf 'format=nv12,hwupload' -c:v h264_vaapi -qp 28 -c:a copy OUTPUT.mp4"
+# Compress video with VAAPI hardware acceleration (18x)
+<Multi_key> <c> <V> : "ffmpeg -hwaccel vaapi -vf 'format=nv12,hwupload' -hwaccel_output_format vaapi -i INPUT.mp4 -c:v h264_vaapi -qp 28 -c:a copy OUTPUT.mp4"
+# Compress video (less) (CPU)
+<Multi_key> <c> <l> : "ffmpeg -i INPUT.mp4 -c:v libx264 -crf 33 -preset medium -c:a copy OUTPUT.mp4"
 # Compress MP3
-<Multi_key> <c> <a> : "ffmpeg -i input.mp3 -map 0:a:0 -b:a 96k output.mp3"
+<Multi_key> <c> <a> : "ffmpeg -i INPUT.mp3 -map 0:a:0 -b:a 96k OUTPUT.mp3"
 # Variable to constant bit-rate MP3
-<Multi_key> <c> <B> : "ffmpeg -i input.flac -c:a libmp3lame -b:a 128k output_cbr.mp3"
+<Multi_key> <c> <B> : "ffmpeg -i INPUT.flac -c:a libmp3lame -b:a 128k OUTPUT_cbr.mp3"
 # Compress JPG
-<Multi_key> <c> <i> : "ffmpeg -i input.jpg -q-v 16 output.jpg"
+<Multi_key> <c> <i> : "ffmpeg -i INPUT.jpg -q-v 16 OUTPUT.jpg"
 
 # Typography
 <Multi_key> <space> <space> : "—"   # em dash
