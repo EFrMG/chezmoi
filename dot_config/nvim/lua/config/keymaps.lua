@@ -71,9 +71,18 @@ map("n", "<leader>ayX", "X", { desc = "Cut character before cursor" })
 -- vim-visual-multi.
 -- Add new cursor at position
 map("n", "<leader>aa", "<Plug>(VM-Add-Cursor-At-Pos)", { desc = "Add new cursor", noremap = false })
+
 -- Select all with new cursor
 map("n", "<leader>aA", "<Plug>(VM-Select-All)", { desc = "New cursor in all occurrences", noremap = false })
 map("x", "<leader>aA", "<Plug>(VM-Visual-All)", { desc = "New cursor in all occurrences (visual)", noremap = false })
+
+-- Code companion --.
+-- CodeCompanion: Chat
+map("n", "<leader>ai", "<Cmd>CodeCompanionChat<CR>", { desc = " CodeCompanion: Chat", noremap = true, silent = true })
+
+-- CodeCompanion: Actions
+map("n", "<leader>aI", "<Cmd>CodeCompanionActions<CR>",
+  { desc = " CodeCompanion: Actions", noremap = true, silent = true })
 
 -- grug-far.
 -- Search word under cursor
