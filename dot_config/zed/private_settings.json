@@ -7,6 +7,14 @@
 // custom settings, run `zed: open default settings` from the
 // command palette (cmd-shift-p / ctrl-shift-p)
 {
+  "agent_servers": {
+    "opencode": {
+      "type": "registry"
+    },
+    "gemini": {
+      "type": "registry"
+    }
+  },
   "drag_and_drop_selection": {
     "delay": 300,
     "enabled": true,
@@ -32,14 +40,17 @@
     "mute_on_join": false,
   },
   "collaboration_panel": {
+    "dock": "left",
     "button": false,
   },
   "git_panel": {
+    "dock": "left",
     "collapse_untracked_diff": false,
     "sort_by_path": true,
     "status_style": "label_color",
   },
   "outline_panel": {
+    "dock": "left",
     "indent_size": 18.0,
     "button": true,
   },
@@ -153,8 +164,9 @@
     "dock": "left",
     "default_profile": "ask",
     "default_model": {
-      "provider": "ollama",
-      "model": "codegemma:2b",
+      "enable_thinking": false,
+      "provider": "google",
+      "model": "gemini-3-flash-preview",
     },
     "model_parameters": [],
   },

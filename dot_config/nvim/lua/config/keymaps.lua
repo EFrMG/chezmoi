@@ -68,6 +68,10 @@ map("n", "<leader>ayX", "X", { desc = "Cut character before cursor" })
 
 -- PLUGINS --.
 
+-- gitsigns
+map("n", "<leader>ah", "]h", { desc = "Next hunk", noremap = false })
+map("n", "<leader>aH", "[h", { desc = "Previous hunk", noremap = false })
+
 -- vim-visual-multi.
 -- Add new cursor at position
 map("n", "<leader>aa", "<Plug>(VM-Add-Cursor-At-Pos)", { desc = "Add new cursor", noremap = false })
@@ -167,7 +171,7 @@ map("n", "<leader>bA", function()
 end, { desc = "Close all normal buffers" })
 
 -- Toggle cursor line highlight
-map("n", "<leader>ah", function()
+map("n", "<leader>al", function()
   utils.toggle_cursor_line_highlight()
 end, { desc = "Toggle cursor line highlight" })
 

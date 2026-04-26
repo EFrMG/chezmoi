@@ -13,6 +13,7 @@ include "%L"
 <Multi_key> <c> <q> : "``"
 <Multi_key> <c> <b> : "```"
 <Multi_key> <c> <m> : "Edit the following document in markdown format. Include headings, bullet lists, labeled code blocks and horizontal rules when approriate for improved readability; make sure not to alter the present textual content, just edit the file with the mentioned markdown aditions: "
+<Multi_key> <l> <i> : "https://picsum.photos/1080/1920"
 
 # ffmpeg compress / convert
 # Compress video with VAAPI hardware acceleration for AMD (23x)
