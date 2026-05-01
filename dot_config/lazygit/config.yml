@@ -24,3 +24,6 @@ gui:
   authorColors:
     "*": "#b4befe"
   nerdFontsVersion: "3"
+
+git:
+  overrideGpg: true
