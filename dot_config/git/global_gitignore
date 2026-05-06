@@ -1,5 +1,6 @@
 **/node_modules/
 dist/
+.env
 note.md
 todo.md
 review.md

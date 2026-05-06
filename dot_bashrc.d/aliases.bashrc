@@ -105,6 +105,7 @@ alias mrd='npm run dev'
 alias mrb='npm run build'
 alias mrp='npm run preview'
 # PNPM
+alias pp='pnpm'
 alias pri='pnpm install'
 alias pra='pnpm add'
 alias prci='pnpm install --frozen-lockfile'
