@@ -10,7 +10,11 @@ input {
   numlock_by_default = false
 
   # Increase sensitivity for mouse/trackpad (default: 0)
+{{ if has "laptop" .role -}}
+  sensitivity = 0.11
+{{ else if has "box" .role -}}
   sensitivity = -0.23
+{{ end -}}
 
   touchpad {
     # Use natural (inverse) scrolling
