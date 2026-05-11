@@ -7,10 +7,11 @@
   "height": 25,
   "modules-left": ["custom/omarchy", "hyprland/workspaces"],
   "modules-center": [
+    "custom/weather",
     "clock",
+    "custom/voxtype",
     "custom/update",
     "custom/screenrecording-indicator",
-    "custom/voxtype",
     "custom/notification-silencing-indicator",
     "custom/idle-indicator",
   ],
@@ -45,6 +46,11 @@
       "3": [],
       "4": [],
       "5": [],
+      "6": [],
+      "7": [],
+      "8": [],
+      "9": [],
+      "10": [],
     },
   },
   "custom/omarchy": {
@@ -68,7 +74,7 @@
     "critical-threshold": 65,
 {{ else if has "box" .role -}}
     "hwmon-path": "/sys/class/hwmon/hwmon2/temp1_input",
-    "interval": 10,
+    "interval": 15,
     "critical-threshold": 70,
 {{ end -}}
     "format-critical": "{icon} {temperatureC}°C",
@@ -76,13 +82,12 @@
     "format-icons": ["", "", ""],
     "on-click": "hyprctl dispatch exec '[fullscreen] omarchy-launch-tui btop'",
   },
-  // "cpu": {
-  //   "interval": 15,
-  //   //  "format": "󰍛 {usage}%",
-  //   "format": "󰍛",
-  //   "on-click": "omarchy-launch-or-focus-tui btop",
-  //   "on-click-right": "alacritty",
-  // },
+  "cpu": {
+    "interval": 15,
+    "format": "󰍛 {usage}%",
+    "on-click": "omarchy-launch-or-focus-tui btop",
+    "on-click-right": "alacritty",
+  },
   "clock": {
     "format": "{:L%A %H:%M}",
     "format-alt": "{:L%d %B W%V %Y}",
@@ -90,6 +95,13 @@
     // "on-click-right": "omarchy-launch-floating-terminal-with-presentation omarchy-tz-select",
     "on-click-right": "hyprctl dispatch exec gnome-calendar",
     "timezone": "America/Argentina/Cordoba",
+  },
+  "custom/weather": {
+    "exec": "$OMARCHY_PATH/default/waybar/weather.sh",
+    "return-type": "json",
+    "interval": 3600,
+    "tooltip": false,
+    "on-click": "notify-send -u low \"$(omarchy-weather-status)\"",
   },
   "network": {
     "format-icons": ["󰤯", "󰤟", "󰤢", "󰤥", "󰤨"],

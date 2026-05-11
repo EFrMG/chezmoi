@@ -1,5 +1,7 @@
 local map = vim.keymap.set
 -- local del = vim.keymap.del
+local gitsigns = require("gitsigns")
+local grug_far = require("grug-far")
 
 -- Utils module
 local utils = require("utils.utils")
@@ -69,8 +71,13 @@ map("n", "<leader>ayX", "X", { desc = "Cut character before cursor" })
 -- PLUGINS --.
 
 -- gitsigns
-map("n", "<leader>ah", "]h", { desc = "Next hunk", noremap = false })
-map("n", "<leader>aH", "[h", { desc = "Previous hunk", noremap = false })
+map("n", "<leader>ah", function()
+  gitsigns.nav_hunk("next")
+end, { desc = "Next hunk" })
+
+map("n", "<leader>aH", function()
+  gitsigns.nav_hunk("prev")
+end, { desc = "Previous hunk" })
 
 -- vim-visual-multi.
 -- Add new cursor at position
@@ -91,49 +98,68 @@ map("n", "<leader>aI", "<Cmd>CodeCompanionActions<CR>",
 -- grug-far.
 -- Search word under cursor
 map("n", "<leader>aR", function()
-  require("grug-far").open({
+  grug_far.open({
     prefills = { search = vim.fn.expand("<cword>") },
   })
 end, { desc = "S & R word under cursor" })
 
 -- Search in the current buffer
 map("n", "<leader>ar", function()
-  require("grug-far").open({
+  grug_far.open({
     prefills = { paths = vim.fn.expand("%") },
   })
 end, { desc = "S & R in current buffer" })
 
 -- Search word/s under cursor in the current buffer
 map("v", "<leader>ar", function()
-  require("grug-far").with_visual_selection({
+  grug_far.with_visual_selection({
     prefills = { paths = vim.fn.expand("%") },
   })
 end, { desc = "S & R visual selection in current buffer" })
 
 -- DIAGNOSTICS --.
-
+--
 -- Next diagnostic
-map("n", "<leader>ad", vim.diagnostic.goto_next, { desc = "Next diagnostic", noremap = true })
+map("n", "<leader>ad", function()
+  vim.diagnostic.jump({ count = 1 })
+end, { desc = "Next diagnostic" })
+
 -- Previous diagnostic
-map("n", "<leader>aD", vim.diagnostic.goto_prev, { desc = "Previous diagnostic", noremap = true })
+map("n", "<leader>aD", function()
+  vim.diagnostic.jump({ count = -1 })
+end, { desc = "Previous diagnostic" })
 
 -- Next error
 map("n", "<leader>ae", function()
-  vim.diagnostic.goto_next({ severity = vim.diagnostic.severity.ERROR })
-end, { desc = "Next error", noremap = true })
+  vim.diagnostic.jump({
+    count = 1,
+    severity = vim.diagnostic.severity.ERROR,
+  })
+end, { desc = "Next error" })
+
 -- Previous error
 map("n", "<leader>aE", function()
-  vim.diagnostic.goto_prev({ severity = vim.diagnostic.severity.ERROR })
-end, { desc = "Previous error", noremap = true })
+  vim.diagnostic.jump({
+    count = -1,
+    severity = vim.diagnostic.severity.ERROR,
+  })
+end, { desc = "Previous error" })
 
 -- Next warning
 map("n", "<leader>aw", function()
-  vim.diagnostic.goto_next({ severity = vim.diagnostic.severity.WARN })
-end, { desc = "Next warning", noremap = true })
+  vim.diagnostic.jump({
+    count = 1,
+    severity = vim.diagnostic.severity.WARN,
+  })
+end, { desc = "Next warning" })
+
 -- Previous warning
 map("n", "<leader>aW", function()
-  vim.diagnostic.goto_prev({ severity = vim.diagnostic.severity.WARN })
-end, { desc = "Previous warning", noremap = true })
+  vim.diagnostic.jump({
+    count = -1,
+    severity = vim.diagnostic.severity.WARN,
+  })
+end, { desc = "Previous warning" })
 
 -- MODULE FUNCTIONS --.
 
