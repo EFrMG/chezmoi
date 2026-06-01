@@ -8,8 +8,11 @@ local utils = require("utils.utils")
 
 -- SYSTEM --.
 
--- Quit All xP
+-- Quit All
 map("n", "<C-q>", "<Cmd>qa<CR>", { desc = "Quit All", silent = true })
+
+-- Restart
+map("n", "<C-S-q>", "<Cmd>:restart<CR>", { desc = "Restart Nvim", silent = true, noremap = true })
 
 -- Save without formatting
 map({ "n", "v", "i" }, "<C-S-s>", "<Cmd>noa w<CR>", { desc = "Save w/o formatting", silent = true })
