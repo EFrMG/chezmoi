@@ -89,7 +89,7 @@ alias chl='chezmoi apply'
 
 alias wlcp='wl-copy'
 alias wlps='wl-paste'
-alias wlpsw='wl-paste -w'
+alias wlpsw='wl-paste -w wl-paste'
 
 alias ba="upower -i /org/freedesktop/UPower/devices/battery_BAT0 | grep -E 'percentage:|time to empty:|state:' | awk '{print $NF}'"
 

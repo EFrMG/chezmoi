@@ -7,6 +7,12 @@
 // custom settings, run `zed: open default settings` from the
 // command palette (cmd-shift-p / ctrl-shift-p)
 {
+  "language_models": {
+    "opencode": {
+      "show_zen_models": false,
+      "show_go_models": false
+    }
+  },
   "agent_servers": {
     "opencode": {
       "type": "registry"
@@ -60,8 +66,8 @@
     "show": true,
   },
   "title_bar": {
+    "show_branch_status_icon": true,
     "show_menus": false,
-    "show_branch_icon": true,
   },
   "search_wrap": true,
   "lsp_highlight_debounce": 300,
@@ -143,6 +149,9 @@
   },
   "show_edit_predictions": false,
   "edit_predictions": {
+    "ollama": {
+      "model": "gemma4:31b-cloud"
+    },
     "provider": "zed",
     "mode": "subtle",
     "copilot": {
@@ -164,9 +173,9 @@
     "dock": "left",
     "default_profile": "ask",
     "default_model": {
-      "enable_thinking": false,
-      "provider": "google",
-      "model": "gemini-3-flash-preview",
+      "enable_thinking": true,
+      "provider": "ollama",
+      "model": "gemma4:31b-cloud",
     },
     "model_parameters": [],
   },
