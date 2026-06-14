@@ -25,7 +25,7 @@
     },
   },
   {
-    "context": "vim_mode == normal || vim_mode == visual",
+    "context": "VimControl",
     "bindings": {
       "s": "vim::PushSneak",
       "shift-s": "vim::PushSneakBackward",
@@ -35,9 +35,7 @@
     "context": "Editor && !menu",
     "bindings": {
       "ctrl-c": "editor::Copy", // vim default: return to normal mode
-      "ctrl-x": "editor::Cut", // vim default: decrement
       "ctrl-s": "workspace::Save", // vim default: show signature
-      "ctrl-a": "editor::SelectAll", // vim default: increment
     },
   },
   {
@@ -82,13 +80,13 @@
     },
   },
   {
-    "context": "vim_mode == normal || vim_mode == visual || vim_mode == operator",
+    "context": "VimControl",
     "bindings": {
       "alt-k": "editor::MoveLineUp",
     },
   },
   {
-    "context": "vim_mode == normal || vim_mode == visual || vim_mode == operator",
+    "context": "VimControl",
     "bindings": {
       "alt-j": "editor::MoveLineDown",
     },
@@ -103,17 +101,6 @@
     "context": "Editor && edit_prediction",
     "unbind": {
       "alt-j": "editor::AcceptNextLineEditPrediction",
-    },
-  },
-  {
-    "context": "vim_mode == normal || vim_mode == visual",
-    "bindings": {
-      "ctrl-n": [
-        "editor::SelectNext",
-        {
-          "replace_newest": false,
-        },
-      ],
     },
   },
   {
@@ -161,7 +148,7 @@
   {
     "context": "Workspace",
     "bindings": {
-      "ctrl-alt-shift-n": "workspace::NewWindow",
+      "ctrl-alt-shift-t": "workspace::NewWindow",
     },
   },
   {
@@ -183,9 +170,9 @@
     },
   },
   {
-    "context": "Editor",
+    "context": "VimControl && !menu",
     "bindings": {
-      "ctrl-shift-n": "editor::SelectAllMatches",
+      "ctrl-a": "editor::SelectAllMatches",
     },
   },
   {
@@ -1166,10 +1153,10 @@
       "space b d": [
         "pane::CloseActiveItem",
         {
-          "save_intent": "close"
-        }
-      ]
-    }
+          "save_intent": "close",
+        },
+      ],
+    },
   },
   {
     "context": "VimControl && !menu",
@@ -1177,10 +1164,10 @@
       "space b a": [
         "pane::CloseAllItems",
         {
-          "save_intent": "close"
-        }
-      ]
-    }
+          "save_intent": "close",
+        },
+      ],
+    },
   },
   {
     "context": "VimControl && !menu",
@@ -1188,62 +1175,62 @@
       "space b o": [
         "pane::CloseOtherItems",
         {
-          "save_intent": "close"
-        }
-      ]
-    }
+          "save_intent": "close",
+        },
+      ],
+    },
   },
   {
     "context": "VimControl && !menu",
     "bindings": {
-      "space b c": "pane::CloseCleanItems"
-    }
+      "space b c": "pane::CloseCleanItems",
+    },
   },
   {
     "context": "Picker > Editor",
     "bindings": {
-      "ctrl-j": "menu::SelectNext"
-    }
+      "ctrl-j": "menu::SelectNext",
+    },
   },
   {
     "context": "Picker > Editor",
     "bindings": {
-      "ctrl-k": "menu::SelectPrevious"
-    }
+      "ctrl-k": "menu::SelectPrevious",
+    },
   },
   {
     "bindings": {
-      "ctrl-j": "menu::SelectNext"
-    }
+      "ctrl-j": "menu::SelectNext",
+    },
   },
   {
     "bindings": {
-      "ctrl-k": "menu::SelectPrevious"
-    }
+      "ctrl-k": "menu::SelectPrevious",
+    },
   },
   {
     "context": "Editor && showing_completions",
     "bindings": {
-      "tab": "editor::ConfirmCompletion"
-    }
-  },
-  {
-    "context": "Editor && showing_completions",
-    "unbind": {
-      "enter": "editor::ConfirmCompletion"
-    }
-  },
-  {
-    "context": "Editor && showing_completions",
-    "bindings": {
-      "shift-tab": "editor::ComposeCompletion"
-    }
+      "tab": "editor::ConfirmCompletion",
+    },
   },
   {
     "context": "Editor && showing_completions",
     "unbind": {
-      "tab": "editor::ComposeCompletion"
-    }
+      "enter": "editor::ConfirmCompletion",
+    },
+  },
+  {
+    "context": "Editor && showing_completions",
+    "bindings": {
+      "shift-tab": "editor::ComposeCompletion",
+    },
+  },
+  {
+    "context": "Editor && showing_completions",
+    "unbind": {
+      "tab": "editor::ComposeCompletion",
+    },
   },
   {
     "context": "ProjectPanel",
@@ -1251,45 +1238,278 @@
       "d": [
         "project_panel::Trash",
         {
-          "skip_prompt": false
-        }
-      ]
-    }
+          "skip_prompt": false,
+        },
+      ],
+    },
   },
   {
     "context": "ProjectPanel && not_editing",
     "unbind": {
-      "d": "project_panel::NewDirectory"
-    }
+      "d": "project_panel::NewDirectory",
+    },
   },
   {
     "context": "ProjectPanel && not_editing",
     "bindings": {
-      "shift-h": "project_panel::ToggleHideGitIgnore"
-    }
+      "shift-h": "project_panel::ToggleHideGitIgnore",
+    },
   },
   {
     "context": "ProjectPanel && not_editing",
     "bindings": {
-      ".": "project_panel::ToggleHideHidden"
-    }
+      ".": "project_panel::ToggleHideHidden",
+    },
   },
   {
     "context": "ProjectPanel && not_editing",
     "bindings": {
-      "r": "project_panel::Rename"
-    }
+      "r": "project_panel::Rename",
+    },
   },
   {
     "context": "ProjectPanel && not_editing",
     "unbind": {
-      "shift-r": "project_panel::Rename"
-    }
+      "shift-r": "project_panel::Rename",
+    },
   },
   {
     "context": "ProjectPanel && not_editing",
     "bindings": {
-      "q": "project_panel::Toggle"
+      "q": "project_panel::Toggle",
+    },
+  },
+  {
+    "context": "vim_mode == normal",
+    "bindings": {
+      "space w": [
+        "editor::GoToDiagnostic",
+        {
+          "severity": {
+            "min": "warning",
+            "max": "error",
+          },
+        },
+      ],
+    },
+  },
+  {
+    "context": "vim_mode == normal",
+    "bindings": {
+      "space e": "project_panel::ToggleFocus",
+    },
+  },
+  {
+    "context": "ProjectPanel && not_editing",
+    "bindings": {
+      "space e": "project_panel::Toggle",
+    },
+  },
+  {
+    "context": "vim_operator == a || vim_operator == i || vim_operator == cs || vim_operator == helix_next || vim_operator == helix_previous",
+    "bindings": {
+      // mini.ai plugin behavior
+      "q": "vim::MiniQuotes",
+      "b": "vim::MiniBrackets",
+    },
+  },
+  {
+    "context": "Editor && !menu",
+    "bindings": {
+      "ctrl-shift-a": "editor::SelectAll",
+    },
+  },
+  {
+    "context": "Editor",
+    "unbind": {
+      "ctrl-a": "editor::SelectAll",
+    },
+  },
+  {
+    "context": "VimControl && !menu",
+    "bindings": {
+      "ctrl-shift-n": "vim::SelectPrevious",
+    },
+  },
+  {
+    "context": "VimControl && !menu",
+    "bindings": {
+      "ctrl-n": "vim::SelectNext",
+    },
+  },
+  {
+    "context": "VimControl && !menu",
+    "bindings": {
+      "ctrl-alt-n": [
+        "editor::SelectNext",
+        {
+          "replace_newest": true,
+        },
+      ],
+    },
+  },
+  {
+    "context": "VimControl && !menu",
+    "bindings": {
+      "ctrl-alt-shift-n": [
+        "editor::SelectPrevious",
+        {
+          "replace_newest": true,
+        },
+      ],
+    },
+  },
+  {
+    "context": "Workspace",
+    "bindings": {
+      "ctrl-shift-j": "workspace::ToggleBottomDock",
+    },
+  },
+  {
+    "context": "Workspace",
+    "unbind": {
+      "ctrl-j": "workspace::ToggleBottomDock",
+    },
+  },
+  {
+    "context": "Editor",
+    "unbind": {
+      "ctrl-shift-j": "editor::JoinLines",
+    },
+  },
+  {
+    "context": "(vim_mode == insert) && showing_signature_help && !showing_completions",
+    "bindings": {
+      "ctrl-n": "editor::SignatureHelpNext",
+    },
+  },
+  {
+    "context": "(vim_mode == insert || vim_mode == normal) && showing_signature_help && !showing_completions",
+    "unbind": {
+      "ctrl-n": "editor::SignatureHelpNext",
+    },
+  },
+  {
+    "context": "vim_mode == insert && !(showing_code_actions || showing_completions)",
+    "bindings": {
+      "ctrl-j": "editor::ShowWordCompletions",
+    },
+  },
+  {
+    "context": "Editor && (showing_code_actions || showing_completions) && vim_mode == insert",
+    "bindings": {
+      "ctrl-j": "editor::ContextMenuNext",
+    },
+  },
+  {
+    "context": "Editor && (showing_code_actions || showing_completions) && vim_mode == insert",
+    "bindings": {
+      "ctrl-k": "editor::ContextMenuPrevious",
+    },
+  },
+  {
+    "context": "vim_mode == insert && showing_signature_help && !showing_completions",
+    "bindings": {
+      "ctrl-p": "editor::SignatureHelpPrevious",
+    },
+  },
+  {
+    "context": "(vim_mode == insert || vim_mode == normal) && showing_signature_help && !showing_completions",
+    "unbind": {
+      "ctrl-p": "editor::SignatureHelpPrevious",
+    },
+  },
+  {
+    "context": "vim_mode == insert && !(showing_code_actions || showing_completions)",
+    "bindings": {
+      "ctrl-k": "editor::ShowWordCompletions",
+    },
+  },
+  {
+    "context": "vim_mode == insert && showing_signature_help && !showing_completions",
+    "bindings": {
+      "ctrl-k": "editor::SignatureHelpPrevious",
+    },
+  },
+  {
+    "context": "VimControl",
+    "bindings": {
+      "space space": "file_finder::Toggle",
+    },
+  },
+  {
+    "context": "VimControl",
+    "bindings": {
+      "space ,": "tab_switcher::Toggle",
+    },
+  },
+  {
+    "context": "(vim_mode == helix_normal || vim_mode == helix_select) && !menu",
+    "bindings": {
+      "space b t": "tab_switcher::ToggleAll",
+    },
+  },
+  {
+    "context": "(vim_mode == helix_normal || vim_mode == helix_select) && !menu",
+    "unbind": {
+      "space b": "tab_switcher::ToggleAll",
+    },
+  },
+  {
+    "context": "VimControl",
+    "bindings": {
+      "space b t": "tab_switcher::ToggleAll",
+    },
+  },
+  {
+    "context": "TabSwitcher",
+    "bindings": {
+      "ctrl-d": "tab_switcher::CloseSelectedItem",
+    },
+  },
+  {
+    "context": "VimControl",
+    "bindings": {
+      "space shift-z": "workspace::ZoomOut",
+    },
+  },
+  {
+    "context": "VimControl",
+    "bindings": {
+      "space z": "workspace::ZoomIn",
+    },
+  },
+  {
+    "context": "VimControl && !menu", // `&& vim_mode != operator` to not affect operations
+    "bindings": {
+      "w": "vim::NextSubwordStart",
+      "b": "vim::PreviousSubwordStart",
+      "e": "vim::NextSubwordEnd",
+      "g e": "vim::PreviousSubwordEnd",
+    },
+  },
+  {
+    "context": "vim_mode == visual",
+    "bindings": {
+      "shift-s": "vim::PushAddSurrounds",
+    },
+  },
+  {
+    "context": "vim_mode == normal || vim_mode == visual",
+    "bindings": {
+      "g w": "vim::HelixJumpToWord",
+    },
+  },
+  {
+    "context": "vim_mode == visual",
+    "bindings": {
+      "shift-x": "vim::Exchange",
+    },
+  },
+  {
+    "context": "VimControl",
+    "bindings": {
+      "v a g": "editor::SelectAll"
     }
   }
 ]

@@ -107,6 +107,7 @@
   "cursor_blink": false,
   "when_closing_with_no_tabs": "keep_window_open",
   "vim": {
+    "use_system_clipboard": "on_yank",
     "highlight_on_yank_duration": 230,
     "use_smartcase_find": true,
     "toggle_relative_line_numbers": false
