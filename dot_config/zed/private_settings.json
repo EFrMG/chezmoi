@@ -152,13 +152,13 @@
     "breadcrumbs": false,
     "code_actions": true,
   },
-  "show_edit_predictions": false,
+  "show_edit_predictions": true,
   "edit_predictions": {
     "ollama": {
       "model": "codegemma:2b",
       "prompt_format": "infer"
     },
-    "provider": "zed",
+    "provider": "ollama",
     "mode": "subtle",
     "copilot": {
       "proxy": null,

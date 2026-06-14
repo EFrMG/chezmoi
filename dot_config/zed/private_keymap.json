@@ -7,21 +7,12 @@
 // from the command palette.
 [
   {
-    "context": "os != macos && Editor && (edit_prediction && (showing_completions || in_leading_whitespace))",
-    "bindings": {
-      // alt-l is provided as an alternative to tab/alt-tab. and will be displayed in the UI. This
-      // is because alt-tab may not be available, as it is often used for window switching on Linux
-      // and Windows.
-      "alt-e": "editor::AcceptEditPrediction",
-    },
-  },
-  {
     "context": "Workspace",
     "bindings": {
       "ctrl-alt-shift-e": "zed::Extensions",
-      "ctrl-alt-x": "workspace::ToggleLeftDock",
+      "ctrl-alt-z": "workspace::ToggleLeftDock",
       "ctrl-shift-x": "workspace::ToggleBottomDock",
-      "ctrl-alt-c": "workspace::ToggleRightDock",
+      "ctrl-alt-x": "workspace::ToggleRightDock",
     },
   },
   {
@@ -1083,9 +1074,9 @@
     },
   },
   {
-    "context": "Editor && edit_prediction",
+    "context": "os != macos && Editor && (edit_prediction && (showing_completions || in_leading_whitespace))",
     "unbind": {
-      "alt-l": "editor::AcceptEditPrediction",
+      "alt-l": "editor::AcceptEditPrediction", // Alternative to Alt-Tab
     },
   },
   {
@@ -1362,7 +1353,7 @@
   {
     "context": "Workspace",
     "bindings": {
-      "ctrl-shift-j": "workspace::ToggleBottomDock",
+      "ctrl-alt-c": "workspace::ToggleBottomDock",
     },
   },
   {
@@ -1509,7 +1500,172 @@
   {
     "context": "VimControl",
     "bindings": {
-      "v a g": "editor::SelectAll"
+      "v a g": "editor::SelectAll",
+    },
+  },
+  {
+    "context": "(vim_mode == helix_normal || vim_mode == helix_select) && !menu",
+    "unbind": {
+      "space a": "editor::ToggleCodeActions",
+    },
+  },
+  {
+    "context": "VimControl",
+    "bindings": {
+      "space a": "agent::ToggleFocus",
+    },
+  },
+  {
+    "context": "MessageEditor > Editor && VimControl",
+    "bindings": {
+      "q": "agent::Toggle",
+    },
+  },
+  {
+    "context": "VimControl",
+    "bindings": {
+      "space m": "diagnostics::Deploy",
+    },
+  },
+  {
+    "context": "VimControl",
+    "bindings": {
+      "space t": "multi_workspace::ToggleWorkspaceSidebar",
+    },
+  },
+  {
+    "context": "VimControl",
+    "bindings": {
+      "space i": "edit_prediction::ToggleMenu",
+    },
+  },
+  {
+    "context": "Editor && !edit_prediction",
+    "bindings": {
+      "alt-e": "editor::ShowEditPrediction",
+    },
+  },
+  {
+    "context": "VimControl",
+    "bindings": {
+      "space j": "terminal_panel::Toggle"
+    }
+  },
+  {
+    "context": "VimControl",
+    "bindings": {
+      "space u": "debug_panel::ToggleFocus"
+    }
+  },
+  {
+    "context": "VimControl",
+    "bindings": {
+      "space o": "outline_panel::ToggleFocus"
+    }
+  },
+  {
+    "context": "Editor && editor_agent_diff",
+    "bindings": {
+      "ctrl-alt-shift-z": "agent::RejectAll"
+    }
+  },
+  {
+    "context": "Editor && editor_agent_diff",
+    "unbind": {
+      "alt-shift-z": "agent::RejectAll"
+    }
+  },
+  {
+    "context": "AgentDiff",
+    "bindings": {
+      "ctrl-alt-shift-z": "agent::RejectAll"
+    }
+  },
+  {
+    "context": "AgentDiff",
+    "unbind": {
+      "alt-shift-z": "agent::RejectAll"
+    }
+  },
+  {
+    "context": "AcpThread > Editor",
+    "bindings": {
+      "ctrl-alt-shift-z": "agent::RejectAll"
+    }
+  },
+  {
+    "context": "AcpThread > Editor",
+    "unbind": {
+      "alt-shift-z": "agent::RejectAll"
+    }
+  },
+  {
+    "context": "Editor && editor_agent_diff",
+    "bindings": {
+      "alt-shift-z": "agent::Reject"
+    }
+  },
+  {
+    "context": "Editor && editor_agent_diff",
+    "unbind": {
+      "ctrl-alt-z": "agent::Reject"
+    }
+  },
+  {
+    "context": "AgentDiff",
+    "bindings": {
+      "alt-shift-z": "agent::Reject"
+    }
+  },
+  {
+    "context": "AgentDiff",
+    "unbind": {
+      "ctrl-alt-z": "agent::Reject"
+    }
+  },
+  {
+    "bindings": {
+      "alt-shift-z": "edit_prediction::RatePredictions"
+    }
+  },
+  {
+    "unbind": {
+      "ctrl-alt-z": "edit_prediction::RatePredictions"
+    }
+  },
+  {
+    "context": "ProjectSearchBar",
+    "bindings": {
+      "alt-x": "search::ToggleRegex"
+    }
+  },
+  {
+    "context": "ProjectSearchBar",
+    "unbind": {
+      "ctrl-alt-x": "search::ToggleRegex"
+    }
+  },
+  {
+    "context": "ProjectSearchView",
+    "bindings": {
+      "alt-x": "search::ToggleRegex"
+    }
+  },
+  {
+    "context": "ProjectSearchView",
+    "unbind": {
+      "ctrl-alt-x": "search::ToggleRegex"
+    }
+  },
+  {
+    "bindings": {
+      "ctrl-shift-j": "terminal_panel::ToggleFocus"
+    }
+  },
+  {
+    "context": "VimControl",
+    "bindings": {
+      "space g": "git_panel::Toggle"
     }
   }
 ]
