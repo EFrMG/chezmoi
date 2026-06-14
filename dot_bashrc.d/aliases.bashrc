@@ -53,6 +53,9 @@ alias snap-bkp='snapper -c seagate_barracuda_bkp create --description "Backup $(
 alias pg-docs='brave /usr/share/doc/postgresql/html/index.html'
 
 # Programs
+alias stl='systemctl'
+alias jtl='journalctl'
+
 alias n='nvim'
 alias nd='nvim -d'
 alias na='fzf -m | xargs -r -d "\n" nvim'
@@ -66,9 +69,6 @@ alias ya='yazi'
 alias zat='zathura'
 alias py='python3'
 alias de='delta'
-
-alias onai='sudo systemctl enable --now ollama && sudo systemctl enable --now docker'
-alias offai='sudo systemctl disable --now ollama && sudo systemctl disable --now docker'
 
 alias ca='gemini'
 alias car='gemini -r'

@@ -11,5 +11,6 @@ exec-once = sleep 3; omarchy-restart-waybar
 {{ else if has "box" .role -}}
 exec-once = sleep 1; hyprpm reload
 exec-once = sleep 3; footclient -- tmux-init
-exec-once = sleep 5; hyprctl dispatch exec [workspace 2 silent] brave
+exec-once = sleep 4; hyprctl dispatch exec [workspace 2 silent] brave
+exec-once = sleep 8; hyprctl dispatch exec [workspace 3 silent] kweather
 {{ end -}}
