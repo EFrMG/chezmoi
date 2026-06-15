@@ -158,7 +158,7 @@
       "model": "codegemma:2b",
       "prompt_format": "infer"
     },
-    "provider": "ollama",
+    "provider": "zed",
     "mode": "subtle",
     "copilot": {
       "proxy": null,

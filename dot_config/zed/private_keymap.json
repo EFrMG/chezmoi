@@ -1423,7 +1423,7 @@
     },
   },
   {
-    "context": "VimControl",
+    "context": "VimControl && !menu",
     "bindings": {
       "space space": "file_finder::Toggle",
     },
@@ -1456,18 +1456,6 @@
     "context": "TabSwitcher",
     "bindings": {
       "ctrl-d": "tab_switcher::CloseSelectedItem",
-    },
-  },
-  {
-    "context": "VimControl",
-    "bindings": {
-      "space shift-z": "workspace::ZoomOut",
-    },
-  },
-  {
-    "context": "VimControl",
-    "bindings": {
-      "space z": "workspace::ZoomIn",
     },
   },
   {
@@ -1759,6 +1747,318 @@
     "context": "VimControl && !menu",
     "unbind": {
       "ctrl-q": "vim::ToggleVisualBlock"
+    }
+  },
+  {
+    "context": "!Editor && !Terminal",
+    "bindings": {
+      "/": [
+        "pane::DeploySearch",
+        {
+          "include_ignored": true
+        }
+      ]
+    }
+  },
+  {
+    "context": "!Editor && !Terminal",
+    "unbind": {
+      "space /": "pane::DeploySearch"
+    }
+  },
+  {
+    "context": "(vim_mode == helix_normal || vim_mode == helix_select) && !menu",
+    "bindings": {
+      "/": [
+        "pane::DeploySearch",
+        {
+          "include_ignored": true
+        }
+      ]
+    }
+  },
+  {
+    "context": "(vim_mode == helix_normal || vim_mode == helix_select) && !menu",
+    "unbind": {
+      "space /": "pane::DeploySearch"
+    }
+  },
+  {
+    "context": "!Editor && !Terminal",
+    "bindings": {
+      "ctrl-f": "file_finder::Toggle"
+    }
+  },
+  {
+    "context": "!Editor && !Terminal",
+    "unbind": {
+      "space f": "file_finder::Toggle"
+    }
+  },
+  {
+    "context": "(vim_mode == helix_normal || vim_mode == helix_select) && !menu",
+    "bindings": {
+      "ctrl-f": "file_finder::Toggle"
+    }
+  },
+  {
+    "context": "(vim_mode == helix_normal || vim_mode == helix_select) && !menu",
+    "unbind": {
+      "space f": "file_finder::Toggle"
+    }
+  },
+  {
+    "context": "!Editor && !Terminal",
+    "bindings": {
+      "ctrl-s": "project_symbols::Toggle"
+    }
+  },
+  {
+    "context": "!Editor && !Terminal",
+    "unbind": {
+      "space shift-s": "project_symbols::Toggle"
+    }
+  },
+  {
+    "context": "(vim_mode == helix_normal || vim_mode == helix_select) && !menu",
+    "bindings": {
+      "ctrl-s": "project_symbols::Toggle"
+    }
+  },
+  {
+    "context": "(vim_mode == helix_normal || vim_mode == helix_select) && !menu",
+    "unbind": {
+      "space shift-s": "project_symbols::Toggle"
+    }
+  },
+  {
+    "context": "(vim_mode == helix_normal || vim_mode == helix_select) && !menu",
+    "bindings": {
+      "ctrl-shift-s": "editor::SaveLocation"
+    }
+  },
+  {
+    "context": "(vim_mode == helix_normal || vim_mode == helix_select) && !menu",
+    "unbind": {
+      "ctrl-s": "editor::SaveLocation"
+    }
+  },
+  {
+    "context": "!Editor && !Terminal",
+    "unbind": {
+      "space w k": "workspace::ActivatePaneUp"
+    }
+  },
+  {
+    "context": "(vim_mode == helix_normal || vim_mode == helix_select) && !menu",
+    "unbind": {
+      "space w k": "workspace::ActivatePaneUp"
+    }
+  },
+  {
+    "context": "!Editor && !Terminal",
+    "unbind": {
+      "space w j": "workspace::ActivatePaneDown"
+    }
+  },
+  {
+    "context": "!ApplicationMenu && !Terminal",
+    "bindings": {
+      "ctrl-h": "workspace::ActivatePaneLeft"
+    }
+  },
+  {
+    "context": "!Editor && !Terminal",
+    "unbind": {
+      "space w h": "workspace::ActivatePaneLeft"
+    }
+  },
+  {
+    "context": "(vim_mode == helix_normal || vim_mode == helix_select) && !menu",
+    "unbind": {
+      "space w j": "workspace::ActivatePaneDown"
+    }
+  },
+  {
+    "context": "(vim_mode == helix_normal || vim_mode == helix_select) && !menu",
+    "unbind": {
+      "space w h": "workspace::ActivatePaneLeft"
+    }
+  },
+  {
+    "context": "!ApplicationMenu && !Terminal",
+    "bindings": {
+      "ctrl-l": "workspace::ActivatePaneRight"
+    }
+  },
+  {
+    "context": "!Editor && !Terminal",
+    "unbind": {
+      "space w l": "workspace::ActivatePaneRight"
+    }
+  },
+  {
+    "context": "(vim_mode == helix_normal || vim_mode == helix_select) && !menu",
+    "unbind": {
+      "space w l": "workspace::ActivatePaneRight"
+    }
+  },
+  {
+    "context": "Editor && mode == full && (vim_mode == visual || vim_mode == normal)",
+    "bindings": {
+      "ctrl-y": "buffer_search::DeployReplace"
+    }
+  },
+  {
+    "context": "Editor && mode == full",
+    "unbind": {
+      "ctrl-h": "buffer_search::DeployReplace"
+    }
+  },
+  {
+    "context": "Editor",
+    "unbind": {
+      "ctrl-shift-z": "editor::Redo"
+    }
+  },
+  {
+    "context": "ProjectPanel",
+    "bindings": {
+      "ctrl-r": "project_panel::Redo"
+    }
+  },
+  {
+    "context": "ProjectPanel",
+    "unbind": {
+      "ctrl-shift-z": "project_panel::Redo"
+    }
+  },
+  {
+    "context": "Pane",
+    "bindings": {
+      "ctrl-shift-z": "workspace::ToggleZoom"
+    }
+  },
+  {
+    "context": "Editor && VimControl",
+    "bindings": {
+      "space z": "workspace::ToggleZoom"
+    }
+  },
+  {
+    "context": "Pane",
+    "bindings": {
+      "ctrl-shift-l": "search::ToggleSelection"
+    }
+  },
+  {
+    "context": "Pane",
+    "unbind": {
+      "ctrl-alt-shift-l": "search::ToggleSelection"
+    }
+  },
+  {
+    "context": "(VimControl && !menu) || (!Editor && !Terminal)",
+    "bindings": {
+      "shift-l": [
+        "pane::ActivateNextItem",
+        {
+          "wrap_around": false
+        }
+      ]
+    }
+  },
+  {
+    "context": "(VimControl && !menu) || (!Editor && !Terminal)",
+    "bindings": {
+      "shift-h": [
+        "pane::ActivatePreviousItem",
+        {
+          "wrap_around": false
+        }
+      ]
+    }
+  },
+  {
+    "context": "Workspace",
+    "bindings": {
+      "ctrl-shift-y": [
+        "pane::DeploySearch",
+        {
+          "replace_enabled": true
+        }
+      ]
+    }
+  },
+  {
+    "context": "Workspace",
+    "unbind": {
+      "ctrl-shift-h": [
+        "pane::DeploySearch",
+        {
+          "replace_enabled": true
+        }
+      ]
+    }
+  },
+  {
+    "context": "VimControl && !menu",
+    "bindings": {
+      "ctrl-shift-h": "vim::WindowTop"
+    }
+  },
+  {
+    "context": "VimControl && !menu",
+    "unbind": {
+      "shift-h": "vim::WindowTop"
+    }
+  },
+  {
+    "context": "VimControl && !menu && !Terminal",
+    "bindings": {
+      "ctrl-shift-l": "vim::WindowBottom"
+    }
+  },
+  {
+    "context": "VimControl && !menu",
+    "unbind": {
+      "shift-l": "vim::WindowBottom"
+    }
+  },
+  {
+    "context": "CommitEditor > VimControl",
+    "bindings": {
+      "tab": "git_panel::FocusChanges"
+    }
+  },
+  {
+    "context": "CommitEditor > VimControl",
+    "bindings": {
+      "shift-tab": "git_panel::FocusChanges"
+    }
+  },
+  {
+    "context": "CommitEditor > Editor",
+    "unbind": {
+      "shift-tab": "git_panel::FocusChanges"
+    }
+  },
+  {
+    "context": "CommitEditor > Editor",
+    "unbind": {
+      "tab": "git_panel::FocusChanges"
+    }
+  },
+  {
+    "context": "CommitEditor > VimControl",
+    "bindings": {
+      "escape": "git_panel::FocusChanges"
+    }
+  },
+  {
+    "context": "CommitEditor > Editor",
+    "unbind": {
+      "escape": "git_panel::FocusChanges"
     }
   }
 ]
