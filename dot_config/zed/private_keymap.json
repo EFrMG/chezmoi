@@ -1667,5 +1667,98 @@
     "bindings": {
       "space g": "git_panel::Toggle"
     }
+  },
+  {
+    "context": "CommitEditor > Editor",
+    "bindings": {
+      "ctrl-shift-escape": "git::ExpandCommitEditor"
+    }
+  },
+  {
+    "context": "CommitEditor > Editor",
+    "unbind": {
+      "shift-escape": "git::ExpandCommitEditor"
+    }
+  },
+  {
+    "context": "CommitEditor > Editor",
+    "bindings": {
+      "shift-escape": "git::ToggleFillCommitEditor"
+    }
+  },
+  {
+    "context": "CommitEditor > Editor",
+    "unbind": {
+      "alt-shift-escape": "git::ToggleFillCommitEditor"
+    }
+  },
+  {
+    "bindings": {
+      "alt-shift-g": "git_graph::Open"
+    }
+  },
+  {
+    "context": "VimControl",
+    "bindings": {
+      "space shift-g": "git_graph::Open"
+    }
+  },
+  {
+    "context": "VimControl && !menu",
+    "bindings": {
+      "z ctrl-a": "editor::ToggleFoldAll"
+    }
+  },
+  {
+    "context": "GitPanel",
+    "bindings": {
+      "alt-p": "git::Push"
+    }
+  },
+  {
+    "context": "GitPanel",
+    "unbind": {
+      "ctrl-g up": "git::Push"
+    }
+  },
+  {
+    "context": "GitPanel",
+    "bindings": {
+      "alt-shift-p": "git::Pull"
+    }
+  },
+  {
+    "context": "GitPanel",
+    "unbind": {
+      "ctrl-g down": "git::Pull"
+    }
+  },
+  {
+    "context": "Pane",
+    "bindings": {
+      "ctrl-q": [
+        "pane::CloseActiveItem",
+        {
+          "close_pinned": false
+        }
+      ]
+    }
+  },
+  {
+    "context": "Pane",
+    "unbind": {
+      "ctrl-w": [
+        "pane::CloseActiveItem",
+        {
+          "close_pinned": false
+        }
+      ]
+    }
+  },
+  {
+    "context": "VimControl && !menu",
+    "unbind": {
+      "ctrl-q": "vim::ToggleVisualBlock"
+    }
   }
 ]
