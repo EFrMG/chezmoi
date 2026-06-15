@@ -1429,7 +1429,7 @@
     },
   },
   {
-    "context": "VimControl",
+    "context": "!ApplicationMenu && !(KeybindEditorModal || editor_agent_diff || NotebookEditor || AgentFeedbackMessageEditor || ThreadHistory) && (VimControl || !Editor)",
     "bindings": {
       "space ,": "tab_switcher::Toggle",
     },
@@ -2077,6 +2077,102 @@
     "context": "DebugPanel",
     "bindings": {
       "q": "debug_panel::Toggle"
+    }
+  },
+  {
+    "context": "ProjectPanel && not_editing",
+    "bindings": {
+      "ctrl-space": "project_panel::Open"
+    }
+  },
+  {
+    "context": "ProjectPanel && not_editing",
+    "unbind": {
+      "space": "project_panel::Open"
+    }
+  },
+  {
+    "context": "OutlinePanel && not_editing",
+    "bindings": {
+      "ctrl-space": "outline_panel::OpenSelectedEntry"
+    }
+  },
+  {
+    "context": "OutlinePanel && not_editing",
+    "unbind": {
+      "space": "outline_panel::OpenSelectedEntry"
+    }
+  },
+  {
+    "context": "ThreadsSidebar && not_searching",
+    "bindings": {
+      "ctrl-space": "menu::Confirm"
+    }
+  },
+  {
+    "context": "ThreadsSidebar && not_searching",
+    "unbind": {
+      "space": "menu::Confirm"
+    }
+  },
+  {
+    "context": "CollabPanel && not_editing",
+    "bindings": {
+      "ctrl-space": "menu::Confirm"
+    }
+  },
+  {
+    "context": "CollabPanel && not_editing",
+    "unbind": {
+      "space": "menu::Confirm"
+    }
+  },
+  {
+    "context": "GitPanel && ChangesList && !GitBranchSelector",
+    "bindings": {
+      "ctrl-space": "git::ToggleStaged"
+    }
+  },
+  {
+    "context": "GitPanel && ChangesList && !GitBranchSelector",
+    "unbind": {
+      "space": "git::ToggleStaged"
+    }
+  },
+  {
+    "context": "BreakpointList",
+    "bindings": {
+      "ctrl-space": "debugger::ToggleEnableBreakpoint"
+    }
+  },
+  {
+    "context": "BreakpointList",
+    "unbind": {
+      "space": "debugger::ToggleEnableBreakpoint"
+    }
+  },
+  {
+    "context": "VimControl && !menu",
+    "unbind": {
+      "space": "vim::WrappingRight"
+    }
+  },
+  {
+    "context": "vim_operator == helix_previous",
+    "unbind": {
+      "space": "vim::InsertEmptyLineAbove"
+    }
+  },
+  {
+    "context": "vim_operator == helix_next",
+    "unbind": {
+      "space": "vim::InsertEmptyLineBelow"
+    }
+  },
+  {
+    "context": "TabSwitcher",
+    "bindings": {
+      "ctrl-space": "menu::Confirm"
     }
   }
 ]
