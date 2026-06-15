@@ -1285,7 +1285,7 @@
     },
   },
   {
-    "context": "vim_mode == normal",
+    "context": "!ApplicationMenu && !(KeybindEditorModal || editor_agent_diff || NotebookEditor || AgentFeedbackMessageEditor || ThreadHistory) && (VimControl || !Editor)",
     "bindings": {
       "space e": "project_panel::ToggleFocus",
     },
@@ -1423,7 +1423,7 @@
     },
   },
   {
-    "context": "VimControl && !menu",
+    "context": "!ApplicationMenu && !(KeybindEditorModal || editor_agent_diff || NotebookEditor || AgentFeedbackMessageEditor || ThreadHistory) && (VimControl || !Editor)",
     "bindings": {
       "space space": "file_finder::Toggle",
     },
@@ -1447,7 +1447,7 @@
     },
   },
   {
-    "context": "VimControl",
+    "context": "!ApplicationMenu && !(KeybindEditorModal || editor_agent_diff || NotebookEditor || AgentFeedbackMessageEditor || ThreadHistory) && (VimControl || !Editor)",
     "bindings": {
       "space b t": "tab_switcher::ToggleAll",
     },
@@ -1498,7 +1498,7 @@
     },
   },
   {
-    "context": "VimControl",
+    "context": "!ApplicationMenu && !(KeybindEditorModal || editor_agent_diff || NotebookEditor || AgentFeedbackMessageEditor || ThreadHistory) && (VimControl || !Editor)",
     "bindings": {
       "space a": "agent::ToggleFocus",
     },
@@ -1540,13 +1540,13 @@
     }
   },
   {
-    "context": "VimControl",
+    "context": "!ApplicationMenu && !(KeybindEditorModal || editor_agent_diff || NotebookEditor || AgentFeedbackMessageEditor || ThreadHistory) && (VimControl || !Editor)",
     "bindings": {
       "space u": "debug_panel::ToggleFocus"
     }
   },
   {
-    "context": "VimControl",
+    "context": "!ApplicationMenu && !(KeybindEditorModal || editor_agent_diff || NotebookEditor || AgentFeedbackMessageEditor || ThreadHistory) && (VimControl || !Editor)",
     "bindings": {
       "space o": "outline_panel::ToggleFocus"
     }
@@ -1651,7 +1651,7 @@
     }
   },
   {
-    "context": "VimControl",
+    "context": "!ApplicationMenu && !(KeybindEditorModal || editor_agent_diff || NotebookEditor || AgentFeedbackMessageEditor || ThreadHistory) && (VimControl || !Editor)",
     "bindings": {
       "space g": "git_panel::Toggle"
     }
@@ -2059,6 +2059,24 @@
     "context": "CommitEditor > Editor",
     "unbind": {
       "escape": "git_panel::FocusChanges"
+    }
+  },
+  {
+    "context": "OutlinePanel",
+      "bindings": {
+      "ctrl-shift-p": "outline_panel::ToggleActiveEditorPin"
+    }
+  },
+  {
+    "context": "!ApplicationMenu && !(KeybindEditorModal || editor_agent_diff || NotebookEditor || AgentFeedbackMessageEditor || ThreadHistory) && (VimControl || !Editor)",
+    "bindings": {
+      "space c": "collab_panel::Toggle"
+    }
+  },
+  {
+    "context": "DebugPanel",
+    "bindings": {
+      "q": "debug_panel::Toggle"
     }
   }
 ]
