@@ -1139,13 +1139,13 @@
     },
   },
   {
-    "context": "VimControl && !menu",
+    "context": "!ApplicationMenu && !(KeybindEditorModal || editor_agent_diff || NotebookEditor || AgentFeedbackMessageEditor || ThreadHistory) && (VimControl || !Editor)",
     "bindings": {
       "space b d": [
         "pane::CloseActiveItem",
         {
-          "save_intent": "close",
-        },
+          "save_intent": "close"
+        }
       ],
     },
   },
