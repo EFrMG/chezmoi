@@ -25,13 +25,7 @@
     },
   },
   "agent_servers": {
-    "opencode": {
-      "type": "registry",
     },
-    "gemini": {
-      "type": "registry",
-    },
-  },
   "drag_and_drop_selection": {
     "delay": 200,
     "enabled": true,
@@ -166,7 +160,7 @@
     },
   },
   "project_panel": {
-    "hide_hidden": false,
+    "hide_hidden": true,
     "hide_gitignore": false,
     "indent_size": 16.0,
     "starts_open": false,
@@ -174,17 +168,18 @@
     "dock": "left",
   },
   "agent": {
+    "favorite_models": [],
     "max_content_width": 1350.0,
     "inline_assistant_model": {
       "provider": "google",
       "model": "gemini-2.5-flash",
     },
     "dock": "right",
-    "default_profile": "write",
+    "default_profile": "ask",
     "default_model": {
       "enable_thinking": false,
-      "provider": "ollama",
-      "model": "qwen3-coder:480b-cloud",
+      "provider": "opencode",
+      "model": "free/big-pickle",
     },
     "model_parameters": [],
   },
