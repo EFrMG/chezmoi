@@ -7,6 +7,9 @@
 // custom settings, run `zed: open default settings` from the
 // command palette (cmd-shift-p / ctrl-shift-p)
 {
+  "prettier": {
+    "allowed": true,
+  },
   "proxy": "",
   "colorize_brackets": true,
   "hover_popover_hiding_delay": 140,
@@ -24,8 +27,7 @@
       "show_go_models": false,
     },
   },
-  "agent_servers": {
-    },
+  "agent_servers": {},
   "drag_and_drop_selection": {
     "delay": 200,
     "enabled": true,
@@ -34,11 +36,11 @@
     "trust_all_worktrees": true,
   },
   "ui_font_size": 19.0,
-  "buffer_font_size": 20,
+  "buffer_font_size": 19.0,
   "bottom_dock_layout": "contained",
   "icon_theme": "Catppuccin Mocha",
   "theme": "Catppuccin Mocha",
-  "agent_buffer_font_size": 18.0,
+  "agent_buffer_font_size": 19.0,
   "calls": {
     "mute_on_join": false,
   },
@@ -78,7 +80,7 @@
       "update_debounce_ms": 500,
     },
   },
-  "agent_ui_font_size": 21.0,
+  "agent_ui_font_size": 19.0,
   "image_viewer": {
     "unit": "decimal",
   },
@@ -104,7 +106,7 @@
     "use_system_clipboard": "on_yank",
     "highlight_on_yank_duration": 230,
     "use_smartcase_find": true,
-    "toggle_relative_line_numbers": false
+    "toggle_relative_line_numbers": false,
   },
   "vim_mode": true,
   "restore_on_file_reopen": false,
@@ -119,24 +121,24 @@
   "scroll_sensitivity": 1.5,
   "scroll_beyond_last_line": "vertical_scroll_margin",
   "minimap": {
-    "show": "never"
+    "show": "never",
   },
   "base_keymap": "VSCode",
   "languages": {
     "HTML": {
-      "show_edit_predictions": true,
       "tab_size": 2,
     },
     "CSS": {
       "tab_size": 2,
     },
-    "JavaScript": {
-      "show_edit_predictions": false,
-      "tab_size": 2,
-    },
     "Python": {
-      "show_edit_predictions": true,
       "tab_size": 4,
+    },
+  },
+  "formatter": {
+    "external": {
+      "command": "prettier",
+      "arguments": ["--stdin-filepath", "{buffer_path}"],
     },
   },
   "toolbar": {
@@ -150,7 +152,7 @@
   "edit_predictions": {
     "ollama": {
       "model": "codegemma:2b",
-      "prompt_format": "infer"
+      "prompt_format": "infer",
     },
     "provider": "zed",
     "mode": "subtle",
@@ -198,7 +200,7 @@
     "calt": true,
   },
   "buffer_line_height": {
-    "custom": 1.45,
+    "custom": 1.350000023841858,
   },
   "current_line_highlight": "all",
   "multi_cursor_modifier": "cmd_or_ctrl",

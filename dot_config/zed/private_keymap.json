@@ -1036,7 +1036,7 @@
   },
   {
     "bindings": {
-      "ctrl-alt-shift-q": "workspace::ToggleWorktreeSecurity",
+      "ctrl-alt-shift-p": "workspace::ToggleWorktreeSecurity",
     },
   },
   {
@@ -2177,6 +2177,64 @@
     "context": "(vim_mode == helix_normal || vim_mode == helix_select) && !menu",
     "unbind": {
       "alt-o": "editor::SelectLargerSyntaxNode"
+    }
+  },
+  {
+    "context": "vim_mode == replace",
+    "bindings": {
+      "ctrl-alt-shift-q": [
+        "vim::PushLiteral",
+        {}
+      ]
+    }
+  },
+  {
+    "context": "vim_mode == replace",
+    "unbind": {
+      "ctrl-shift-q": [
+        "vim::PushLiteral",
+        {}
+      ]
+    }
+  },
+  {
+    "context": "vim_mode == insert",
+    "bindings": {
+      "ctrl-alt-shift-q": [
+        "vim::PushLiteral",
+        {}
+      ]
+    }
+  },
+  {
+    "context": "vim_mode == insert",
+    "unbind": {
+      "ctrl-shift-q": [
+        "vim::PushLiteral",
+        {}
+      ]
+    }
+  },
+  {
+    "context": "Workspace",
+    "bindings": {
+      "ctrl-shift-q": [
+        "projects::OpenRecent",
+        {
+          "create_new_window": false
+        }
+      ]
+    }
+  },
+  {
+    "context": "Workspace",
+    "unbind": {
+      "ctrl-r": [
+        "projects::OpenRecent",
+        {
+          "create_new_window": false
+        }
+      ]
     }
   }
 ]
