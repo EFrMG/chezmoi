@@ -787,7 +787,7 @@
   {
     "context": "Pane",
     "bindings": {
-      "ctrl-m shift-enter": "pane::TogglePinTab",
+      "ctrl-m t": "pane::TogglePinTab",
     },
   },
   {
@@ -1498,7 +1498,7 @@
   {
     "context": "VimControl",
     "bindings": {
-      "space m": "diagnostics::Deploy",
+      "space h": "diagnostics::Deploy",
     },
   },
   {
@@ -2056,7 +2056,7 @@
   {
     "context": "!ApplicationMenu && !(KeybindEditorModal || editor_agent_diff || NotebookEditor || AgentFeedbackMessageEditor || ThreadHistory) && (VimControl || !Editor)",
     "bindings": {
-      "space c": "collab_panel::Toggle",
+      "space shift-c": "collab_panel::Toggle",
     },
   },
   {
@@ -2235,6 +2235,134 @@
           "create_new_window": false
         }
       ]
+    }
+  },
+  {
+    "context": "VimControl",
+    "bindings": {
+      "ctrl-m shift-v": "markdown::OpenPreview"
+    }
+  },
+  {
+    "context": "AcpThread",
+    "bindings": {
+      "ctrl-shift-b": "agent::NewThread"
+    }
+  },
+  {
+    "context": "AcpThread",
+    "unbind": {
+      "ctrl-n": "agent::NewThread"
+    }
+  },
+  {
+    "context": "VimControl",
+    "bindings": {
+      "space c": "agent::AddSelectionToThread"
+    }
+  },
+  {
+    "context": "(GitPanel && ChangesList && !GitBranchSelector) || (CommitEditor > VimControl)",
+    "bindings": {
+      "ctrl-shift-s": "git::UnstageAll"
+    }
+  },
+  {
+    "context": "(GitPanel && ChangesList && !GitBranchSelector) || (CommitEditor > VimControl)",
+    "bindings": {
+      "alt-shift-s": "git::StageAll"
+    }
+  },
+  {
+    "context": "(GitPanel && ChangesList && !GitBranchSelector) || CommitEditor > VimControl",
+    "bindings": {
+      "alt-shift-down": "git::Uncommit"
+    }
+  },
+  {
+    "context": "CommitEditor > VimControl",
+    "bindings": {
+      "q": "git_panel::Toggle"
+    }
+  },
+  {
+    "context": "Pane",
+    "bindings": {
+      "alt-shift-left": [
+        "pane::SplitLeft",
+        {
+          "mode": "MovePane"
+        }
+      ]
+    }
+  },
+  {
+    "context": "Pane",
+    "bindings": {
+      "alt-shift-right": [
+        "pane::SplitRight",
+        {
+          "mode": "MovePane"
+        }
+      ]
+    }
+  },
+  {
+    "context": "Pane",
+    "bindings": {
+      "alt-shift-up": [
+        "pane::SplitUp",
+        {
+          "mode": "MovePane"
+        }
+      ]
+    }
+  },
+  {
+    "context": "Pane",
+    "bindings": {
+      "alt-shift-down": [
+        "pane::SplitDown",
+        {
+          "mode": "MovePane"
+        }
+      ]
+    }
+  },
+  {
+    "context": "VimControl",
+    "bindings": {
+      "space m": "editor::ToggleBookmark"
+    }
+  },
+  {
+    "context": "VimControl",
+    "bindings": {
+      "space ctrl-m": "editor::GoToNextBookmark"
+    }
+  },
+  {
+    "context": "VimControl",
+      "bindings": {
+      "space shift-m": "editor::GoToPreviousBookmark"
+    }
+  },
+  {
+    "context": "VimControl",
+      "bindings": {
+      "space ctrl-shift-m": "editor::ViewBookmarks"
+    }
+  },
+  {
+    "context": "VimControl",
+    "bindings": {
+      "space ctrl-alt-shift-m": "workspace::ClearBookmarks"
+    }
+  },
+  {
+    "context": "VimControl",
+    "bindings": {
+      "space r": "vim::ToggleRegistersView"
     }
   }
 ]
