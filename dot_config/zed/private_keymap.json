@@ -2364,5 +2364,41 @@
     "bindings": {
       "space r": "vim::ToggleRegistersView"
     }
+  },
+  {
+    "context": "(vim_mode == helix_normal || vim_mode == helix_select) && !menu",
+    "unbind": {
+      "space s": "outline::Toggle"
+    }
+  },
+  {
+    "context": "(GitPanel && ChangesList && !GitBranchSelector) || CommitEditor > VimControl",
+    "bindings": {
+      "space s d": "git::Diff"
+    }
+  },
+  {
+    "context": "(GitPanel && ChangesList && !GitBranchSelector) || CommitEditor > VimControl",
+    "bindings": {
+      "space s p": "git::StashPop"
+    }
+  },
+  {
+    "context": "(GitPanel && ChangesList && !GitBranchSelector) || CommitEditor > VimControl",
+    "bindings": {
+      "space s a": "git::StashAll"
+    }
+  },
+  {
+    "context": "(GitPanel && ChangesList && !GitBranchSelector) || CommitEditor > VimControl",
+    "bindings": {
+      "space s q": "git::StashApply"
+    }
+  },
+  {
+    "context": "(GitPanel && ChangesList && !GitBranchSelector) || CommitEditor > VimControl",
+    "bindings": {
+      "space s w": "git::ViewStash"
+    }
   }
 ]
