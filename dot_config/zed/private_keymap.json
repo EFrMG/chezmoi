@@ -1139,7 +1139,7 @@
     }
   },
   {
-    "context": "!ApplicationMenu && !(KeybindEditorModal || editor_agent_diff || NotebookEditor || AgentFeedbackMessageEditor || ThreadHistory) && (VimControl || !Editor)",
+    "context": "!ApplicationMenu && !(Terminal || KeybindEditorModal || editor_agent_diff || NotebookEditor || AgentFeedbackMessageEditor || ThreadHistory) && (VimControl || !Editor)",
     "bindings": {
       "space b d": [
         "pane::CloseActiveItem",
@@ -1285,7 +1285,7 @@
     }
   },
   {
-    "context": "!ApplicationMenu && !(KeybindEditorModal || editor_agent_diff || NotebookEditor || AgentFeedbackMessageEditor || ThreadHistory) && (VimControl || !Editor)",
+    "context": "!ApplicationMenu && !(Terminal || KeybindEditorModal || editor_agent_diff || NotebookEditor || AgentFeedbackMessageEditor || ThreadHistory) && (VimControl || !Editor)",
     "bindings": {
       "space e": "project_panel::ToggleFocus"
     }
@@ -1415,13 +1415,13 @@
     }
   },
   {
-    "context": "!ApplicationMenu && !(KeybindEditorModal || editor_agent_diff || NotebookEditor || AgentFeedbackMessageEditor || ThreadHistory) && (VimControl || !Editor)",
+    "context": "!ApplicationMenu && !(Terminal || KeybindEditorModal || editor_agent_diff || NotebookEditor || AgentFeedbackMessageEditor || ThreadHistory) && (VimControl || !Editor)",
     "bindings": {
       "space space": "file_finder::Toggle"
     }
   },
   {
-    "context": "!ApplicationMenu && !(KeybindEditorModal || editor_agent_diff || NotebookEditor || AgentFeedbackMessageEditor || ThreadHistory) && (VimControl || !Editor)",
+    "context": "!ApplicationMenu && !(Terminal || KeybindEditorModal || editor_agent_diff || NotebookEditor || AgentFeedbackMessageEditor || ThreadHistory) && (VimControl || !Editor)",
     "bindings": {
       "space ,": "tab_switcher::Toggle"
     }
@@ -1439,7 +1439,7 @@
     }
   },
   {
-    "context": "!ApplicationMenu && !(KeybindEditorModal || editor_agent_diff || NotebookEditor || AgentFeedbackMessageEditor || ThreadHistory) && (VimControl || !Editor)",
+    "context": "!ApplicationMenu && !(Terminal || KeybindEditorModal || editor_agent_diff || NotebookEditor || AgentFeedbackMessageEditor || ThreadHistory) && (VimControl || !Editor)",
     "bindings": {
       "space b t": "tab_switcher::ToggleAll"
     }
@@ -1484,7 +1484,7 @@
     }
   },
   {
-    "context": "!ApplicationMenu && !(KeybindEditorModal || editor_agent_diff || NotebookEditor || AgentFeedbackMessageEditor || ThreadHistory) && (VimControl || !Editor)",
+    "context": "!ApplicationMenu && !(Terminal || KeybindEditorModal || editor_agent_diff || NotebookEditor || AgentFeedbackMessageEditor || ThreadHistory) && (VimControl || !Editor)",
     "bindings": {
       "space a": "agent::ToggleFocus"
     }
@@ -1526,13 +1526,13 @@
     }
   },
   {
-    "context": "!ApplicationMenu && !(KeybindEditorModal || editor_agent_diff || NotebookEditor || AgentFeedbackMessageEditor || ThreadHistory) && (VimControl || !Editor)",
+    "context": "!ApplicationMenu && !(Terminal || KeybindEditorModal || editor_agent_diff || NotebookEditor || AgentFeedbackMessageEditor || ThreadHistory) && (VimControl || !Editor)",
     "bindings": {
       "space u": "debug_panel::ToggleFocus"
     }
   },
   {
-    "context": "!ApplicationMenu && !(KeybindEditorModal || editor_agent_diff || NotebookEditor || AgentFeedbackMessageEditor || ThreadHistory) && (VimControl || !Editor)",
+    "context": "!ApplicationMenu && !(Terminal || KeybindEditorModal || editor_agent_diff || NotebookEditor || AgentFeedbackMessageEditor || ThreadHistory) && (VimControl || !Editor)",
     "bindings": {
       "space o": "outline_panel::ToggleFocus"
     }
@@ -1637,7 +1637,7 @@
     }
   },
   {
-    "context": "!ApplicationMenu && !(KeybindEditorModal || editor_agent_diff || NotebookEditor || AgentFeedbackMessageEditor || ThreadHistory) && (VimControl || !Editor)",
+    "context": "!ApplicationMenu && !(Terminal || KeybindEditorModal || editor_agent_diff || NotebookEditor || AgentFeedbackMessageEditor || ThreadHistory) && (VimControl || !Editor)",
     "bindings": {
       "space g": "git_panel::Toggle"
     }
@@ -2054,7 +2054,7 @@
     }
   },
   {
-    "context": "!ApplicationMenu && !(KeybindEditorModal || editor_agent_diff || NotebookEditor || AgentFeedbackMessageEditor || ThreadHistory) && (VimControl || !Editor)",
+    "context": "!ApplicationMenu && !(Terminal || KeybindEditorModal || editor_agent_diff || NotebookEditor || AgentFeedbackMessageEditor || ThreadHistory) && (VimControl || !Editor)",
     "bindings": {
       "space shift-c": "collab_panel::Toggle"
     }

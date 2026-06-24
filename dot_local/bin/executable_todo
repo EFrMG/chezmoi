@@ -366,6 +366,97 @@ todo_clear_completed() {
   gum spin --title "Removing…" sleep 0.5
 }
 
+todo_edit_item() {
+  local file="$1"
+
+  [[ ! -s "$file" ]] && gum style --foreground="#F38BA8" "List is empty." && return
+
+  local -a raw_lines
+  mapfile -t raw_lines <"$file"
+
+  local -a item_display item_indices
+
+  for i in "${!raw_lines[@]}"; do
+    local line="${raw_lines[$i]}"
+
+    if todo_is_item "$line"; then
+      local level pad=""
+
+      level=$(todo_level "$line")
+
+      for ((j = 0; j < level; j++)); do pad+="  "; done
+
+      local label
+
+      label=$(todo_label "$line")
+
+      if todo_is_checked "$line"; then
+        local bullet="󰄵"
+
+        (( level > 0 )) && bullet="󰄴"
+        (( level > 1 )) && bullet="󰘾"
+      else
+        local bullet="󰄱"
+
+        (( level > 0 )) && bullet="󰄰"
+        (( level > 1 )) && bullet="󰘼"
+      fi
+
+      item_display+=("${pad}${bullet} ${label}")
+      item_indices+=("$i")
+    fi
+  done
+
+  [[ ${#item_display[@]} -eq 0 ]] && gum style --foreground="#F38BA8" "No items to edit yet." && return
+
+  local chosen_display
+  chosen_display=$(printf '%s\n' "${item_display[@]}" |
+    gum choose --header "Select item to edit:")
+
+  [[ -z "$chosen_display" ]] && return
+
+  local chosen_idx=-1
+  for i in "${!item_display[@]}"; do
+    if [[ "${item_display[$i]}" == "$chosen_display" ]]; then
+      chosen_idx="${item_indices[$i]}"
+      break
+    fi
+  done
+
+  [[ $chosen_idx -lt 0 ]] && return
+
+  local original_line="${raw_lines[$chosen_idx]}"
+  local original_label
+  original_label=$(todo_label "$original_line")
+  local spaces="${original_line%%[! ]*}"
+  local bullet_part="${original_line:$((${#spaces})):${#original_line}}" # e.g., "- [ ] " or "- [x] "
+  bullet_part="${bullet_part%%"${original_label}"*}"
+
+  local new_label
+  new_label=$(gum input --placeholder "Edit item" --value "$original_label" --width 60)
+
+  # User cancelled or entered empty string
+  [[ -z "$new_label" ]] && return
+
+  if [[ "$new_label" != "$original_label" ]]; then
+    local new_line="${spaces}${bullet_part}${new_label}"
+
+    raw_lines[chosen_idx]="$new_line"
+
+    local tmp
+    tmp=$(mktemp)
+
+    for line in "${raw_lines[@]}"; do
+      echo "$line" >>"$tmp"
+    done
+
+    mv "$tmp" "$file"
+    # No message
+  else
+    gum spin --title "No changes made." --spinner="jump" sleep 1.5
+  fi
+}
+
 todo_action_menu() {
   local file="$1"
   local name
@@ -380,6 +471,7 @@ todo_action_menu() {
       "Add items" \
       "Add sub-item" \
       "Toggle done / undone" \
+      "Edit item" \
       "Clear completed" \
       "Delete list" \
       "Quit")
@@ -393,6 +485,9 @@ todo_action_menu() {
       ;;
     "Toggle done / undone")
       todo_toggle_items "$file"
+      ;;
+    "Edit item")
+      todo_edit_item "$file"
       ;;
     "Clear completed")
       todo_clear_completed
