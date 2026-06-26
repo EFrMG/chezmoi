@@ -215,7 +215,7 @@ todo_toggle_items() {
 
   [[ -z "$chosen" ]] && return
 
-  # Mark selected using bash string comparison — avoids rg encoding issues
+  # Mark selected using bash string comparison to avoid rg encoding issues
   local n=${#raw_lines[@]}
   local -a selected
 

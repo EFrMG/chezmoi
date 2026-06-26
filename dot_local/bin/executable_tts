@@ -1,0 +1,87 @@
+#!/bin/bash
+# Use edge-tts or piper-tts to produce text to speech, taking from a string of text or file
+# Install: uv tool install edge-tts && uv tool install piper-tts --with pathvalidate
+# Also, download a piper-tts model and/or check the hardcoded one
+
+# Default to edge-tts
+use_piper=false
+input_from_file=false
+declare file_to_read
+declare text_to_read
+
+# Parse flag
+while getopts ":lh" opt; do
+  case ${opt} in
+    h ) cat <<EOF
+
+Usage: $(basename "$0") [-l] <output_filename> [input_filename | "text to read"]
+
+Options:
+  -h    Show this help message
+  -l    Use piper
+
+Examples:
+  tts -l article_summary_voice article_text_snippets
+
+  tts my_toughts "Any text you'd like to hear, quoted or not, yet mind the newlines and apostrophes."
+EOF
+exit 0
+        ;;
+    l ) use_piper=true
+        ;;
+    ? ) echo "Invalid option: -$OPTARG" 1>&2
+        exit 1
+        ;;
+  esac
+done
+shift $((OPTIND -1))
+
+# After shifting, $1 is the output filename, $2 is either input filename or part of text.
+
+# Ensure output filename
+if [[ -z "$1" ]]; then
+  echo "Usage: $(basename "$0") [-l] <output_filename> [input_filename | "text to read"]" >&2
+  exit 1
+fi
+
+spoken_file="$1"
+shift
+
+# Now, if $1 exists, it's either the input filename or the start of the text to speak.
+if [[ -n "$1" ]]; then
+  # If there is only one remaining argument which is a file: it is the input file
+  if [[ "$#" -eq 1 ]] && [[ -f "$1" ]]; then
+    file_to_read="$1"
+    input_from_file=true
+  else
+    # Otherwise, all remaining arguments are the text to speak
+    text_to_read="$*"
+    input_from_file=false
+  fi
+else
+  # No text or input file provided
+  echo "You must provide text or a text file to be read." 1>&2
+  exit 1
+fi
+
+# Change directory
+cd ~/Music/TTS || { echo "Could not cd into TTS/" 1>&2; exit 1; }
+
+if "$use_piper"; then
+  output_extension=".wav"
+
+  if "$input_from_file"; then
+    # We save the environment to cache with uvx, it is quite fast to initialize and overall flexible
+    uvx --with piper-tts --with pathvalidate python3 -m piper -m en_GB-southern_english_female-low -f "$spoken_file$output_extension" --input-file "$file_to_read"
+  else
+    uvx --with piper-tts --with pathvalidate python3 -m piper -m en_GB-southern_english_female-low -f "$spoken_file$output_extension" -- "$text_to_read"
+  fi
+else
+  output_extension=".mp3"
+
+  if "$input_from_file"; then
+    edge-tts -f "$file_to_read" --write-media "$spoken_file$output_extension"
+  else
+    edge-tts --write-media "$spoken_file$output_extension" --text "$text_to_read"
+  fi
+fi

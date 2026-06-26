@@ -1,0 +1,40 @@
+#!/bin/bash
+# Stops Ollama models + fzf
+
+declare selected_models
+selected_models=$(
+  (
+    echo -e "Name\tSize\tContext\tUntil"
+    curl -s http://localhost:11434/api/ps | jq -r '
+      .models[] |
+
+      # Format size to GB (1 decimal) or MB (integer)
+      (if .size >= 1073741824 then
+          "\((.size / 1073741824 * 10 | round) / 10) GB"
+      else
+          "\((.size / 1048576 | round)) MB"
+      end) as $size |
+
+      # If year > 2100, it is "Forever"; otherwise, slice the string to get HH:MM:SS
+      (if (.expires_at[0:4] | tonumber) > 2100 then
+          "Forever"
+      else
+          (.expires_at[11:19])
+      end) as $expire_time |
+
+      # Output as tab-separated Values
+      [ .name, $size, .context_length, $expire_time ] | @tsv
+    '
+  ) | column -t -s $'\t' | fzf -m --header-lines=1 --prompt="Stop Ollama Models > " | awk '{print $1}'
+)
+
+if [[ -n "$selected_models" ]]; then
+  echo "$selected_models" | while read -r model; do
+    echo "Stopping $model"
+    ollama stop "$model"
+  done
+
+  echo "Done."
+else
+  echo "Aborted: No models selected."
+fi

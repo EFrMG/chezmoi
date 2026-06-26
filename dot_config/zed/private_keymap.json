@@ -1224,7 +1224,7 @@
     }
   },
   {
-    "context": "ProjectPanel",
+    "context": "ProjectPanel && not_editing",
     "bindings": {
       "d": [
         "project_panel::Trash",
@@ -2623,6 +2623,18 @@
     "context": "VimControl || !Editor",
     "bindings": {
       "ctrl-alt-g": "git::Switch"
+    }
+  },
+  {
+    "context": "(GitPanel && ChangesList && !GitBranchSelector) || CommitEditor",
+    "bindings": {
+      "alt-shift-s": "git::StageAll"
+    }
+  },
+  {
+    "context": "(GitPanel && ChangesList && !GitBranchSelector) || CommitEditor",
+    "bindings": {
+      "ctrl-shift-s": "git::UnstageAll"
     }
   }
 ]

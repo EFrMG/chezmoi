@@ -85,54 +85,6 @@ omaf() {
   fi
 }
 
-# Edge text to speech
-tts() {
-  local filewrite
-  filewrite=$1
-
-  shift
-
-  cd ~/Music/TTS || return && echo "Could not cd into TTS/"
-
-  edge-tts --write-media "$filewrite.mp3" --text "$*"
-}
-
-ttsf() {
-  local fileread
-  fileread=$1
-  local filewrite
-  filewrite=$2
-
-  shift 2
-
-  edge-tts -f "$fileread" --write-media "$filewrite.mp3"
-}
-
-# Piper text to speech (local) (bad quality)
-ttsl() {
-  local filewrite
-  filewrite=$1
-
-  shift
-
-  cd ~/Music/TTS || return && echo "Could not cd into TTS/"
-
-  uvx --with piper-tts --with pathvalidate python3 -m piper -m en_GB-southern_english_female-low -f "$filewrite.wav" -- "$*"
-}
-
-ttslf() {
-  local fileread
-  fileread=$1
-  local filewrite
-  filewrite=$2
-
-  shift 2
-
-  cd ~/Music/TTS || return && echo "Could not cd into TTS/"
-
-  uvx --with piper-tts --with pathvalidate python3 -m piper -m en_GB-southern_english_female-low -f "$filewrite.wav" --input-file "$fileread"
-}
-
 # Fzf + bat
 bata() {
   local selected
