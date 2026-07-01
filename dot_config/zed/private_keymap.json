@@ -25,8 +25,8 @@
   {
     "context": "Editor && !menu",
     "bindings": {
-      "ctrl-c": "editor::Copy", // vim default: return to normal mode
-      "ctrl-s": "workspace::Save" // vim default: show signature
+      "ctrl-c": "editor::Copy" // vim default: return to normal mode
+      // vim default: show signature
     }
   },
   {
@@ -633,7 +633,7 @@
   {
     "context": "Pane",
     "bindings": {
-      "shift-m w": [
+      "ctrl-m w": [
         "pane::CloseAllItems",
         {
           "close_pinned": false
@@ -655,7 +655,7 @@
   {
     "context": "Pane",
     "bindings": {
-      "shift-m u": [
+      "ctrl-m u": [
         "pane::CloseCleanItems",
         {
           "close_pinned": false
@@ -677,7 +677,7 @@
   {
     "context": "Pane",
     "bindings": {
-      "shift-m e": [
+      "ctrl-m e": [
         "pane::CloseItemsToTheLeft",
         {
           "close_pinned": false
@@ -699,7 +699,7 @@
   {
     "context": "Pane",
     "bindings": {
-      "shift-m t": [
+      "ctrl-m shift-e": [
         "pane::CloseItemsToTheRight",
         {
           "close_pinned": false
@@ -1243,7 +1243,7 @@
   {
     "context": "ProjectPanel && not_editing",
     "bindings": {
-      "shift-h": "project_panel::ToggleHideGitIgnore"
+      "alt-i": "project_panel::ToggleHideGitIgnore"
     }
   },
   {
@@ -1520,7 +1520,7 @@
     }
   },
   {
-    "context": "VimControl",
+    "context": "!ApplicationMenu && !(Terminal || KeybindEditorModal || editor_agent_diff || NotebookEditor || AgentFeedbackMessageEditor || ThreadHistory) && (VimControl || !Editor)",
     "bindings": {
       "space j": "terminal_panel::Toggle"
     }
@@ -1794,7 +1794,7 @@
     }
   },
   {
-    "context": "!Editor && !Terminal",
+    "context": "!Editor && !Terminal && !ProjectPanel",
     "bindings": {
       "ctrl-s": "project_symbols::Toggle"
     }
@@ -2268,12 +2268,6 @@
     }
   },
   {
-    "context": "CommitEditor > VimControl",
-    "bindings": {
-      "q": "git_panel::Toggle"
-    }
-  },
-  {
     "context": "Pane",
     "bindings": {
       "alt-shift-left": [
@@ -2635,6 +2629,270 @@
     "context": "(GitPanel && ChangesList && !GitBranchSelector) || CommitEditor",
     "bindings": {
       "ctrl-shift-s": "git::UnstageAll"
+    }
+  },
+  {
+    "context": "CommitEditor > Editor",
+    "bindings": {
+      "alt-enter": "git::Commit"
+    }
+  },
+  {
+    "context": "CommitEditor > Editor",
+    "unbind": {
+      "ctrl-enter": "git::Commit"
+    }
+  },
+  {
+    "context": "GitDiff > Editor",
+    "bindings": {
+      "alt-enter": "git::Commit"
+    }
+  },
+  {
+    "context": "GitDiff > Editor",
+    "unbind": {
+      "ctrl-enter": "git::Commit"
+    }
+  },
+  {
+    "context": "GitPanel",
+    "bindings": {
+      "alt-enter": "git::Commit"
+    }
+  },
+  {
+    "context": "GitPanel",
+    "unbind": {
+      "ctrl-enter": "git::Commit"
+    }
+  },
+  {
+    "context": "GitCommit > Editor",
+    "bindings": {
+      "alt-enter": "git::Commit"
+    }
+  },
+  {
+    "context": "GitCommit > Editor",
+    "unbind": {
+      "ctrl-enter": "git::Commit"
+    }
+  },
+  {
+    "context": "GitPanel && ChangesList && !GitBranchSelector",
+    "bindings": {
+      "ctrl-enter": "menu::SecondaryConfirm"
+    }
+  },
+  {
+    "context": "GitPanel && ChangesList && !GitBranchSelector",
+    "unbind": {
+      "alt-enter": "menu::SecondaryConfirm"
+    }
+  },
+  {
+    "context": "(vim_mode == helix_normal || vim_mode == helix_select) && !menu",
+    "unbind": {
+      "alt-p": "editor::SelectPreviousSyntaxNode"
+    }
+  },
+  {
+    "context": "Editor && !menu",
+    "bindings": {
+      "ctrl-s": "workspace::Save"
+    }
+  },
+  {
+    "context": "Workspace && !Terminal",
+    "bindings": {
+      "ctrl-s": "workspace::Save"
+    }
+  },
+  {
+    "context": "Workspace",
+    "unbind": {
+      "ctrl-s": "workspace::Save"
+    }
+  },
+  {
+    "context": "RecentProjects",
+    "bindings": {
+      "alt-o": "workspace::Open"
+    }
+  },
+  {
+    "context": "FileFinder || (FileFinder > Picker > Editor) || (FileFinder > Picker > menu)",
+    "bindings": {
+      "ctrl-space": "menu::Confirm"
+    }
+  },
+  {
+    "context": "ProjectPanel && not_editing",
+    "bindings": {
+      "ctrl-j": "project_panel::ScrollDown"
+    }
+  },
+  {
+    "context": "ProjectPanel && not_editing",
+    "unbind": {
+      "ctrl-d": "project_panel::ScrollDown"
+    }
+  },
+  {
+    "context": "ProjectPanel && not_editing",
+    "bindings": {
+      "ctrl-k": "project_panel::ScrollUp"
+    }
+  },
+  {
+    "context": "ProjectPanel && not_editing",
+    "unbind": {
+      "ctrl-u": "project_panel::ScrollUp"
+    }
+  },
+  {
+    "context": "VimControl && !menu || Pane && (!Editor && !Terminal && !ProjectPanel)",
+    "bindings": {
+      "g shift-s": "project_symbols::Toggle"
+    }
+  },
+  {
+    "context": "Editor",
+    "unbind": {
+      "alt-up": "editor::MoveLineUp"
+    }
+  },
+  {
+    "context": "(vim_mode == normal || vim_mode == helix_normal) && !menu",
+    "bindings": {
+      "alt-up": "vim::Increment"
+    }
+  },
+  {
+    "context": "(vim_mode == normal || vim_mode == helix_normal) && !menu",
+    "unbind": {
+      "ctrl-a": "vim::Increment"
+    }
+  },
+  {
+    "context": "(vim_mode == normal || vim_mode == helix_normal) && !menu",
+    "bindings": {
+      "alt-down": "vim::Decrement"
+    }
+  },
+  {
+    "context": "(vim_mode == normal || vim_mode == helix_normal) && !menu",
+    "unbind": {
+      "ctrl-x": "vim::Decrement"
+    }
+  },
+  {
+    "context": "Editor",
+    "unbind": {
+      "alt-down": "editor::MoveLineDown"
+    }
+  },
+  {
+    "context": "Editor",
+    "bindings": {
+      "ctrl-2": "editor::ExpandAllDiffHunks"
+    }
+  },
+  {
+    "context": "Editor",
+    "unbind": {
+      "ctrl-\"": "editor::ExpandAllDiffHunks"
+    }
+  },
+  {
+    "context": "Editor && !agent_diff && VimControl",
+    "bindings": {
+      "g y": "git::ToggleStaged"
+    }
+  },
+  {
+    "context": "VimControl && !menu",
+    "bindings": {
+      "g shift-y": "editor::GoToTypeDefinition"
+    }
+  },
+  {
+    "context": "VimControl && !menu",
+    "unbind": {
+      "g y": "editor::GoToTypeDefinition"
+    }
+  },
+  {
+    "context": "CommitEditor > VimControl",
+    "bindings": {
+      "q": "git_panel::Toggle"
+    }
+  },
+  {
+    "context": "GitPanel",
+    "bindings": {
+      "alt-backspace": "git::RestoreTrackedFiles"
+    }
+  },
+  {
+    "context": "GitPanel",
+    "unbind": {
+      "ctrl-g backspace": "git::RestoreTrackedFiles"
+    }
+  },
+  {
+    "context": "FileFinder",
+    "bindings": {
+      "alt-i": "search::ToggleIncludeIgnored"
+    }
+  },
+  {
+    "context": "(vim_mode == helix_normal || vim_mode == helix_select) && !menu",
+    "unbind": {
+      "alt-i": "editor::SelectSmallerSyntaxNode"
+    }
+  },
+  {
+    "context": "ProjectPanel && not_editing",
+    "bindings": {
+      "ctrl-left": "project_panel::CollapseAllEntries"
+    }
+  },
+  {
+    "context": "ProjectPanel && not_editing",
+    "bindings": {
+      "left": "project_panel::CollapseSelectedEntry"
+    }
+  },
+  {
+    "context": "ProjectPanel && not_editing",
+    "bindings": {
+      "shift-h": "project_panel::CollapseSelectedEntryAndChildren"
+    }
+  },
+  {
+    "context": "ProjectPanel && not_editing",
+    "bindings": {
+      "ctrl-h": "project_panel::CollapseAllEntries"
+    }
+  },
+  {
+    "context": "ProjectPanel",
+    "unbind": {
+      "ctrl-left": "project_panel::CollapseAllEntries"
+    }
+  },
+  {
+    "context": "Editor",
+    "bindings": {
+      "alt-m": "git::OpenModifiedFiles"
+    }
+  },
+  {
+    "context": "Editor",
+    "unbind": {
+      "alt-g m": "git::OpenModifiedFiles"
     }
   }
 ]

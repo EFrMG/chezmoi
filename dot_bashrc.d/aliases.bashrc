@@ -55,8 +55,12 @@ alias pg-docs='brave /usr/share/doc/postgresql/html/index.html'
 
 # Programs
 alias stl='systemctl'
+alias sstl='sudo systemctl'
 alias jtl='journalctl'
 alias ap='apropos'
+
+alias t='btop'
+alias st='sudo btop'
 
 alias n='nvim'
 alias nd='nvim -d'
@@ -71,9 +75,9 @@ alias zat='zathura'
 alias py='python3'
 alias de='delta'
 
-alias ca='gemini'
-alias car='gemini -r'
 alias co='copilot'
+alias ol='ollama'
+alias oll='ollama launch opencode'
 
 alias ytvid='mpv --ytdl-format="best[height<=480]"'
 alias ytaud='mpv --ytdl-format="best" --no-video'
