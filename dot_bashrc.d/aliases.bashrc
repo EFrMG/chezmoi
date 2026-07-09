@@ -81,6 +81,7 @@ alias oll='ollama launch opencode'
 
 alias ytvid='mpv --ytdl-format="best[height<=480]"'
 alias ytaud='mpv --ytdl-format="best" --no-video'
+alias ytaudd='yt-dlp -x'
 
 alias ch='chezmoi'
 alias chd='chezmoi cd'
@@ -126,3 +127,6 @@ alias prc='pnpm typecheck'
 alias nrd='next dev'
 alias nrb='next build'
 alias nrp='next start'
+
+# Python3
+alias uvgrade='uv tool upgrade --all'

@@ -1645,7 +1645,7 @@
   {
     "context": "CommitEditor > Editor",
     "bindings": {
-      "ctrl-shift-escape": "git::ExpandCommitEditor"
+      "ctrl-escape": "git::ExpandCommitEditor"
     }
   },
   {
@@ -1696,9 +1696,9 @@
     }
   },
   {
-    "context": "GitPanel",
+    "context": "(GitPanel && ChangesList && !GitBranchSelector) || CommitEditor > VimControl",
     "bindings": {
-      "alt-shift-p": "git::Pull"
+      "alt-shift-f": "git::Pull"
     }
   },
   {
@@ -1934,7 +1934,7 @@
   {
     "context": "Pane",
     "bindings": {
-      "ctrl-shift-l": "search::ToggleSelection"
+      "alt-s": "search::ToggleSelection"
     }
   },
   {
@@ -1966,9 +1966,9 @@
     }
   },
   {
-    "context": "Workspace",
+    "context": "!ApplicationMenu && !(Terminal || KeybindEditorModal || editor_agent_diff || NotebookEditor || AgentFeedbackMessageEditor || ThreadHistory) && (VimControl || !Editor)",
     "bindings": {
-      "ctrl-shift-y": [
+      "space f": [
         "pane::DeploySearch",
         {
           "replace_enabled": true
@@ -2009,12 +2009,6 @@
     "context": "VimControl && !menu",
     "unbind": {
       "shift-l": "vim::WindowBottom"
-    }
-  },
-  {
-    "context": "CommitEditor > VimControl",
-    "bindings": {
-      "tab": "git_panel::FocusChanges"
     }
   },
   {
@@ -2562,7 +2556,7 @@
   {
     "context": "ProjectSearchBar",
     "bindings": {
-      "alt-r": "search::ToggleRegex"
+      "ctrl-r": "search::ToggleRegex"
     }
   },
   {
@@ -2574,7 +2568,7 @@
   {
     "context": "ProjectSearchView",
     "bindings": {
-      "alt-r": "search::ToggleRegex"
+      "ctrl-r": "search::ToggleRegex"
     }
   },
   {
@@ -2608,13 +2602,13 @@
     }
   },
   {
-    "context": "VimControl || !Editor",
+    "context": "VimControl && !menu",
     "bindings": {
       "ctrl-alt-shift-g": "git::AddToGitignore"
     }
   },
   {
-    "context": "VimControl || !Editor",
+    "context": "VimControl && !menu",
     "bindings": {
       "ctrl-alt-g": "git::Switch"
     }
@@ -2893,6 +2887,148 @@
     "context": "Editor",
     "unbind": {
       "alt-g m": "git::OpenModifiedFiles"
+    }
+  },
+  {
+    "context": "Editor && mode == full && vim_mode == visual",
+    "bindings": {
+      "ctrl-shift-y": "buffer_search::UseSelectionForFind"
+    }
+  },
+  {
+    "context": "(GitPanel && ChangesList && !GitBranchSelector) || CommitEditor > VimControl",
+    "bindings": {
+      "alt-f": "git::Fetch"
+    }
+  },
+  {
+    "context": "StashList || StashList > Picker > Editor",
+    "bindings": {
+      "ctrl-space": "stash_picker::ShowStashItem"
+    }
+  },
+  {
+    "context": "(GitPanel && ChangesList && !GitBranchSelector) || CommitEditor > VimControl",
+    "bindings": {
+      "space b b": "git::Branch"
+    }
+  },
+  {
+    "context": "CommitEditor > Editor && VimControl",
+    "bindings": {
+      "space shift-z": "git::ExpandCommitEditor"
+    }
+  },
+  {
+    "context": "CommitEditor > Editor && VimControl",
+    "bindings": {
+      "space z": "git::ToggleFillCommitEditor"
+    }
+  },
+  {
+    "context": "(GitPanel && ChangesList && !GitBranchSelector) || CommitEditor > VimControl",
+    "bindings": {
+      "space d": "git::Diff"
+    }
+  },
+  {
+    "context": "GitPanel",
+    "unbind": {
+      "ctrl-g d": "git::Diff"
+    }
+  },
+  {
+    "context": "VimControl && !menu",
+    "bindings": {
+      "space shift-r": "git::ReviewDiff"
+    }
+  },
+  {
+    "context": "Editor",
+    "unbind": {
+      "alt-g r": "git::ReviewDiff"
+    }
+  },
+  {
+    "context": "Pane",
+    "bindings": {
+      "ctrl-r": "search::ToggleRegex"
+    }
+  },
+  {
+    "context": "Pane",
+    "unbind": {
+      "alt-r": "search::ToggleRegex"
+    }
+  },
+  {
+    "context": "Pane",
+    "bindings": {
+      "alt-r": "search::ToggleReplace"
+    }
+  },
+  {
+    "context": "Pane",
+    "unbind": {
+      "ctrl-alt-shift-h": "search::ToggleReplace"
+    }
+  },
+  {
+    "context": "BufferSearchBar",
+    "bindings": {
+      "alt-s": "search::ToggleSelection"
+    }
+  },
+  {
+    "context": "BufferSearchBar",
+    "unbind": {
+      "ctrl-l": "search::ToggleSelection"
+    }
+  },
+  {
+    "context": "VimControl && !menu",
+    "bindings": {
+      "/": [
+        "vim::Search",
+        {
+          "regex": false
+        }
+      ]
+    }
+  },
+  {
+    "context": "VimControl && !menu",
+    "bindings": {
+      "?": [
+        "vim::Search",
+        {
+          "backwards": true,
+          "regex": false
+        }
+      ]
+    }
+  },
+  {
+    "context": "VimControl && !menu",
+    "bindings": {
+      "*": [
+        "vim::MoveToNext",
+        {
+          "regex": false
+        }
+      ]
+    }
+  },
+  {
+    "context": "vim_mode == visual",
+    "bindings": {
+      "#": [
+        "vim::MoveToPrevious",
+        {
+          "partial_word": true,
+          "regex": false
+        }
+      ]
     }
   }
 ]

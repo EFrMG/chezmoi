@@ -31,6 +31,9 @@ include "%L"
 # Compress JPG
 <Multi_key> <c> <i> : "ffmpeg -i INPUT.jpg -q-v 16 OUTPUT.jpg"
 
+# ImageMagick
+<Multi_key> <m> <p> : "magick mogrify -path . -resize 64x -quality 87 img.ext"
+
 # Typography
 <Multi_key> <space> <space> : "—"   # em dash
 <Multi_key> <minus> <minus> : "–"   # en dash
