@@ -3030,5 +3030,41 @@
         }
       ]
     }
+  },
+  {
+    "context": "SettingsWindow",
+    "bindings": {
+      "ctrl-q": "workspace::CloseWindow"
+    }
+  },
+  {
+    "context": "SettingsWindow",
+    "unbind": {
+      "ctrl-w": "workspace::CloseWindow"
+    }
+  },
+  {
+    "context": "RulesLibrary",
+    "bindings": {
+      "ctrl-q": "workspace::CloseWindow"
+    }
+  },
+  {
+    "context": "RulesLibrary",
+    "unbind": {
+      "ctrl-w": "workspace::CloseWindow"
+    }
+  },
+  {
+    "context": "Workspace",
+    "bindings": {
+      "ctrl-q": "workspace::CloseActiveDock"
+    }
+  },
+  {
+    "context": "Workspace",
+    "unbind": {
+      "ctrl-w": "workspace::CloseActiveDock"
+    }
   }
 ]
