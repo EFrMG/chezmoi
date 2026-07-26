@@ -130,3 +130,6 @@ alias nrp='next start'
 
 # Python3
 alias uvgrade='uv tool upgrade --all'
+
+# Cmake
+alias cmc='cmake -B build && cmake --build build --j8'

@@ -1754,17 +1754,6 @@
   },
   {
     "context": "(vim_mode == helix_normal || vim_mode == helix_select) && !menu",
-    "bindings": {
-      "/": [
-        "pane::DeploySearch",
-        {
-          "include_ignored": true
-        }
-      ]
-    }
-  },
-  {
-    "context": "(vim_mode == helix_normal || vim_mode == helix_select) && !menu",
     "unbind": {
       "space /": "pane::DeploySearch"
     }
@@ -2226,9 +2215,9 @@
     }
   },
   {
-    "context": "AcpThread",
+    "context": "AcpThread > VimControl",
     "bindings": {
-      "ctrl-shift-b": "agent::NewThread"
+      "space shift-a": "agent::NewThread"
     }
   },
   {
@@ -2336,9 +2325,9 @@
     }
   },
   {
-    "context": "VimControl",
+    "context": "VimControl && !menu",
     "bindings": {
-      "space r": "vim::ToggleRegistersView"
+      "space ctrl-r": "vim::ToggleRegistersView"
     }
   },
   {
@@ -2348,9 +2337,9 @@
     }
   },
   {
-    "context": "(GitPanel && ChangesList && !GitBranchSelector) || CommitEditor > VimControl",
+    "context": "!ApplicationMenu && !(Terminal || KeybindEditorModal || editor_agent_diff || NotebookEditor || AgentFeedbackMessageEditor || ThreadHistory) && (VimControl || !Editor)",
     "bindings": {
-      "space s d": "git::Diff"
+      "space r": "git::Diff"
     }
   },
   {
@@ -2692,7 +2681,7 @@
     }
   },
   {
-    "context": "Editor && !menu",
+    "context": "Editor",
     "bindings": {
       "ctrl-s": "workspace::Save"
     }
@@ -2878,7 +2867,7 @@
     }
   },
   {
-    "context": "Editor",
+    "context": "!ApplicationMenu && !(Terminal || KeybindEditorModal || editor_agent_diff || NotebookEditor || AgentFeedbackMessageEditor || ThreadHistory) && (VimControl || !Editor)",
     "bindings": {
       "alt-m": "git::OpenModifiedFiles"
     }
@@ -2922,13 +2911,7 @@
   {
     "context": "CommitEditor > Editor && VimControl",
     "bindings": {
-      "space z": "git::ToggleFillCommitEditor"
-    }
-  },
-  {
-    "context": "(GitPanel && ChangesList && !GitBranchSelector) || CommitEditor > VimControl",
-    "bindings": {
-      "space d": "git::Diff"
+      "space ctrl-z": "git::ToggleFillCommitEditor"
     }
   },
   {
@@ -2938,9 +2921,9 @@
     }
   },
   {
-    "context": "VimControl && !menu",
+    "context": "!ApplicationMenu && !(Terminal || KeybindEditorModal || editor_agent_diff || NotebookEditor || AgentFeedbackMessageEditor || ThreadHistory) && (VimControl || !Editor)",
     "bindings": {
-      "space shift-r": "git::ReviewDiff"
+      "space r": "git::ReviewDiff"
     }
   },
   {
@@ -3014,7 +2997,7 @@
       "*": [
         "vim::MoveToNext",
         {
-          "regex": false
+          "regex": true
         }
       ]
     }
@@ -3026,7 +3009,7 @@
         "vim::MoveToPrevious",
         {
           "partial_word": true,
-          "regex": false
+          "regex": true
         }
       ]
     }
@@ -3065,6 +3048,120 @@
     "context": "Workspace",
     "unbind": {
       "ctrl-w": "workspace::CloseActiveDock"
+    }
+  },
+  {
+    "context": "vim_mode == insert",
+    "bindings": {
+      "ctrl-i": "editor::ShowSignatureHelp"
+    }
+  },
+  {
+    "context": "vim_mode == insert",
+    "unbind": {
+      "ctrl-s": "editor::ShowSignatureHelp"
+    }
+  },
+  {
+    "context": "MessageEditor > Editor && VimControl",
+    "bindings": {
+      "space m": "agent::OpenActiveThreadAsMarkdown"
+    }
+  },
+  {
+    "context": "AcpThread && VimControl",
+    "bindings": {
+      "space shift-z": "agent::ExpandMessageEditor"
+    }
+  },
+  {
+    "context": "AcpThread",
+    "unbind": {
+      "alt-shift-escape": "agent::ExpandMessageEditor"
+    }
+  },
+  {
+    "context": "Editor && mode == full",
+    "bindings": {
+      "ctrl-<": "agent::AddSelectionToThread"
+    }
+  },
+  {
+    "context": "Editor && mode == full",
+    "unbind": {
+      "ctrl->": "agent::AddSelectionToThread"
+    }
+  },
+  {
+    "context": "AcpThread",
+    "bindings": {
+      "ctrl-<": "agent::AddSelectionToThread"
+    }
+  },
+  {
+    "context": "AcpThread",
+    "unbind": {
+      "ctrl->": "agent::AddSelectionToThread"
+    }
+  },
+  {
+    "context": "Terminal",
+    "bindings": {
+      "ctrl-<": "agent::AddSelectionToThread"
+    }
+  },
+  {
+    "context": "Terminal",
+    "unbind": {
+      "ctrl->": "agent::AddSelectionToThread"
+    }
+  },
+  {
+    "context": "AcpThread",
+    "bindings": {
+      "ctrl->": "agent::NewThread"
+    }
+  },
+  {
+    "context": "KeymapEditor",
+    "bindings": {
+      "alt-f": "keymap_editor::ToggleKeystrokeSearch"
+    }
+  },
+  {
+    "context": "KeymapEditor",
+    "unbind": {
+      "ctrl-alt-f": "keymap_editor::ToggleKeystrokeSearch"
+    }
+  },
+  {
+    "context": "!ApplicationMenu && !(Terminal || KeybindEditorModal || editor_agent_diff || NotebookEditor || AgentFeedbackMessageEditor || ThreadHistory) && (VimControl || !Editor)",
+    "bindings": {
+      "space b l": "pane::ReopenClosedItem"
+    }
+  },
+  {
+    "context": "!ApplicationMenu && !(Terminal || KeybindEditorModal || editor_agent_diff || NotebookEditor || AgentFeedbackMessageEditor || ThreadHistory) && (VimControl || !Editor)",
+    "bindings": {
+      "ctrl-shift-t": "pane::ReopenClosedItem"
+    }
+  },
+  {
+    "context": "(vim_mode == helix_normal || vim_mode == helix_select) && !menu",
+    "unbind": {
+      "space r": "editor::Rename"
+    }
+  },
+  {
+    "context": "!ApplicationMenu && !(Terminal || KeybindEditorModal || editor_agent_diff || NotebookEditor || AgentFeedbackMessageEditor || ThreadHistory) && (VimControl || !Editor)",
+    "bindings": {
+      "space b n": "workspace::NewFile"
+    }
+  },
+  {
+    "context": "!ApplicationMenu && !(Terminal || KeybindEditorModal || editor_agent_diff || NotebookEditor || AgentFeedbackMessageEditor || ThreadHistory) && (VimControl || !Editor)",
+    "bindings": {
+      "space shift-r": "git::OpenModifiedFiles"
     }
   }
 ]

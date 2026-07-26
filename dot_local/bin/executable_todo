@@ -72,7 +72,7 @@ todo_add_items() {
 
   while true; do
     local item
-    item=$(gum input --placeholder "New todo…" --width 60)
+    item=$(gum input --placeholder "New todo…" --width 90)
     [[ -z "$item" ]] && break
     echo "${indent}- [ ] $item" >>"$file"
     gum style --foreground="#999ca9" "  ✓ added: $item"
@@ -133,7 +133,7 @@ todo_add_sub_items() {
   gum style --foreground="#A6E3A1" --bold "Add sub-items under '$(todo_label "${raw_lines[$parent_idx]}")' (empty line to stop)"
   while true; do
     local item
-    item=$(gum input --placeholder "New sub-todo…" --width 56)
+    item=$(gum input --placeholder "New sub-todo…" --width 90)
 
     [[ -z "$item" ]] && break
 
@@ -433,7 +433,7 @@ todo_edit_item() {
   bullet_part="${bullet_part%%"${original_label}"*}"
 
   local new_label
-  new_label=$(gum input --placeholder "Edit item" --value "$original_label" --width 60)
+  new_label=$(gum input --placeholder "Edit item" --value "$original_label" --width 90)
 
   # User cancelled or entered empty string
   [[ -z "$new_label" ]] && return
