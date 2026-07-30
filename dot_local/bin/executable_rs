@@ -1,0 +1,47 @@
+#!/usr/bin/env bash
+
+# Interactive shell script runner using fzf.
+# Recursively finds and lists all .sh files from the current directory,
+# allowing the user to select and execute one.
+
+# Find all .sh files using fd if available, otherwise find
+if command -v fd >/dev/null 2>&1; then
+  files=$(fd -e sh --type f)
+else
+  # Fallback to standard find, ignoring common VCS and dependency directories
+  files=$(find . -type d \( -name .git -o -name .venv -o -name node_modules -o -name .cache -o -name .shadow \) -prune -o -type f -name "*.sh" -print)
+fi
+
+if [[ -z "$files" ]]; then
+  echo "No .sh files found in the current directory or its subdirectories."
+  exit 1
+fi
+
+selected=$(echo "$files" | fzf \
+  --prompt="Select script to run > " \
+  --layout=reverse \
+)
+
+# Exit if user cancelled fzf
+if [[ -z "$selected" ]]; then
+  exit 0
+fi
+
+# Ensure local paths are prefixed with ./ if they don't start with / or ./ or ../
+if [[ "$selected" != /* && "$selected" != ./* && "$selected" != ../* ]]; then
+  exec_path="./$selected"
+else
+  exec_path="$selected"
+fi
+
+# Print execution message
+echo -e "\033[1;34m=> Running:\033[0m $exec_path" "$@"
+echo
+
+# If it is executable, run it directly to respect its shebang;
+# otherwise, force bash execution
+if [[ -x "$exec_path" ]]; then
+  "$exec_path" "$@"
+else
+  bash "$exec_path" "$@"
+fi
