@@ -10,3 +10,5 @@ GEMINI.md
 DESIGN.md
 **/.antigravitycli/
 **/DOCS/
+
+**/.claude/settings.local.json

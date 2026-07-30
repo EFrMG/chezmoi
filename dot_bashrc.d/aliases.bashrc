@@ -13,7 +13,7 @@ alias cp='cp -i'
 alias chmod='chmod --preserve-root'
 
 # Terminal
-alias zurz='source ~/.bashrc'
+alias zurs='source ~/.bashrc'
 alias ma='batman'
 
 # File-system
@@ -76,6 +76,7 @@ alias py='python3'
 alias de='delta'
 
 alias co='copilot'
+alias ca='claude'
 alias ol='ollama'
 alias oll='ollama launch opencode'
 

@@ -608,12 +608,6 @@
   },
   {
     "context": "Editor && extension == md",
-    "bindings": {
-      "ctrl-m v": "markdown::OpenPreviewToTheSide"
-    }
-  },
-  {
-    "context": "Editor && extension == md",
     "unbind": {
       "ctrl-k v": "markdown::OpenPreviewToTheSide"
     }
@@ -2209,7 +2203,7 @@
     }
   },
   {
-    "context": "VimControl",
+    "context": "VimControl && !menu && Editor && extension == md",
     "bindings": {
       "ctrl-m shift-v": "markdown::OpenPreview"
     }
@@ -2923,7 +2917,7 @@
   {
     "context": "!ApplicationMenu && !(Terminal || KeybindEditorModal || editor_agent_diff || NotebookEditor || AgentFeedbackMessageEditor || ThreadHistory) && (VimControl || !Editor)",
     "bindings": {
-      "space r": "git::ReviewDiff"
+      "space alt-shift-r": "git::ReviewDiff"
     }
   },
   {
@@ -3162,6 +3156,78 @@
     "context": "!ApplicationMenu && !(Terminal || KeybindEditorModal || editor_agent_diff || NotebookEditor || AgentFeedbackMessageEditor || ThreadHistory) && (VimControl || !Editor)",
     "bindings": {
       "space shift-r": "git::OpenModifiedFiles"
+    }
+  },
+  {
+    "context": "!ApplicationMenu && !(Terminal || KeybindEditorModal || editor_agent_diff || NotebookEditor || AgentFeedbackMessageEditor || ThreadHistory) && (VimControl || !Editor)",
+    "bindings": {
+      "space ctrl-d": "diagnostics::Deploy"
+    }
+  },
+  {
+    "context": "VimControl && !menu && Editor && extension == md",
+    "bindings": {
+      "space b shift-m": "markdown::OpenPreviewToTheSide"
+    }
+  },
+  {
+    "context": "VimControl && !menu && Editor && extension == md",
+    "bindings": {
+      "space b m": "markdown::OpenPreview"
+    }
+  },
+  {
+    "context": "MarkdownPreview",
+    "bindings": {
+      "ctrl-j": "markdown::ScrollPageDown"
+    }
+  },
+  {
+    "context": "MarkdownPreview",
+    "unbind": {
+      "ctrl-d": "markdown::ScrollPageDown"
+    }
+  },
+  {
+    "context": "MarkdownPreview",
+    "bindings": {
+      "ctrl-k": "markdown::ScrollPageUp"
+    }
+  },
+  {
+    "context": "MarkdownPreview",
+    "unbind": {
+      "ctrl-u": "markdown::ScrollPageUp"
+    }
+  },
+  {
+    "context": "MarkdownPreview",
+    "bindings": {
+      "ctrl-u": "markdown::ScrollUpByItem"
+    }
+  },
+  {
+    "context": "MarkdownPreview",
+    "bindings": {
+      "ctrl-d": "markdown::ScrollDownByItem"
+    }
+  },
+  {
+    "context": "MarkdownPreview",
+    "bindings": {
+      "k": "markdown::ScrollUp"
+    }
+  },
+  {
+    "context": "MarkdownPreview",
+    "bindings": {
+      "j": "markdown::ScrollDown"
+    }
+  },
+  {
+    "context": "!ApplicationMenu && !(Terminal || KeybindEditorModal || editor_agent_diff || NotebookEditor || AgentFeedbackMessageEditor || ThreadHistory) && (VimControl || !Editor)",
+    "bindings": {
+      "space ctrl-shift-r": "agent::OpenAgentDiff"
     }
   }
 ]

@@ -25,7 +25,9 @@ selected_models=$(
       # Output as tab-separated Values
       [ .name, $size, .context_length, $expire_time ] | @tsv
     '
-  ) | column -t -s $'\t' | fzf -m --header-lines=1 --prompt="Stop Ollama Models > " | awk '{print $1}'
+  ) | column -t -s $'\t' | fzf -m \
+      --header-lines=1 --prompt="Stop Ollama Models > " \
+      --layout=reverse | awk '{print $1}'
 )
 
 if [[ -n "$selected_models" ]]; then
