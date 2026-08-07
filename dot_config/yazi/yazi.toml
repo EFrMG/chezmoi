@@ -31,4 +31,6 @@ prepend_rules = [
   { url = "*.py",   use = "edit" },
   { url = "*.js",   use = "edit" },
   { url = "*.go",   use = "edit" },
+  { url = "*.bash_history",   use = "edit" },
+  { url = "*.python_history",   use = "edit" },
 ]
