@@ -1,14 +1,17 @@
 **/node_modules/
 dist/
 .env
+.zed/
+
 note.md
 todo.md
 review.md
-.zed/
-AGENTS.md
-GEMINI.md
-DESIGN.md
-**/.antigravitycli/
 **/DOCS/
 
+AGENTS.md
+GEMINI.md
+CLAUDE.md
+DESIGN.md
+**/.antigravitycli/
 **/.claude/settings.local.json
+

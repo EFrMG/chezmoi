@@ -1666,9 +1666,9 @@
     }
   },
   {
-    "context": "VimControl",
+    "context": "!ApplicationMenu && !(Terminal || KeybindEditorModal || editor_agent_diff || NotebookEditor || AgentFeedbackMessageEditor || ThreadHistory) && (VimControl || !Editor)",
     "bindings": {
-      "space shift-g": "git_graph::Open"
+      "space ctrl-g": "git_graph::Open"
     }
   },
   {
@@ -3228,6 +3228,36 @@
     "context": "!ApplicationMenu && !(Terminal || KeybindEditorModal || editor_agent_diff || NotebookEditor || AgentFeedbackMessageEditor || ThreadHistory) && (VimControl || !Editor)",
     "bindings": {
       "space ctrl-shift-r": "agent::OpenAgentDiff"
+    }
+  },
+  {
+    "context": "(GitPanel && ChangesList && !GitBranchSelector) || CommitEditor > VimControl",
+    "bindings": {
+      "space v s": "git_panel::ViewStagedChanges"
+    }
+  },
+  {
+    "context": "(GitPanel && ChangesList && !GitBranchSelector) || CommitEditor > VimControl",
+    "bindings": {
+      "space v u": "git_panel::ViewUnstagedChanges"
+    }
+  },
+  {
+    "context": "!ApplicationMenu && !(Terminal || KeybindEditorModal || editor_agent_diff || NotebookEditor || AgentFeedbackMessageEditor || ThreadHistory) && (VimControl || !Editor)",
+    "bindings": {
+      "space v s": "git::ViewStagedChanges"
+    }
+  },
+  {
+    "context": "!ApplicationMenu && !(Terminal || KeybindEditorModal || editor_agent_diff || NotebookEditor || AgentFeedbackMessageEditor || ThreadHistory) && (VimControl || !Editor)",
+    "bindings": {
+      "space v u": "git::ViewUnstagedChanges"
+    }
+  },
+  {
+    "context": "!ApplicationMenu && !(Terminal || KeybindEditorModal || editor_agent_diff || NotebookEditor || AgentFeedbackMessageEditor || ThreadHistory) && (VimControl || !Editor)",
+    "bindings": {
+      "space shift-g": "git::ViewUncommittedChanges"
     }
   }
 ]

@@ -17,10 +17,10 @@
     "description": "Mobile query"
   },
 
-  "Debugging border": {
+  "Debugging outline": {
     "prefix": "debug",
-    "body": ["  * {", "    border: 1px solid red;", "  }", ""],
-    "description": "Debugging border"
+    "body": ["* {", "  outline: 1px solid red;", "}", ""],
+    "description": "Debugging outline"
   },
 
   "Full reset": {
