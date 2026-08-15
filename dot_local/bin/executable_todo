@@ -8,7 +8,7 @@ TODO_DIR="${TODO_DIR:-$HOME/.todos}"
 
 # Helper functions --.
 
-# You'll need nerd-icons too!
+# You'll need a nerd-icons font too!
 todo_requires() {
   if ! command -v gum &>/dev/null; then
     echo -e "error: 'gum' is not installed.\nInstall it with: pacman -S gum\n" >&2
@@ -17,11 +17,6 @@ todo_requires() {
 
   if ! command -v fd &>/dev/null; then
     echo -e "error: 'fd' is not installed.\nInstall it with: pacman -S fd\n" >&2
-    return 1
-  fi
-
-  if ! command -v rg &>/dev/null; then
-    echo -e "error: 'rg' is not installed.\nInstall it with: pacman -S ripgrep\n" >&2
     return 1
   fi
 }
@@ -41,27 +36,175 @@ todo_pick_file() {
   if [[ "$choice" == "$new_opt" ]]; then
     choice=$(gum input --placeholder "List name (e.g. work, shopping)")
     [[ -z "$choice" ]] && return 1
+
+    if [[ "$choice" == */* ]]; then
+      gum style --foreground="#F38BA8" "List names can't contain '/'."
+      sleep 1
+      return 1
+    fi
   fi
 
-  echo "$TODO_DIR/${choice}.md"
+  printf '%s\n' "$TODO_DIR/${choice}.md"
 }
 
+# One pattern for every item line
+# Captured as: indent, marker (including the space after it), state character, label
+# Everything that reads or rewrites a line goes through it, so a hand-written "* [X] foo" is understood the same way everywhere and keept as is when written back
+TODO_ITEM_RE='^([[:space:]]*)([-*+][[:space:]]\[(.?)\][[:space:]])(.*)$'
+
+todo_is_item()    { [[ "$1" =~ $TODO_ITEM_RE ]]; }
+
+todo_is_checked() { [[ "$1" =~ $TODO_ITEM_RE && "${BASH_REMATCH[3]}" == [xX] ]]; }
+
+todo_is_blank()   { [[ -z "${1//[[:space:]]/}" ]]; }
+
 todo_level() {
-  local spaces="${1%%[! ]*}"
-  echo $(( ${#spaces} / 2 ))
+  local ws="${1%%[![:space:]]*}"
+  ws=${ws//$'\t'/  } # a tab indents one level, like two spaces
+
+  printf '%s\n' $(( ${#ws} / 2 ))
 }
 
 todo_label() {
-  local line="${1#"${1%%[! ]*}"}"  # strip leading spaces
-  line="${line#"- [ ] "}"
-  line="${line#"- [x] "}"
-
-  echo "$line"
+  if [[ "$1" =~ $TODO_ITEM_RE ]]; then
+    printf '%s\n' "${BASH_REMATCH[4]}"
+  else
+    printf '%s\n' "$1"
+  fi
 }
 
-todo_is_item()    { [[ "$1" =~ ^[[:space:]]*-\ \[.?\]\  ]]; }
+# Everything before the label, e.g. "  - [x] "
+todo_prefix() {
+  [[ "$1" =~ $TODO_ITEM_RE ]] && printf '%s\n' "${BASH_REMATCH[1]}${BASH_REMATCH[2]}"
+}
 
-todo_is_checked() { [[ "$1" =~ ^[[:space:]]*-\ \[x\]\  ]]; }
+# Rewrite an item with a new state character, leaving its indent, marker and label exactly as they were
+todo_set_checked() {
+  local line="$1" state="$2"
+
+  if [[ ! "$line" =~ $TODO_ITEM_RE ]]; then
+    printf '%s\n' "$line"
+    return
+  fi
+
+  local indent="${BASH_REMATCH[1]}" marker="${BASH_REMATCH[2]}" label="${BASH_REMATCH[4]}"
+
+  printf '%s\n' "${indent}${marker:0:2}[${state}]${marker: -1}${label}"
+}
+
+# Swap a rebuilt list into place
+# mktemp files are 0600, so mode is carried over, and a symlinked list should be written through, not replaced
+todo_replace_file() {
+  local tmp="$1" file="$2"
+
+  [[ -L "$file" ]] && file=$(readlink -f "$file")
+  [[ -e "$file" ]] && chmod --reference="$file" "$tmp" 2>/dev/null
+
+  mv "$tmp" "$file"
+}
+
+# Menu stand-in for a blank line in the file
+# A single space renders as an empty row in gum, but is still non-empty, so it can be told apart from the empty string gum returns when the user cancels.
+TODO_MENU_SEP=" "
+
+todo_bullet() {
+  local line="$1" level="$2"
+
+  if todo_is_checked "$line"; then
+    local bullet="󰄵"
+    (( level > 0 )) && bullet="󰄴"
+    (( level > 1 )) && bullet="󰘾"
+  else
+    local bullet="󰄱"
+    (( level > 0 )) && bullet="󰄰"
+    (( level > 1 )) && bullet="󰘼"
+  fi
+
+  printf '%s\n' "$bullet"
+}
+
+# Build the entries for an item picker: every todo item, plus the headings and blank separators around them
+# The grouping the user sees in the list is the grouping they see in the menu; those context rows are still selectable (gum has no inert rows), so they get index -1 and callers must ignore them
+# usage: todo_build_menu <raw_lines_var> <display_var> <indices_var> [bullets]
+todo_build_menu() {
+  local -n _raw="$1" _display="$2" _indices="$3"
+  local bullets="${4:-1}"
+
+  _display=()
+  _indices=()
+
+  local -A seen=()
+  local last_kind="" i
+
+  for i in "${!_raw[@]}"; do
+    local line="${_raw[$i]}"
+    local row idx
+
+    if todo_is_item "$line"; then
+      local level pad=""
+      level=$(todo_level "$line")
+
+      for ((j = 0; j < level; j++)); do pad+="  "; done
+
+      local label
+      label=$(todo_label "$line")
+
+      if [[ "$bullets" -eq 1 ]]; then
+        row="${pad}$(todo_bullet "$line" "$level") ${label}"
+      else
+        row="${pad}${label}"
+      fi
+
+      idx="$i"
+      last_kind="item"
+    elif todo_is_blank "$line"; then
+      # Never lead with a separator and collapse runs of blank lines
+      [[ -z "$last_kind" || "$last_kind" == "separator" ]] && continue
+
+      _display+=("$TODO_MENU_SEP")
+      _indices+=(-1)
+      last_kind="separator"
+      continue
+    else
+      # Heading (or any other prose line), kept as-is for user orientation
+      row="$line"
+      idx=-1
+      last_kind="heading"
+    fi
+
+    # A row is only ever identified by the text gum hands back, so two items reading the same have to be told apart on screen
+    # We add "… (n)" to the item's name, starting from 2
+    if [[ -n "${seen["$row"]:-}" ]]; then
+      local copy=$(( seen["$row"] + 1 ))
+
+      while [[ -n "${seen["$row ($copy)"]:-}" ]]; do (( copy++ )); done
+
+      seen["$row"]="$copy"
+      row="$row ($copy)"
+    fi
+
+    seen["$row"]=1
+    _display+=("$row")
+    _indices+=("$idx")
+  done
+
+  # Drop context rows that trail the last item: they lead nowhere
+  while (( ${#_indices[@]} > 0 )) && (( ${_indices[-1]} < 0 )); do
+    unset '_display[-1]' '_indices[-1]'
+  done
+}
+
+# True when a menu built by todo_build_menu holds at least one real item
+todo_menu_has_items() {
+  local -n _idx="$1"
+  local i
+
+  for i in "${_idx[@]}"; do
+    (( i >= 0 )) && return 0
+  done
+
+  return 1
+}
 
 todo_add_items() {
   local file="$1"
@@ -70,11 +213,20 @@ todo_add_items() {
 
   gum style --foreground="#A6E3A1" --bold "$prompt"
 
+  local first=1
+
   while true; do
     local item
     item=$(gum input --placeholder "New todo…" --width 90)
     [[ -z "$item" ]] && break
-    echo "${indent}- [ ] $item" >>"$file"
+
+    # A hand-edited file may not end in a newline; appending to it as-is would glue the first new item onto the last existing one
+    if (( first )); then
+      [[ -s "$file" && -n "$(tail -c 1 "$file")" ]] && printf '\n' >>"$file"
+      first=0
+    fi
+
+    printf '%s\n' "${indent}- [ ] $item" >>"$file"
     gum style --foreground="#999ca9" "  ✓ added: $item"
   done
 }
@@ -86,20 +238,9 @@ todo_add_sub_items() {
 
   # Collect all items (not just top-level) as potential parents
   local -a parent_labels parent_indices
+  todo_build_menu raw_lines parent_labels parent_indices 0
 
-  for i in "${!raw_lines[@]}"; do
-    if todo_is_item "${raw_lines[$i]}"; then
-      local level pad=""
-      level=$(todo_level "${raw_lines[$i]}")
-
-      for ((j = 0; j < level; j++)); do pad+="  "; done
-
-      parent_labels+=("${pad}$(todo_label "${raw_lines[$i]}")")
-      parent_indices+=("$i")
-    fi
-  done
-
-  if [[ ${#parent_labels[@]} -eq 0 ]]; then
+  if ! todo_menu_has_items parent_indices; then
     gum style --foreground="#F38BA8" "No items to nest under."
     sleep 1
     return
@@ -110,11 +251,11 @@ todo_add_sub_items() {
     gum choose --header "Nest under parent:")
   [[ -z "$parent_label" ]] && return
 
-  # Resolve chosen parent to a raw_lines index
+  # Resolve chosen parent to a raw_lines index (a separator resolves to none)
   local parent_idx=-1
 
   for i in "${!parent_labels[@]}"; do
-    if [[ "${parent_labels[$i]}" == "$parent_label" ]]; then
+    if (( ${parent_indices[$i]} >= 0 )) && [[ "${parent_labels[$i]}" == "$parent_label" ]]; then
       parent_idx="${parent_indices[$i]}"
       break
     fi
@@ -156,17 +297,24 @@ todo_add_sub_items() {
     fi
   done
 
+  # Rewind past anything that isn't an item (blank separators, headings) so the new sub-items land right after the parent's last child, rather than on the far side of the blank line that closes the group
+  while (( insert_at > parent_idx + 1 )) && ! todo_is_item "${raw_lines[$((insert_at - 1))]}"; do
+    (( insert_at-- ))
+  done
+
   # Rebuild file with new items inserted at the right position
   local tmp
   tmp=$(mktemp)
 
-  for ((i = 0; i < insert_at; i++)); do echo "${raw_lines[$i]}" >>"$tmp"; done
+  {
+    for ((i = 0; i < insert_at; i++)); do printf '%s\n' "${raw_lines[$i]}"; done
 
-  for item in "${new_items[@]}"; do echo "${child_indent}- [ ] ${item}" >>"$tmp"; done
+    for item in "${new_items[@]}"; do printf '%s\n' "${child_indent}- [ ] ${item}"; done
 
-  for ((i = insert_at; i < n; i++)); do echo "${raw_lines[$i]}" >>"$tmp"; done
+    for ((i = insert_at; i < n; i++)); do printf '%s\n' "${raw_lines[$i]}"; done
+  } >"$tmp"
 
-  mv "$tmp" "$file"
+  todo_replace_file "$tmp" "$file"
 }
 
 todo_toggle_items() {
@@ -176,36 +324,11 @@ todo_toggle_items() {
   local -a raw_lines
   mapfile -t raw_lines <"$file"
 
-  # Only track actual todo items, with their file line index
+  # Track actual todo items with their file line index, plus separators
   local -a item_display item_indices
-  for i in "${!raw_lines[@]}"; do
-    local line="${raw_lines[$i]}"
+  todo_build_menu raw_lines item_display item_indices
 
-    if todo_is_item "$line"; then
-      local level pad=""
-      level=$(todo_level "$line")
-
-      for ((j = 0; j < level; j++)); do pad+="  "; done
-
-      local label
-      label=$(todo_label "$line")
-
-      if todo_is_checked "$line"; then
-        local bullet="󰄵"
-        (( level > 0 )) && bullet="󰄴"
-        (( level > 1 )) && bullet="󰘾"
-      else
-        local bullet="󰄱"
-        (( level > 0 )) && bullet="󰄰"
-        (( level > 1 )) && bullet="󰘼"
-      fi
-
-      item_display+=("${pad}${bullet} ${label}")
-      item_indices+=("$i")
-    fi
-  done
-
-  [[ ${#item_display[@]} -eq 0 ]] && gum style --foreground="#F38BA8" "No items yet." && return
+  todo_menu_has_items item_indices || { gum style --foreground="#F38BA8" "No items yet."; return; }
 
   local chosen
   chosen=$(printf '%s\n' "${item_display[@]}" |
@@ -215,64 +338,61 @@ todo_toggle_items() {
 
   [[ -z "$chosen" ]] && return
 
-  # Mark selected using bash string comparison to avoid rg encoding issues
+  # Match on the display text gum hands back (todo_build_menu keeps it unique)
   local n=${#raw_lines[@]}
-  local -a selected
+  # picked = the user's own choices
+  # target = the state each line ends up in
+  local -a picked target
 
-  for i in "${!raw_lines[@]}"; do selected[i]=0; done
+  for i in "${!raw_lines[@]}"; do picked[i]=0; target[i]=-1; done
 
   for j in "${!item_display[@]}"; do
-    local dl="${item_display[$j]}"
+    local idx="${item_indices[$j]}"
 
-    if [[ $'\n'"$chosen"$'\n' == *$'\n'"$dl"$'\n'* ]]; then
-      selected[${item_indices[$j]}]=1
+    (( idx < 0 )) && continue # separator or heading
+
+    if [[ $'\n'"$chosen"$'\n' == *$'\n'"${item_display[$j]}"$'\n'* ]]; then
+      picked[idx]=1
+      todo_is_checked "${raw_lines[$idx]}" && target[idx]=0 || target[idx]=1
     fi
   done
 
-  # Cascade selection to children of any selected parent
+  # Children follow the state their parent was just given
   for j in "${!item_indices[@]}"; do
     local i="${item_indices[$j]}"
 
-    if [[ "${selected[$i]}" -eq 1 ]]; then
-      local parent_level
-      parent_level=$(todo_level "${raw_lines[$i]}")
+    (( i < 0 )) && continue # separator or heading
+    (( picked[i] == 1 )) || continue
 
-      for ((k = i + 1; k < n; k++)); do
-        if todo_is_item "${raw_lines[$k]}"; then
-          local child_level
-          child_level=$(todo_level "${raw_lines[$k]}")
+    local parent_level
+    parent_level=$(todo_level "${raw_lines[$i]}")
 
-          if (( child_level > parent_level )); then
-            selected[k]=1
-          else
-            break
-          fi
-        fi
-      done
-    fi
+    for ((k = i + 1; k < n; k++)); do
+      todo_is_item "${raw_lines[$k]}" || continue
+
+      local child_level
+      child_level=$(todo_level "${raw_lines[$k]}")
+
+      (( child_level > parent_level )) || break
+
+      # An explicit pick of its own wins over the parent's cascade
+      (( picked[k] == 1 )) || target[k]="${target[$i]}"
+    done
   done
 
   # Write updated file
   local tmp
   tmp=$(mktemp)
+
   for i in "${!raw_lines[@]}"; do
-    local line="${raw_lines[$i]}"
-    if [[ "${selected[$i]}" -eq 1 ]] && todo_is_item "$line"; then
-      local spaces="${line%%[! ]*}"
+    case "${target[$i]}" in
+    1) todo_set_checked "${raw_lines[$i]}" "x" ;;
+    0) todo_set_checked "${raw_lines[$i]}" " " ;;
+    *) printf '%s\n' "${raw_lines[$i]}" ;;
+    esac
+  done >"$tmp"
 
-      local label
-      label=$(todo_label "$line")
-
-      if todo_is_checked "$line"; then
-        echo "${spaces}- [ ] ${label}" >>"$tmp"
-      else
-        echo "${spaces}- [x] ${label}" >>"$tmp"
-      fi
-    else
-      echo "$line" >>"$tmp"
-    fi
-  done
-  mv "$tmp" "$file"
+  todo_replace_file "$tmp" "$file"
 }
 
 todo_show() {
@@ -307,21 +427,17 @@ todo_show() {
       local label
       label=$(todo_label "$line")
 
+      local bullet
+      bullet=$(todo_bullet "$line" "$level")
+
       if todo_is_checked "$line"; then
-        local bullet="󰄵"
-        (( level > 0 )) && bullet="󰄴"
-        (( level > 1 )) && bullet="󰘾"
-
-        gum style --foreground="#999ca9" " ${pad}${bullet} ${label}"
+        gum style --foreground="#999ca9" -- " ${pad}${bullet} ${label}"
       else
-        local bullet="󰄱"
-        (( level > 0 )) && bullet="󰄰"
-        (( level > 1 )) && bullet="󰘼"
-
-        gum style --foreground="#CDD6F4" " ${pad}${bullet} ${label}"
+        gum style --foreground="#CDD6F4" -- " ${pad}${bullet} ${label}"
       fi
     else
-      gum style --foreground="#89DCEB" --bold "$line"
+      # -- so a markdown rule ("---") isn't read as a flag!
+      gum style --foreground="#89DCEB" --bold -- "$line"
     fi
   done <"$file"
 
@@ -329,8 +445,7 @@ todo_show() {
 }
 
 todo_clear_completed() {
-  local tmp
-  tmp=$(mktemp)
+  local file="$1"
 
   local -a raw_lines
   mapfile -t raw_lines <"$file"
@@ -340,11 +455,14 @@ todo_clear_completed() {
   local -a skip
   for i in "${!raw_lines[@]}"; do skip[i]=0; done
 
+  local removed=0
+
   for i in "${!raw_lines[@]}"; do
     local line="${raw_lines[$i]}"
 
     if todo_is_checked "$line"; then
       skip[i]=1
+      (( removed++ ))
       # Also skip all children, regardless of their state
       local parent_level
       parent_level=$(todo_level "$line")
@@ -358,10 +476,35 @@ todo_clear_completed() {
     fi
   done
 
+  if (( removed == 0 )); then
+    gum style --foreground="#999ca9" "Nothing completed to clear."
+    gum spin --title "…" sleep 0.5
+    return
+  fi
+
+  local tmp
+  tmp=$(mktemp)
+
+  # Removing a block tends to strand the blank line that used to separate it
+  # The surviving lines are written back with blank runs collapsed
+  local pending_blank=0 wrote=0
+
   for i in "${!raw_lines[@]}"; do
-    [[ "${skip[$i]}" -eq 0 ]] && echo "${raw_lines[$i]}" >>"$tmp"
-  done
-  mv "$tmp" "$file"
+    [[ "${skip[$i]}" -eq 1 ]] && continue
+
+    if todo_is_blank "${raw_lines[$i]}"; then
+      (( wrote == 1 )) && pending_blank=1
+      continue
+    fi
+
+    (( pending_blank == 1 )) && printf '\n'
+    pending_blank=0
+    wrote=1
+
+    printf '%s\n' "${raw_lines[$i]}"
+  done >"$tmp"
+
+  todo_replace_file "$tmp" "$file"
   gum style --foreground="#A6E3A1" "Cleared completed items."
   gum spin --title "Removing…" sleep 0.5
 }
@@ -375,39 +518,9 @@ todo_edit_item() {
   mapfile -t raw_lines <"$file"
 
   local -a item_display item_indices
+  todo_build_menu raw_lines item_display item_indices
 
-  for i in "${!raw_lines[@]}"; do
-    local line="${raw_lines[$i]}"
-
-    if todo_is_item "$line"; then
-      local level pad=""
-
-      level=$(todo_level "$line")
-
-      for ((j = 0; j < level; j++)); do pad+="  "; done
-
-      local label
-
-      label=$(todo_label "$line")
-
-      if todo_is_checked "$line"; then
-        local bullet="󰄵"
-
-        (( level > 0 )) && bullet="󰄴"
-        (( level > 1 )) && bullet="󰘾"
-      else
-        local bullet="󰄱"
-
-        (( level > 0 )) && bullet="󰄰"
-        (( level > 1 )) && bullet="󰘼"
-      fi
-
-      item_display+=("${pad}${bullet} ${label}")
-      item_indices+=("$i")
-    fi
-  done
-
-  [[ ${#item_display[@]} -eq 0 ]] && gum style --foreground="#F38BA8" "No items to edit yet." && return
+  todo_menu_has_items item_indices || { gum style --foreground="#F38BA8" "No items to edit yet."; return; }
 
   local chosen_display
   chosen_display=$(printf '%s\n' "${item_display[@]}" |
@@ -415,9 +528,10 @@ todo_edit_item() {
 
   [[ -z "$chosen_display" ]] && return
 
+  # A separator resolves to no item, which just backs out
   local chosen_idx=-1
   for i in "${!item_display[@]}"; do
-    if [[ "${item_display[$i]}" == "$chosen_display" ]]; then
+    if (( ${item_indices[$i]} >= 0 )) && [[ "${item_display[$i]}" == "$chosen_display" ]]; then
       chosen_idx="${item_indices[$i]}"
       break
     fi
@@ -426,11 +540,9 @@ todo_edit_item() {
   [[ $chosen_idx -lt 0 ]] && return
 
   local original_line="${raw_lines[$chosen_idx]}"
-  local original_label
+  local original_label prefix
   original_label=$(todo_label "$original_line")
-  local spaces="${original_line%%[! ]*}"
-  local bullet_part="${original_line:$((${#spaces})):${#original_line}}" # e.g., "- [ ] " or "- [x] "
-  bullet_part="${bullet_part%%"${original_label}"*}"
+  prefix=$(todo_prefix "$original_line") # indent + "- [ ] " / "- [x] "
 
   local new_label
   new_label=$(gum input --placeholder "Edit item" --value "$original_label" --width 90)
@@ -439,18 +551,14 @@ todo_edit_item() {
   [[ -z "$new_label" ]] && return
 
   if [[ "$new_label" != "$original_label" ]]; then
-    local new_line="${spaces}${bullet_part}${new_label}"
-
-    raw_lines[chosen_idx]="$new_line"
+    raw_lines[chosen_idx]="${prefix}${new_label}"
 
     local tmp
     tmp=$(mktemp)
 
-    for line in "${raw_lines[@]}"; do
-      echo "$line" >>"$tmp"
-    done
+    printf '%s\n' "${raw_lines[@]}" >"$tmp"
 
-    mv "$tmp" "$file"
+    todo_replace_file "$tmp" "$file"
     # No message
   else
     gum spin --title "No changes made." --spinner="jump" sleep 1.5
@@ -490,7 +598,7 @@ todo_action_menu() {
       todo_edit_item "$file"
       ;;
     "Clear completed")
-      todo_clear_completed
+      todo_clear_completed "$file"
       ;;
     "Delete list")
       if gum confirm "Delete '$name' permanently?"; then
@@ -522,7 +630,7 @@ todo() {
   --help | -h)
     gum style --border rounded --padding "1 3" --border-foreground="#89B4FA" \
       "$(
-        cat <<'EOF'
+        cat <<EOF
 todo [name|--list|--help]
 
   todo                open / create default list in current directory
@@ -531,7 +639,7 @@ todo [name|--list|--help]
   todo --help -h      show this help
 
 Default lists are stored in the current directory.
-Named lists are stored as markdown in $TODO_DIR (~/.todos/).
+Named lists are stored as markdown in $TODO_DIR.
 EOF
       )"
     return 0
@@ -543,11 +651,19 @@ EOF
     file="./todo.md"
     ;;
   *)
+    if [[ "$1" == */* ]]; then
+      echo "error: list names can't contain '/'" >&2
+      return 1
+    fi
+
     file="$TODO_DIR/${1}.md"
     ;;
   esac
 
-  touch "$file"
+  if ! touch "$file"; then
+    echo "error: cannot write to '$file'" >&2
+    return 1
+  fi
 
   # If file is brand new / empty, directly add items
   if [[ ! -s "$file" ]]; then
