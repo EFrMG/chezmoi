@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Automatically start tmux
+# Start tmux
 # if command -v tmux &>/dev/null && [ -z "$TMUX" ]; then
   tmux attach -t tmux 2>/dev/null || tmux new -s tmux
 # fi

@@ -74,7 +74,7 @@ unexif() {
 # Fzf search Omarchy commands + bat
 omaf() {
   local selected
-  selected=$(fd -t f -d 1 . "$OMARCHY_PATH/bin" | xargs basename -a | sed "s/^omarchy-//" | fzf -m \
+  selected=$(fd -t f -d 1 . "/usr/bin" | xargs basename -a | sed "s/^omarchy-//" | fzf -m \
     --preview "bat --force-colorization --language=bash $OMARCHY_PATH/bin/omarchy-{}" \
     --bind "alt-p:toggle-preview" \
     --bind "alt-d:preview-half-page-down,alt-u:preview-half-page-up" \

@@ -51,3 +51,9 @@
 	signingkey = 0CEC52395D9D1B46
 [gpg]
 	format = openpgp
+[credential "https://github.com"]
+	helper = 
+	helper = !/home/francisco/.local/share/mise/installs/gh/2.97.0/gh_2.97.0_linux_amd64/bin/gh auth git-credential
+[credential "https://gist.github.com"]
+	helper = 
+	helper = !/home/francisco/.local/share/mise/installs/gh/2.97.0/gh_2.97.0_linux_amd64/bin/gh auth git-credential
