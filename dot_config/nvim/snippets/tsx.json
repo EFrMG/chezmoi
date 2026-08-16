@@ -1,0 +1,297 @@
+{
+  "Functional Component": {
+    "prefix": "rfc",
+    "description": "React functional component",
+    "body": [
+      "interface ${1:${TM_FILENAME_BASE}}Props {",
+      "  $2",
+      "}",
+      "",
+      "export default function ${1:${TM_FILENAME_BASE}}({ $3 }: ${1:${TM_FILENAME_BASE}}Props) {",
+      "  return (",
+      "    <div className=\"$4\">",
+      "      $0",
+      "    </div>",
+      "  );",
+      "}"
+    ]
+  },
+
+  "Functional Component (no props)": {
+    "prefix": "rfcn",
+    "description": "React functional component with no props",
+    "body": [
+      "export default function ${1:${TM_FILENAME_BASE}}() {",
+      "  return (",
+      "    <div className=\"$2\">",
+      "      $0",
+      "    </div>",
+      "  );",
+      "}"
+    ]
+  },
+
+  "Forwarded Ref Component": {
+    "prefix": "rfcref",
+    "description": "React component with forwardRef",
+    "body": [
+      "import { forwardRef } from 'react';",
+      "",
+      "interface ${1:Component}Props {",
+      "  $2",
+      "}",
+      "",
+      "const ${1:Component} = forwardRef<HTML${3:Div}Element, ${1:Component}Props>(",
+      "  ({ $4 }, ref) => {",
+      "    return (",
+      "      <div ref={ref} className=\"$5\">",
+      "        $0",
+      "      </div>",
+      "    );",
+      "  }",
+      ");",
+      "",
+      "${1:Component}.displayName = '${1:Component}';",
+      "export default ${1:Component};"
+    ]
+  },
+
+  "useState": {
+    "prefix": "us",
+    "description": "useState hook",
+    "body": "const [${1:state}, set${2:State}] = useState<${3:Type}>(${4:initialValue});"
+  },
+
+  "useEffect": {
+    "prefix": "ue",
+    "description": "useEffect hook",
+    "body": [
+      "useEffect(() => {",
+      "  $1",
+      "  return () => {",
+      "    $2",
+      "  };",
+      "}, [$3]);"
+    ]
+  },
+
+  "useEffect (no cleanup)": {
+    "prefix": "uenc",
+    "description": "useEffect without cleanup",
+    "body": ["useEffect(() => {", "  $1", "}, [$2]);"]
+  },
+
+  "useRef": {
+    "prefix": "ur",
+    "description": "useRef hook",
+    "body": "const ${1:ref} = useRef<${2:HTMLDivElement}>(${3:null});"
+  },
+
+  "useCallback": {
+    "prefix": "ucb",
+    "description": "useCallback hook",
+    "body": ["const ${1:handler} = useCallback(($2) => {", "  $3", "}, [$4]);"]
+  },
+
+  "useMemo": {
+    "prefix": "um",
+    "description": "useMemo hook",
+    "body": ["const ${1:value} = useMemo(() => {", "  return $2;", "}, [$3]);"]
+  },
+
+  "useContext": {
+    "prefix": "uc",
+    "description": "useContext hook",
+    "body": "const ${1:value} = useContext(${2:Context});"
+  },
+
+  "Custom Hook": {
+    "prefix": "hook",
+    "description": "Custom React hook scaffold",
+    "body": [
+      "import { useState, useEffect } from 'react';",
+      "",
+      "interface Use${1:Hook}Options {",
+      "  $2",
+      "}",
+      "",
+      "export function use${1:Hook}({ $3 }: Use${1:Hook}Options = {}) {",
+      "  const [${4:state}, set${5:State}] = useState<${6:Type}>(${7:null});",
+      "",
+      "  useEffect(() => {",
+      "    $7",
+      "  }, [$8]);",
+      "",
+      "  return { ${4:state} };",
+      "}"
+    ]
+  },
+
+  "Context + Provider": {
+    "prefix": "rctx",
+    "description": "React context with typed provider",
+    "body": [
+      "import { createContext, useContext, useState } from 'react';",
+      "",
+      "interface ${1:Feature}ContextValue {",
+      "  $2",
+      "}",
+      "",
+      "const ${1:Feature}Context = createContext<${1:Feature}ContextValue | null>(null);",
+      "",
+      "export function ${1:Feature}Provider({ children }: { children: React.ReactNode }) {",
+      "  $3",
+      "  return (",
+      "    <${1:Feature}Context.Provider value={{ $4 }}>",
+      "      {children}",
+      "    </${1:Feature}Context.Provider>",
+      "  );",
+      "}",
+      "",
+      "export function use${1:Feature}() {",
+      "  const ctx = useContext(${1:Feature}Context);",
+      "  if (!ctx) throw new Error('use${1:Feature} must be used within ${1:Feature}Provider');",
+      "  return ctx;",
+      "}"
+    ]
+  },
+
+  "Button": {
+    "prefix": "rbtn",
+    "description": "Typed button component with Tailwind variants",
+    "body": [
+      "type Variant = 'primary' | 'secondary' | 'ghost' | 'destructive';",
+      "",
+      "interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {",
+      "  variant?: Variant;",
+      "  loading?: boolean;",
+      "}",
+      "",
+      "const variants: Record<Variant, string> = {",
+      "  primary:     'bg-blue-600 text-white hover:bg-blue-700',",
+      "  secondary:   'bg-gray-100 text-gray-900 hover:bg-gray-200',",
+      "  ghost:       'text-gray-600 hover:bg-gray-100',",
+      "  destructive: 'bg-red-600 text-white hover:bg-red-700',",
+      "};",
+      "",
+      "export function Button({ variant = 'primary', loading, children, className, disabled, ...props }: ButtonProps) {",
+      "  return (",
+      "    <button",
+      "      className={`inline-flex items-center justify-center rounded-md px-4 py-2 text-sm font-medium transition-colors disabled:opacity-50 disabled:pointer-events-none \\${variants[variant]} \\${className ?? ''}`}",
+      "      disabled={disabled || loading}",
+      "      {...props}",
+      "    >",
+      "      {loading ? <span className=\"mr-2 h-4 w-4 animate-spin rounded-full border-2 border-current border-t-transparent\" /> : null}",
+      "      {children}",
+      "    </button>",
+      "  );",
+      "}"
+    ]
+  },
+
+  "Input": {
+    "prefix": "rinput",
+    "description": "Typed input component with label and error",
+    "body": [
+      "interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {",
+      "  label?: string;",
+      "  error?: string;",
+      "}",
+      "",
+      "export function Input({ label, error, id, className, ...props }: InputProps) {",
+      "  return (",
+      "    <div className=\"flex flex-col gap-1\">",
+      "      {label && <label htmlFor={id} className=\"text-sm font-medium text-gray-700\">{label}</label>}",
+      "      <input",
+      "        id={id}",
+      "        className={`rounded-md border px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-blue-500 \\${error ? 'border-red-500' : 'border-gray-300'} \\${className ?? ''}`}",
+      "        {...props}",
+      "      />",
+      "      {error && <p className=\"text-xs text-red-500\">{error}</p>}",
+      "    </div>",
+      "  );",
+      "}"
+    ]
+  },
+
+  "cn utility import": {
+    "prefix": "cn",
+    "description": "clsx + tailwind-merge cn() helper",
+    "body": [
+      "import { clsx, type ClassValue } from 'clsx';",
+      "import { twMerge } from 'tailwind-merge';",
+      "",
+      "export function cn(...inputs: ClassValue[]) {",
+      "  return twMerge(clsx(inputs));",
+      "}"
+    ]
+  },
+
+  "Async data hook": {
+    "prefix": "usedata",
+    "description": "Generic async data fetching hook",
+    "body": [
+      "function use${1:Data}<T>(fetcher: () => Promise<T>) {",
+      "  const [data, setData] = useState<T | null>(null);",
+      "  const [loading, setLoading] = useState(true);",
+      "  const [error, setError] = useState<Error | null>(null);",
+      "",
+      "  useEffect(() => {",
+      "    let cancelled = false;",
+      "    setLoading(true);",
+      "    fetcher()",
+      "      .then((d) => { if (!cancelled) setData(d); })",
+      "      .catch((e) => { if (!cancelled) setError(e); })",
+      "      .finally(() => { if (!cancelled) setLoading(false); });",
+      "    return () => { cancelled = true; };",
+      "  }, []);",
+      "",
+      "  return { data, loading, error };",
+      "}"
+    ]
+  },
+
+  "Flex row center": {
+    "prefix": "twrow",
+    "description": "Tailwind flex row centered",
+    "body": "<div className=\"flex items-center gap-${1:2}\">$0</div>"
+  },
+
+  "Flex col": {
+    "prefix": "twcol",
+    "description": "Tailwind flex column",
+    "body": "<div className=\"flex flex-col gap-${1:2}\">$0</div>"
+  },
+
+  "Grid auto cols": {
+    "prefix": "twgrid",
+    "description": "Tailwind responsive grid",
+    "body": "<div className=\"grid grid-cols-${1:1} sm:grid-cols-${2:2} lg:grid-cols-${3:3} gap-${4:4}\">$0</div>"
+  },
+
+  "Card": {
+    "prefix": "twcard",
+    "description": "Tailwind card container",
+    "body": "<div className=\"rounded-lg border border-gray-200 bg-white p-${1:6} shadow-sm\">$0</div>"
+  },
+
+  "AnimatePresence Wrapper": {
+    "prefix": "animatepresence",
+    "body": [
+      "<AnimatePresence mode=\"${1:popLayout}\">",
+      "  {${2:true} && (",
+      "    <motion.${3:div}",
+      "      key={`${4:uniqueKey}`}",
+      "      initial={{ opacity: 0 }}",
+      "      animate={{ opacity: 1 }}",
+      "      exit={{ opacity: 0 , transition: {} }}",
+      "      transition={{ duration: 0.3 }}",
+      "    >",
+      "      $0",
+      "    </motion.div>",
+      "  )}",
+      "</AnimatePresence>"
+    ],
+    "description": "Framer Motion AnimatePresence"
+  }
+}

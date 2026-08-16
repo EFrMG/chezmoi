@@ -1,11 +1,15 @@
-# If not running interactively, don't do anything (leave this at the top of this file)
+# Omarchy environment (OMARCHY_PATH + PATH), needed even for non-interactive shells
+[[ -r /usr/share/omarchy/default/bash/env-bootstrap ]] && source /usr/share/omarchy/default/bash/env-bootstrap
+
+# Exit if not running interactively
 [[ $- != *i* ]] && return
 
 # Disable terminal flow control
 stty -ixon
 
 # Omarchy aliases and functions
-source "$HOME/.local/share/omarchy/default/bash/rc"
+source "$OMARCHY_PATH/default/bash/rc"
+
 source "$HOME/.local/share/../bin/env"
 
 # Binding fzf

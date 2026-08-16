@@ -1,0 +1,72 @@
+{
+  "useState": {
+    "prefix": "us",
+    "description": "useState hook",
+    "body": "const [${1:state}, set${2:State}] = useState<${3:Type}>(${4:initialValue});"
+  },
+
+  "useEffect": {
+    "prefix": "ue",
+    "description": "useEffect hook",
+    "body": [
+      "useEffect(() => {",
+      "  $1",
+      "  return () => {",
+      "    $2",
+      "  };",
+      "}, [$3]);"
+    ]
+  },
+
+  "useEffect (no cleanup)": {
+    "prefix": "uenc",
+    "description": "useEffect without cleanup",
+    "body": ["useEffect(() => {", "  $1", "}, [$2]);"]
+  },
+
+  "useRef": {
+    "prefix": "ur",
+    "description": "useRef hook",
+    "body": "const ${1:ref} = useRef<${2:HTMLDivElement}>(${3:null});"
+  },
+
+  "useCallback": {
+    "prefix": "ucb",
+    "description": "useCallback hook",
+    "body": ["const ${1:handler} = useCallback(($2) => {", "  $3", "}, [$4]);"]
+  },
+
+  "useMemo": {
+    "prefix": "um",
+    "description": "useMemo hook",
+    "body": ["const ${1:value} = useMemo(() => {", "  return $2;", "}, [$3]);"]
+  },
+
+  "useContext": {
+    "prefix": "uc",
+    "description": "useContext hook",
+    "body": "const ${1:value} = useContext(${2:Context});"
+  },
+
+  "Custom Hook": {
+    "prefix": "hook",
+    "description": "Custom React hook scaffold",
+    "body": [
+      "import { useState, useEffect } from 'react';",
+      "",
+      "interface Use${1:Hook}Options {",
+      "  $2",
+      "}",
+      "",
+      "export function use${1:Hook}({ $3 }: Use${1:Hook}Options = {}) {",
+      "  const [${4:state}, set${5:State}] = useState<${6:Type}>(${7:null});",
+      "",
+      "  useEffect(() => {",
+      "    $7",
+      "  }, [$8]);",
+      "",
+      "  return { ${4:state} };",
+      "}"
+    ]
+  }
+}

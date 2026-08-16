@@ -49,11 +49,5 @@
 	email = 204592755+EFrMG@users.noreply.github.com
 	name = EFrMG
 	signingkey = 0CEC52395D9D1B46
-[credential "https://github.com"]
-	helper = 
-	helper = !/usr/bin/gh auth git-credential
-[credential "https://gist.github.com"]
-	helper = 
-	helper = !/usr/bin/gh auth git-credential
 [gpg]
 	format = openpgp
