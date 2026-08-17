@@ -4,7 +4,7 @@
     "layout": {
       "center": [
         {
-          "id": "omarchy.indicators"
+          "id": "omarchy.weather"
         },
         {
           "id": "omarchy.clock",
@@ -16,10 +16,10 @@
           "id": "omarchy.keyboard-layout"
         },
         {
-          "id": "omarchy.weather"
+          "id": "omarchy.system-update"
         },
         {
-          "id": "omarchy.system-update"
+          "id": "omarchy.indicators"
         }
       ],
       "left": [
@@ -35,16 +35,16 @@
           "id": "omarchy.tray"
         },
         {
-          "id": "omarchy.agents"
-        },
-        {
-          "id": "omarchy.bluetooth"
-        },
-        {
-          "id": "omarchy.network"
+          "id": "omarchy.microphone"
         },
         {
           "id": "omarchy.audio"
+        },
+        {
+          "id": "omarchy.agents"
+        },
+        {
+          "id": "omarchy.network"
         },
         {
           "id": "omarchy.monitor"
@@ -67,15 +67,20 @@
     },
     {
       "id": "francisco.unicode"
+    },
+    {
+      "id": "francisco.clipboard"
     }
   ],
   "version": 1,
   "disabledPlugins": [
     "omarchy.emojis",
-    "omarchy.menu"
+    "omarchy.menu",
+    "omarchy.clipboard"
   ],
   "cloneSourceRestores": [
     "francisco.emojis",
-    "francisco.menu"
+    "francisco.menu",
+    "francisco.clipboard"
   ]
 }

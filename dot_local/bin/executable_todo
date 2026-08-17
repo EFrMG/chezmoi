@@ -14,18 +14,27 @@ todo_requires() {
     echo -e "error: 'gum' is not installed.\nInstall it with: pacman -S gum\n" >&2
     return 1
   fi
-
-  if ! command -v fd &>/dev/null; then
-    echo -e "error: 'fd' is not installed.\nInstall it with: pacman -S fd\n" >&2
-    return 1
-  fi
 }
 
 todo_pick_file() {
   mkdir -p "$TODO_DIR"
-  local files new_opt choice
+  local new_opt choice f
+  local -a files=()
 
-  mapfile -t files < <(fd --base-directory "$TODO_DIR" -e md -t f 2>/dev/null | sed 's/\.md$//' | sort)
+  # Glob expansion is already collated, the names come out sorted
+  local nullglob_was=1
+  shopt -q nullglob || nullglob_was=0
+  shopt -s nullglob
+
+  for f in "$TODO_DIR"/*.md; do
+    [[ -f "$f" ]] || continue # a directory named "….md", or a dangling symlink
+
+    f="${f##*/}"
+    files+=("${f%.md}")
+  done
+
+  (( nullglob_was )) || shopt -u nullglob
+
   new_opt="+ New list…"
 
   choice=$(printf '%s\n' "${files[@]}" "$new_opt" |
@@ -58,11 +67,12 @@ todo_is_checked() { [[ "$1" =~ $TODO_ITEM_RE && "${BASH_REMATCH[3]}" == [xX] ]];
 
 todo_is_blank()   { [[ -z "${1//[[:space:]]/}" ]]; }
 
+# Sets TODO_LEVEL instead of printing it: todo_show calls this once per line on every redraw, a command substitution there costs a fork per item
 todo_level() {
   local ws="${1%%[![:space:]]*}"
   ws=${ws//$'\t'/  } # a tab indents one level, like two spaces
 
-  printf '%s\n' $(( ${#ws} / 2 ))
+  TODO_LEVEL=$(( ${#ws} / 2 ))
 }
 
 todo_label() {
@@ -107,20 +117,28 @@ todo_replace_file() {
 # A single space renders as an empty row in gum, but is still non-empty, so it can be told apart from the empty string gum returns when the user cancels.
 TODO_MENU_SEP=" "
 
+# The list is redrawn on every pass through the action menu, so todo_show writes it in one printf
+# These are the same as the gum calls elsewhere use, as 24-bit escapes
+TODO_C_RESET=$'\e[0m'
+TODO_C_ITALIC=$'\e[3m'
+TODO_C_ITEM=$'\e[38;2;205;214;244m' # #CDD6F4, still to do
+TODO_C_MUTED=$'\e[38;2;153;156;169m' # #999ca9, completed
+TODO_C_PROSE=$'\e[1;38;2;137;220;235m' # #89DCEB bold, headings and rules
+
+# Sets TODO_BULLET, for the same reason as todo_level
+# Matches the item pattern again, so callers must read anything they need out of BASH_REMATCH first
 todo_bullet() {
   local line="$1" level="$2"
 
   if todo_is_checked "$line"; then
-    local bullet="󰄵"
-    (( level > 0 )) && bullet="󰄴"
-    (( level > 1 )) && bullet="󰘾"
+    TODO_BULLET="󰄵"
+    (( level > 0 )) && TODO_BULLET="󰄴"
+    (( level > 1 )) && TODO_BULLET="󰘾"
   else
-    local bullet="󰄱"
-    (( level > 0 )) && bullet="󰄰"
-    (( level > 1 )) && bullet="󰘼"
+    TODO_BULLET="󰄱"
+    (( level > 0 )) && TODO_BULLET="󰄰"
+    (( level > 1 )) && TODO_BULLET="󰘼"
   fi
-
-  printf '%s\n' "$bullet"
 }
 
 # Build the entries for an item picker: every todo item, plus the headings and blank separators around them
@@ -142,7 +160,8 @@ todo_build_menu() {
 
     if todo_is_item "$line"; then
       local level pad=""
-      level=$(todo_level "$line")
+      todo_level "$line"
+      level="$TODO_LEVEL"
 
       for ((j = 0; j < level; j++)); do pad+="  "; done
 
@@ -150,7 +169,8 @@ todo_build_menu() {
       label=$(todo_label "$line")
 
       if [[ "$bullets" -eq 1 ]]; then
-        row="${pad}$(todo_bullet "$line" "$level") ${label}"
+        todo_bullet "$line" "$level"
+        row="${pad}${TODO_BULLET} ${label}"
       else
         row="${pad}${label}"
       fi
@@ -208,10 +228,8 @@ todo_menu_has_items() {
 
 todo_add_items() {
   local file="$1"
-  local indent="${2:-}"
-  local prompt="${3:-Add items (empty line to stop)}"
 
-  gum style --foreground="#A6E3A1" --bold "$prompt"
+  gum style --foreground="#A6E3A1" --bold "Add items (empty line to stop)"
 
   local first=1
 
@@ -226,7 +244,7 @@ todo_add_items() {
       first=0
     fi
 
-    printf '%s\n' "${indent}- [ ] $item" >>"$file"
+    printf '%s\n' "- [ ] $item" >>"$file"
     gum style --foreground="#999ca9" "  ✓ added: $item"
   done
 }
@@ -266,7 +284,8 @@ todo_add_sub_items() {
   # Collect new sub-items
   local -a new_items
   local parent_level
-  parent_level=$(todo_level "${raw_lines[$parent_idx]}")
+  todo_level "${raw_lines[$parent_idx]}"
+  parent_level="$TODO_LEVEL"
 
   local child_indent=""
   for ((i = 0; i <= parent_level; i++)); do child_indent+="  "; done
@@ -290,7 +309,9 @@ todo_add_sub_items() {
 
   for ((k = parent_idx + 1; k < n; k++)); do
     if todo_is_item "${raw_lines[$k]}"; then
-      if (( $(todo_level "${raw_lines[$k]}") <= parent_level )); then
+      todo_level "${raw_lines[$k]}"
+
+      if (( TODO_LEVEL <= parent_level )); then
         insert_at=$k
         break
       fi
@@ -300,6 +321,23 @@ todo_add_sub_items() {
   # Rewind past anything that isn't an item (blank separators, headings) so the new sub-items land right after the parent's last child, rather than on the far side of the blank line that closes the group
   while (( insert_at > parent_idx + 1 )) && ! todo_is_item "${raw_lines[$((insert_at - 1))]}"; do
     (( insert_at-- ))
+  done
+
+  # A fresh sub-item leaves the branch above it unfinished, this makes every checked ancestor go back to undone
+  # Walking outwards one level at a time skips siblings and cousins, which are not affected
+  local level_above=$(( parent_level + 1 ))
+
+  for ((k = parent_idx; k >= 0; k--)); do
+    todo_is_item "${raw_lines[$k]}" || continue
+
+    todo_level "${raw_lines[$k]}"
+    (( TODO_LEVEL < level_above )) || continue
+    level_above="$TODO_LEVEL"
+
+    todo_is_checked "${raw_lines[$k]}" \
+      && raw_lines[k]=$(todo_set_checked "${raw_lines[$k]}" " ")
+
+    (( level_above == 0 )) && break
   done
 
   # Rebuild file with new items inserted at the right position
@@ -365,15 +403,15 @@ todo_toggle_items() {
     (( picked[i] == 1 )) || continue
 
     local parent_level
-    parent_level=$(todo_level "${raw_lines[$i]}")
+    todo_level "${raw_lines[$i]}"
+    parent_level="$TODO_LEVEL"
 
     for ((k = i + 1; k < n; k++)); do
       todo_is_item "${raw_lines[$k]}" || continue
 
-      local child_level
-      child_level=$(todo_level "${raw_lines[$k]}")
+      todo_level "${raw_lines[$k]}"
 
-      (( child_level > parent_level )) || break
+      (( TODO_LEVEL > parent_level )) || break
 
       # An explicit pick of its own wins over the parent's cascade
       (( picked[k] == 1 )) || target[k]="${target[$i]}"
@@ -411,36 +449,37 @@ todo_show() {
   echo ""
 
   if [[ ! -s "$file" ]]; then
-    gum style --foreground="#999ca9" --italic "  No items yet."
-    echo ""
+    printf '%s  No items yet.%s\n\n' "${TODO_C_ITALIC}${TODO_C_MUTED}" "$TODO_C_RESET"
     return
   fi
 
+  local -a rows=()
+  local line
+
   while IFS= read -r line || [[ -n "$line" ]]; do
-    if todo_is_item "$line"; then
-      local level
-      level=$(todo_level "$line")
+    if [[ "$line" =~ $TODO_ITEM_RE ]]; then
+      # Read out of BASH_REMATCH before anything else matches over it
+      local state="${BASH_REMATCH[3]}" label="${BASH_REMATCH[4]}"
+
+      todo_level "$line"
+      todo_bullet "$line" "$TODO_LEVEL"
 
       local pad=""
-      for ((i = 0; i < level; i++)); do pad+="  "; done
+      for ((i = 0; i < TODO_LEVEL; i++)); do pad+="  "; done
 
-      local label
-      label=$(todo_label "$line")
+      local color="$TODO_C_ITEM"
+      [[ "$state" == [xX] ]] && color="$TODO_C_MUTED"
 
-      local bullet
-      bullet=$(todo_bullet "$line" "$level")
-
-      if todo_is_checked "$line"; then
-        gum style --foreground="#999ca9" -- " ${pad}${bullet} ${label}"
-      else
-        gum style --foreground="#CDD6F4" -- " ${pad}${bullet} ${label}"
-      fi
+      rows+=("${color} ${pad}${TODO_BULLET} ${label}${TODO_C_RESET}")
+    elif todo_is_blank "$line"; then
+      rows+=("") # no point coloring nothing
     else
-      # -- so a markdown rule ("---") isn't read as a flag!
-      gum style --foreground="#89DCEB" --bold -- "$line"
+      # Headings, rules and any other prose, kept verbatim
+      rows+=("${TODO_C_PROSE}${line}${TODO_C_RESET}")
     fi
   done <"$file"
 
+  printf '%s\n' "${rows[@]}"
   echo ""
 }
 
@@ -465,11 +504,14 @@ todo_clear_completed() {
       (( removed++ ))
       # Also skip all children, regardless of their state
       local parent_level
-      parent_level=$(todo_level "$line")
+      todo_level "$line"
+      parent_level="$TODO_LEVEL"
 
       for ((k = i + 1; k < n; k++)); do
         if todo_is_item "${raw_lines[$k]}"; then
-          (( $(todo_level "${raw_lines[$k]}") > parent_level )) \
+          todo_level "${raw_lines[$k]}"
+
+          (( TODO_LEVEL > parent_level )) \
             && skip[k]=1 || break
         fi
       done
@@ -601,7 +643,7 @@ todo_action_menu() {
       todo_clear_completed "$file"
       ;;
     "Delete list")
-      if gum confirm "Delete '$name' permanently?"; then
+      if gum confirm --default=false "Delete '$name' permanently?"; then
         gum spin --title "Removing…" sleep 1.5
         rm "$file"
         gum style --foreground="#F38BA8" "Deleted $name."
