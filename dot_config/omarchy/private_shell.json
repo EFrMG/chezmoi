@@ -1,0 +1,81 @@
+{
+  "bar": {
+    "centerAnchor": "omarchy.clock",
+    "layout": {
+      "center": [
+        {
+          "id": "omarchy.indicators"
+        },
+        {
+          "id": "omarchy.clock",
+          "format": "ddd d MMM h:mm AP",
+          "formatAlt": "d MMMM 'W'ww yyyy",
+          "verticalFormat": "HH\n—\nmm"
+        },
+        {
+          "id": "omarchy.keyboard-layout"
+        },
+        {
+          "id": "omarchy.weather"
+        },
+        {
+          "id": "omarchy.system-update"
+        }
+      ],
+      "left": [
+        {
+          "id": "francisco.menu"
+        },
+        {
+          "id": "omarchy.workspaces"
+        }
+      ],
+      "right": [
+        {
+          "id": "omarchy.tray"
+        },
+        {
+          "id": "omarchy.agents"
+        },
+        {
+          "id": "omarchy.bluetooth"
+        },
+        {
+          "id": "omarchy.network"
+        },
+        {
+          "id": "omarchy.audio"
+        },
+        {
+          "id": "omarchy.monitor"
+        },
+        {
+          "id": "omarchy.power"
+        }
+      ]
+    },
+    "position": "bottom",
+    "transparent": false
+  },
+  "idle": {
+    "lock": 480,
+    "screensaver": 150
+  },
+  "plugins": [
+    {
+      "id": "francisco.emojis"
+    },
+    {
+      "id": "francisco.unicode"
+    }
+  ],
+  "version": 1,
+  "disabledPlugins": [
+    "omarchy.emojis",
+    "omarchy.menu"
+  ],
+  "cloneSourceRestores": [
+    "francisco.emojis",
+    "francisco.menu"
+  ]
+}

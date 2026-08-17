@@ -30,7 +30,7 @@ oka() {
 }
 
 # Yazi cd on quit
-yad() {
+ad() {
   local tmp
   tmp="$(mktemp -t "yazi-cwd.XXXXXX")"
 
