@@ -19,7 +19,7 @@ You could find some interesting scripts [in here](./dot_local/bin) to do things 
 - Stop Ollama models with an fzf picker
 - Initialize Tmux to have a single session as primary quickly
 - Create to-do files interactively
-- Run TTS models with string of text or files containing text
+- Run TTS models with a string of text or files containing text
 
 There might be some hardcoded Catppuccin values for themes here and there, although not for the waybar given that I like it to contrast when the battery is running low or high.
 
