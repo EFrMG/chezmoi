@@ -11,6 +11,11 @@ edit = [
   { run = 'nvim %s', block = true, desc = "Edit with Neovim" },
   { run = 'zed %s', orphan = true, desc = "Edit with Zed" },
 ]
+image = [
+  { run = 'imv %s', orphan = true, desc = "Open with imv" },
+  { run = 'gthumb %s', orphan = true, desc = "Open with gthumb" },
+  { run = 'gimp %s', orphan = true, desc = "Open with gimp" },
+]
 
 [open]
 prepend_rules = [
@@ -21,6 +26,7 @@ prepend_rules = [
   { mime = "application/wine-extension-ini", use = "edit" },
 
   { mime = "text/*", use = "edit" },
+  { mime = "image/*", use = "image" },
 
   { url = "*.json", use = "edit" },
   { url = "*.toml", use = "edit" },
