@@ -5,9 +5,3 @@ export VISUAL=nvim
 
 # Qt app theeming with qt6ct (along with kvantummanager)
 export QT_QPA_PLATFORMTHEME=qt6ct
-
-# Use a custom directory for screenshots (remember to make the directory!)
-export OMARCHY_SCREENSHOT_DIR="$HOME/Pictures/captures"
-
-# Use a custom directory for screenrecordings (remember to make the directory!)
-export OMARCHY_SCREENRECORD_DIR="$HOME/Videos/OBS"
