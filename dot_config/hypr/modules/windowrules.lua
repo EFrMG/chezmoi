@@ -13,3 +13,9 @@ o.window("^com\\.mitchellh\\.ghostty\\.float$", { float = true, size = { "(monit
 
 -- The width here might be wrong if the terminal font size changes; bashmount's separators fit pixel-perfect within this size
 o.window("^org\\.omarchy\\.bashmount$", { float = true, size = { 873, 880 } })
+
+o.window("^org\\.kde\\.kweather$", { float = true, size = { 1190, "(monitor_h*0.78)" } })
+
+o.window("^org\\.gnome\\.Dictionary.Devel$", { float = true, size = { 565, "(monitor_h*0.9)" } })
+
+o.window("^org\\.gnome\\.Calculator$", { float = true, size = { 380, 630 } })

@@ -31,7 +31,7 @@ if hl.plugin.dynamic_cursors then
       window = 104,
 
       -- full tilt for each side (°)
-      full = 60,
+      full = 50,
     },
 
     -- magnifies the cursor if its is being shaken
