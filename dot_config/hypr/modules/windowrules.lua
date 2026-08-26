@@ -19,3 +19,5 @@ o.window("^org\\.kde\\.kweather$", { float = true, size = { 1190, "(monitor_h*0.
 o.window("^org\\.gnome\\.Dictionary.Devel$", { float = true, size = { 565, "(monitor_h*0.9)" } })
 
 o.window("^org\\.gnome\\.Calculator$", { float = true, size = { 380, 630 } })
+
+o.window("^org\\.localsend\\.localsend_app$", { tag = "+floating-window" })

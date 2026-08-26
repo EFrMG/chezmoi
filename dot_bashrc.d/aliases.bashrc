@@ -4,6 +4,7 @@ unalias ls
 unalias lsa
 unalias lt
 unalias lta
+unalias c
 
 # Security
 alias sude='sudoedit'
@@ -75,6 +76,7 @@ alias zat='zathura'
 alias py='python3'
 alias de='delta'
 
+alias c='opencode'
 alias co='copilot'
 alias ca='claude'
 alias ol='ollama'

@@ -1692,7 +1692,7 @@
   {
     "context": "(GitPanel && ChangesList && !GitBranchSelector) || CommitEditor > VimControl",
     "bindings": {
-      "alt-shift-f": "git::Pull"
+      "alt-shift-p": "git::Pull"
     }
   },
   {

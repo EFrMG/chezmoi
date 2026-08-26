@@ -34,6 +34,7 @@ prepend_rules = [
   { url = "*.yml", use = "edit" },
   { url = "*.md",   use = "edit" },
   { url = "*.conf", use = "edit" },
+  { url = "config",   use = "edit" },
   { url = "*.py",   use = "edit" },
   { url = "*.js",   use = "edit" },
   { url = "*.go",   use = "edit" },

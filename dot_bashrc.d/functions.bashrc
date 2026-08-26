@@ -95,32 +95,3 @@ bata() {
   fi
 }
 
-# Fix tdl closing nvim with sleeps (Omarchy)
-tdl() {
-  [[ -z $1 ]] && {
-    echo "Usage: tdl <c|cx|codex|other_ai> [<second_ai>]"
-    return 1
-  }
-  [[ -z $TMUX ]] && {
-    echo "You must start tmux to use tdl."
-    return 1
-  }
-  local current_dir="${PWD}"
-  local editor_pane ai_pane ai2_pane
-  local ai="$1"
-  local ai2="$2"
-  editor_pane="$TMUX_PANE"
-  tmux rename-window -t "$editor_pane" "$(basename "$current_dir")"
-  tmux split-window -v -p 15 -t "$editor_pane" -c "$current_dir"
-  ai_pane=$(tmux split-window -h -p 30 -t "$editor_pane" -c "$current_dir" -P -F '#{pane_id}')
-  if [[ -n $ai2 ]]; then
-    ai2_pane=$(tmux split-window -v -t "$ai_pane" -c "$current_dir" -P -F '#{pane_id}')
-    tmux send-keys -t "$ai2_pane" "$ai2" C-m
-  fi
-  sleep 1
-  tmux send-keys -t "$ai_pane" "$ai" C-m
-  sleep 1
-  tmux send-keys -t "$editor_pane" "$EDITOR ." C-m
-  sleep 1
-  tmux select-pane -t "$editor_pane"
-}
