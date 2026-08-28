@@ -68,10 +68,10 @@ hl.config({
   },
 
   -- https://wiki.hypr.land/Configuring/Layouts/Scrolling-Layout/
-  -- scrolling = {
-  --   -- See only one column per screen instead of two.
-  --   column_width = 0.97,
-  -- },
+  scrolling = {
+    column_width = 0.8125,
+    fullscreen_on_one_column = false,
+  },
 })
 
 -- Animations

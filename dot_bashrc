@@ -12,6 +12,9 @@ source "$OMARCHY_PATH/default/bash/rc"
 
 source "$HOME/.local/share/../bin/env"
 
+# Override all things
+[[ -d "$HOME/.local/bin" ]] && export PATH="$HOME/.local/bin:$PATH"
+
 # Binding fzf
 bind '"\C-a": "\C-r"' # Ctrl + A: History widget
 bind '"\C-s": "\C-t"' # Ctrl + S: File widget

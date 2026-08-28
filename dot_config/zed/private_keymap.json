@@ -3259,5 +3259,22 @@
     "bindings": {
       "space shift-g": "git::ViewUncommittedChanges"
     }
+  },
+  {
+    "context": "VimControl && !menu",
+    "bindings": {
+      "g ctrl-b": "git::Blame"
+    }
+  },
+  {
+    "context": "Editor",
+    "unbind": {
+      "alt-g b": "git::Blame"
+    }
+  },
+  {
+    "bindings": {
+      "ctrl-shift-k": "zed::OpenKeymap"
+    }
   }
 ]
