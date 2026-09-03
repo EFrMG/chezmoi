@@ -69,18 +69,14 @@
       "id": "francisco.emojis"
     },
     {
-      "id": "francisco.unicode"
+      "id": "omarchy-unicode-picker"
     },
     {
       "id": "francisco.clipboard"
     }
   ],
   "version": 1,
-  "disabledPlugins": [
-    "omarchy.emojis",
-    "omarchy.menu",
-    "omarchy.clipboard"
-  ],
+  "disabledPlugins": ["omarchy.emojis", "omarchy.menu", "omarchy.clipboard"],
   "cloneSourceRestores": [
     "francisco.emojis",
     "francisco.menu",

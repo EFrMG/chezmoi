@@ -78,11 +78,11 @@ map("n", "<leader>ayX", "X", { desc = "Cut character before cursor" })
 -- PLUGINS --.
 
 -- gitsigns
-map("n", "<leader>ah", function()
+map("n", "<leader>h", function()
   gitsigns.nav_hunk("next")
 end, { desc = "Next hunk" })
 
-map("n", "<leader>aH", function()
+map("n", "<leader>H", function()
   gitsigns.nav_hunk("prev")
 end, { desc = "Previous hunk" })
 

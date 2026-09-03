@@ -33,7 +33,6 @@ alias .7='cd ../../../../../../..'
 alias .8='cd ../../../../../../../..'
 alias .9='cd ../../../../../../../../..'
 
-alias zoe='zoxide edit'
 alias npw='pwd | xargs uwsm-app -- nautilus &>/dev/null &'
 alias l='eza -1 --icons=auto'
 alias lh='eza -a1 --icons=auto'
@@ -47,10 +46,11 @@ alias lafsize='eza -1faalo --no-user --group-directories-first --sort modified -
 alias lad='eza -1Daalo --no-user --group-directories-first --sort modified --git --git-repos-no-status --icons=auto'
 alias ladsize='eza -1Daalo --no-user --group-directories-first --sort modified --total-size --git --git-repos-no-status --icons=auto'
 
+alias zoe='zoxide edit'
 alias shpath='echo $PATH | tr ":" "\n"'
+
 alias mount-mob='jmtpfs ~/phone-mount/'
-alias umount-mob='fusermount -u ~/phone-mount/'
-alias snap-bkp='snapper -c seagate_barracuda_bkp create --description "Backup $(date "+%F at %X")"'
+alias umount-mob='fusermount3 -u ~/phone-mount/'
 
 alias pg-docs='brave /usr/share/doc/postgresql/html/index.html'
 
@@ -79,6 +79,7 @@ alias de='delta'
 alias c='opencode'
 alias co='copilot'
 alias ca='claude'
+alias cx='codex'
 alias ol='ollama'
 alias oll='ollama launch opencode'
 
