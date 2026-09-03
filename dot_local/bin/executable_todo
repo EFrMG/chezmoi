@@ -520,7 +520,6 @@ todo_clear_completed() {
 
   if (( removed == 0 )); then
     gum style --foreground="#999ca9" "Nothing completed to clear."
-    gum spin --title "…" sleep 0.5
     return
   fi
 
@@ -548,7 +547,6 @@ todo_clear_completed() {
 
   todo_replace_file "$tmp" "$file"
   gum style --foreground="#A6E3A1" "Cleared completed items."
-  gum spin --title "Removing…" sleep 0.5
 }
 
 todo_edit_item() {
@@ -603,7 +601,7 @@ todo_edit_item() {
     todo_replace_file "$tmp" "$file"
     # No message
   else
-    gum spin --title "No changes made." --spinner="jump" sleep 1.5
+    gum style --foreground="#999ca9" "No changes made."
   fi
 }
 
@@ -644,7 +642,6 @@ todo_action_menu() {
       ;;
     "Delete list")
       if gum confirm --default=false "Delete '$name' permanently?"; then
-        gum spin --title "Removing…" sleep 1.5
         rm "$file"
         gum style --foreground="#F38BA8" "Deleted $name."
         return 0 # Exit, since file is gone

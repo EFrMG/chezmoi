@@ -16,7 +16,7 @@ label="files"
 echo ""
 
 if gum confirm "Empty trash containing $count $label?"; then
-  gum spin --title "Emptying..." -- gio trash --empty
+  gio trash --empty
   echo -e "Cleared $count $label \e[90m󰩺\e[0m"
 else
   echo -e "Cancelled \e[31m󰜺\e[0m"
