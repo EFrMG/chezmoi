@@ -1,6 +1,7 @@
 # Omarchy environment (OMARCHY_PATH + PATH), needed even for non-interactive shells
 [[ -r /usr/share/omarchy/default/bash/env-bootstrap ]] && source /usr/share/omarchy/default/bash/env-bootstrap
 
+
 # Exit if not running interactively
 [[ $- != *i* ]] && return
 
@@ -10,9 +11,7 @@ stty -ixon
 # Omarchy aliases and functions
 source "$OMARCHY_PATH/default/bash/rc"
 
-source "$HOME/.local/share/../bin/env"
-
-# Override all things
+# Local bin, again
 [[ -d "$HOME/.local/bin" ]] && export PATH="$HOME/.local/bin:$PATH"
 
 # Binding fzf
