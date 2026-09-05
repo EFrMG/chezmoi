@@ -21,3 +21,6 @@ o.window("^org\\.gnome\\.Dictionary.Devel$", { float = true, size = { 565, "(mon
 o.window("^org\\.gnome\\.Calculator$", { float = true, size = { 380, 630 } })
 
 o.window("^org\\.localsend\\.localsend_app$", { tag = "+floating-window" })
+
+-- Prevent terminals from stealing focus
+o.window("^com\\.mitchellh\\.ghostty$", { focus_on_activate = false, })
