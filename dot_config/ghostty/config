@@ -75,8 +75,30 @@ keybind = ctrl+shift+space>r=prompt_tab_title
 keybind = ctrl+shift+space>o=goto_split:next
 keybind = ctrl+shift+space>shift+o=goto_split:previous
 
+keybind = alt+1=goto_tab:1
+keybind = alt+2=goto_tab:2
+keybind = alt+3=goto_tab:3
+keybind = alt+4=goto_tab:4
+keybind = alt+5=goto_tab:5
+keybind = alt+6=goto_tab:6
+keybind = alt+7=goto_tab:7
+keybind = alt+8=goto_tab:8
+keybind = alt+9=goto_tab:9
+keybind = alt+0=last_tab
+keybind = alt+digit_1=goto_tab:1
+keybind = alt+digit_2=goto_tab:2
+keybind = alt+digit_3=goto_tab:3
+keybind = alt+digit_4=goto_tab:4
+keybind = alt+digit_5=goto_tab:5
+keybind = alt+digit_6=goto_tab:6
+keybind = alt+digit_7=goto_tab:7
+keybind = alt+digit_8=goto_tab:8
+keybind = alt+digit_9=goto_tab:9
+keybind = alt+digit_0=last_tab
+
 # Slowdown mouse scrolling
 mouse-scroll-multiplier = 3
 
 # Fix general slowness on hyprland (https://github.com/ghostty-org/ghostty/discussions/3224)
 async-backend = epoll
+
