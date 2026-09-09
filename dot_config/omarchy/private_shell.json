@@ -7,9 +7,9 @@
           "id": "omarchy.weather"
         },
         {
-          "id": "omarchy.clock",
           "format": "ddd d MMM h:mm AP",
           "formatAlt": "d MMMM 'W'ww yyyy",
+          "id": "omarchy.clock",
           "verticalFormat": "HH\n—\nmm"
         },
         {
@@ -58,8 +58,18 @@
       ]
     },
     "position": "bottom",
-    "transparent": true
+    "transparent": false
   },
+  "cloneSourceRestores": [
+    "francisco.emojis",
+    "francisco.menu",
+    "francisco.clipboard"
+  ],
+  "disabledPlugins": [
+    "omarchy.emojis",
+    "omarchy.menu",
+    "omarchy.clipboard"
+  ],
   "idle": {
     "lock": 480,
     "screensaver": 150
@@ -75,11 +85,5 @@
       "id": "francisco.clipboard"
     }
   ],
-  "version": 1,
-  "disabledPlugins": ["omarchy.emojis", "omarchy.menu", "omarchy.clipboard"],
-  "cloneSourceRestores": [
-    "francisco.emojis",
-    "francisco.menu",
-    "francisco.clipboard"
-  ]
+  "version": 1
 }

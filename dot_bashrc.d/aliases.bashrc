@@ -87,7 +87,8 @@ alias sb='virsh --connect qemu:///system start arch-sandbox'
 alias ssb='ssh arch-sandbox'
 alias sbf='sshfs arch-sandbox:/home/arch/agent-sandbox/projects /home/francisco/Documents/Coding-trials/virtual-machines/Arch/vm-projects-mirror/'
 alias ssbf='fusermount3 -u /home/francisco/Documents/Coding-trials/virtual-machines/Arch/vm-projects-mirror/'
-alias bkbf='rsync -avz arch-sandbox:~/agent-sandbox/projects/ /home/francisco/Documents/Coding-trials/virtual-machines/Arch/vm-projects-copy/'
+alias bksb='rsync -avz arch-sandbox:~/agent-sandbox/projects/ /home/francisco/Documents/Coding-trials/virtual-machines/Arch/vm-projects-copy/'
+alias shut='virsh --connect qemu:///system shutdown arch-sandbox'
 
 alias ytvid='mpv --ytdl-format="best[height<=480]"'
 alias ytaud='mpv --ytdl-format="best" --no-video'
@@ -114,6 +115,7 @@ alias glo='git log --all --graph --oneline --date=rfc \
 --pretty=format:"%C(auto)%h%C(reset) %C(auto)%d%C(reset) %C(green)%an%C(reset): %s %C(cyan)—.%C(reset) %C(dim white)%ad%C(reset)"'
 
 # JS development
+alias miseup='mise upgrade'
 alias lsr='live-server'
 # NPM
 alias mri='npm i'
@@ -139,7 +141,7 @@ alias nrb='next build'
 alias nrp='next start'
 
 # Python3
-alias uvgrade='uv tool upgrade --all'
+alias uvup='uv tool upgrade --all'
 
 # Cmake
 alias cmc='cmake -B build && cmake --build build --j8'
