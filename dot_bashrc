@@ -46,3 +46,17 @@ alt-bg:-1,query:-1,nth:italic,nomatch:-1"'
 
 # Fzf command history style (without preview)
 export FZF_CTRL_R_OPTS='--no-preview --wrap'
+
+# Nvim man mode for man
+export MANPAGER='nvim +Man!'
+
+# Go lang
+export GOPATH="$HOME/go"
+export PATH="$PATH:$GOPATH/bin"
+
+# Manage history better across terminals and with higher limits
+shopt -s histappend
+PROMPT_COMMAND="history -a; history -c; history -r${PROMPT_COMMAND:+; $PROMPT_COMMAND}"
+
+export HISTSIZE=10000
+export HISTFILESIZE=20000

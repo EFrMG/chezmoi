@@ -1,14 +1,5 @@
-# Nvim man mode for man
-export MANPAGER='nvim +Man!'
-
 # Local bin
 [[ -d "$HOME/.local/bin" ]] && export PATH="$HOME/.local/bin:$PATH"
-
-export BROWSER=brave
-
-# Go lang
-export GOPATH="$HOME/go"
-export PATH="$PATH:$GOPATH/bin"
 
 # Interactive settings
 [[ -f ~/.bashrc ]] && source "$HOME/.bashrc"
