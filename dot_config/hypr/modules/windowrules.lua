@@ -22,5 +22,8 @@ o.window("^org\\.gnome\\.Calculator$", { float = true, size = { 380, 630 } })
 
 o.window("^org\\.localsend\\.localsend_app$", { tag = "+floating-window" })
 
+-- Matched by its dedicated app-id
+o.window("^org\\.francisco\\.todos$", { float = true, size = { "(monitor_w*0.5)", "(monitor_h*0.8)" } })
+
 -- Prevent terminals from stealing focus
 o.window("^com\\.mitchellh\\.ghostty$", { focus_on_activate = false, })

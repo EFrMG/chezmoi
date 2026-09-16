@@ -1,8 +1,20 @@
 **/node_modules/
-dist/
-.env
-.zed/
+**/build/
+**/dist/
+**/target/
+**/bin/
+**/packages/
+**/vendor/
+**/deps/
+**/third_party/
+**/out/
+**/lib/
+**/libs/
+**/Library/
 
+.env
+
+.zed/
 note.md
 todo.md
 review.md

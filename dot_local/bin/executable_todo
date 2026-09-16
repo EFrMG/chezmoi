@@ -51,6 +51,12 @@ todo_pick_file() {
       sleep 1
       return 1
     fi
+
+    if [[ "$choice" == -* ]]; then
+      gum style --foreground="#F38BA8" "List names can't start with '-'."
+      sleep 1
+      return 1
+    fi
   fi
 
   printf '%s\n' "$TODO_DIR/${choice}.md"
@@ -692,6 +698,11 @@ EOF
   *)
     if [[ "$1" == */* ]]; then
       echo "error: list names can't contain '/'" >&2
+      return 1
+    fi
+
+    if [[ "$1" == -* ]]; then
+      echo "error: list names can't start with '-'" >&2
       return 1
     fi
 
