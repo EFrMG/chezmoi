@@ -611,6 +611,18 @@ todo_edit_item() {
   fi
 }
 
+todo_open_in_editor() {
+  local file="$1"
+
+  if [[ -z "${EDITOR:-}" ]]; then
+    gum style --foreground="#F38BA8" '$EDITOR is not set.'
+    sleep 1
+    return
+  fi
+
+  "$EDITOR" "$file"
+}
+
 todo_action_menu() {
   local file="$1"
   local name
@@ -626,6 +638,8 @@ todo_action_menu() {
       "Add sub-item" \
       "Toggle done / undone" \
       "Edit item" \
+      "Open in \$EDITOR" \
+      "Switch list" \
       "Clear completed" \
       "Delete list" \
       "Quit")
@@ -642,6 +656,27 @@ todo_action_menu() {
       ;;
     "Edit item")
       todo_edit_item "$file"
+      ;;
+    "Open list in \$EDITOR")
+      todo_open_in_editor "$file"
+      ;;
+    "Switch list")
+      local new_file
+      new_file=$(todo_pick_file) || continue
+
+      if ! touch "$new_file"; then
+        gum style --foreground="#F38BA8" "error: cannot write to '$new_file'"
+        sleep 1
+        continue
+      fi
+
+      file="$new_file"
+      name=$(basename "$file" .md)
+
+      if [[ ! -s "$file" ]]; then
+        gum style --foreground="#89DCEB" --bold "New list: $name"
+        todo_add_items "$file"
+      fi
       ;;
     "Clear completed")
       todo_clear_completed "$file"
