@@ -638,7 +638,7 @@ todo_action_menu() {
       "Add sub-item" \
       "Toggle done / undone" \
       "Edit item" \
-      "Open in \$EDITOR" \
+      "Open list in \$EDITOR" \
       "Switch list" \
       "Clear completed" \
       "Delete list" \
