@@ -87,7 +87,6 @@ alias sb='virsh --connect qemu:///system start arch-sandbox'
 alias ssb='ssh arch-sandbox'
 alias sbf='sshfs arch-sandbox:/home/arch/agent-sandbox/projects /home/francisco/Documents/Coding-trials/virtual-machines/Arch/vm-projects-mirror/'
 alias ssbf='fusermount3 -u /home/francisco/Documents/Coding-trials/virtual-machines/Arch/vm-projects-mirror/'
-alias bksb='rsync -avz arch-sandbox:~/agent-sandbox/projects/ /home/francisco/Documents/Coding-trials/virtual-machines/Arch/vm-projects-copy/'
 alias shut='virsh --connect qemu:///system shutdown arch-sandbox'
 
 alias ytvid='mpv --ytdl-format="best[height<=480]"'
