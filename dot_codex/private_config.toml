@@ -1,0 +1,9 @@
+approval_policy = "on-request"
+approvals_reviewer = "user"
+
+default_permissions = ":read-only"
+sandbox_mode = "read-only"
+
+[tui]
+status_line = ["current-dir", "model", "reasoning", "branch-changes", "run-state", "context-used", "five-hour-limit", "total-input-tokens", "total-output-tokens"]
+status_line_use_colors = true
