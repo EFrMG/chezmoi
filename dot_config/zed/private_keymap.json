@@ -1492,7 +1492,7 @@
   {
     "context": "VimControl",
     "bindings": {
-      "space h": "diagnostics::Deploy"
+      "space l": "diagnostics::Deploy"
     }
   },
   {
@@ -2379,15 +2379,15 @@
     }
   },
   {
-    "context": "Editor && vim_mode == normal",
+    "context": "VimControl",
     "bindings": {
-      "space l": "editor::GoToHunk"
+      "space h": "editor::GoToHunk"
     }
   },
   {
     "context": "Editor && vim_mode == normal",
     "bindings": {
-      "space shift-l": "editor::GoToPreviousHunk"
+      "space shift-h": "editor::GoToPreviousHunk"
     }
   },
   {
