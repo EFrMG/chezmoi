@@ -4,7 +4,7 @@ hl.config({
     -- No gaps between windows or borders.
     gaps_in = -1,
     gaps_out = 1,
-    border_size = 2,
+    border_size = 1,
 
     col = {
       inactive_border = "rgba(595959ff)",
