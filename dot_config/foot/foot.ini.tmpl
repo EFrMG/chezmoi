@@ -1,7 +1,7 @@
 [main]
 include=~/.local/state/omarchy/current/theme/foot.ini
 term=xterm-256color
-font=JetBrainsMono Nerd Font:size=14
+font=JetBrainsMono Nerd Font:size={{ if has "monitor-S" .role }}12{{ else }}14{{ end }}
 pad=9x0
 initial-window-mode=windowed
 workers=0

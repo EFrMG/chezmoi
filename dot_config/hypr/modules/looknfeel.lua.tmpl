@@ -48,7 +48,7 @@ hl.config({
 
   group = {
     groupbar = {
-      font_size = 15
+      font_size = {{ if has "monitor-S" .role }}13{{ else }}15{{ end }}
     }
   },
 
@@ -60,7 +60,7 @@ hl.config({
 
   -- https://wiki.hypr.land/Configuring/Basics/Variables/#animations
   animations = {
-    -- enabled = false,
+    enabled = {{ if has "laptop" .role }}false{{ else }}true{{ end }},
   },
 
   cursor = {

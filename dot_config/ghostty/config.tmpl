@@ -9,7 +9,7 @@ confirm-close-surface=false
 # Font
 font-family = "JetBrainsMono Nerd Font"
 font-style = Regular
-font-size = 12
+font-size = {{ if has "monitor-S" .role }}10{{ else }}12{{ end }}
 font-synthetic-style = false
 
 # Window
