@@ -1,0 +1,20 @@
+# Size of map tiles
+tile_cell_pixels = 42
+
+# Main UI font
+tile_font_size = {{ if has "monitor-S" .role }}24{{ else }}28{{ end }}
+
+tile_font_crt_size  = {{ if has "monitor-S" .role }}19{{ else }}22{{ end }}
+tile_font_stat_size = {{ if has "monitor-S" .role }}17{{ else }}20{{ end }}
+tile_font_msg_size  = {{ if has "monitor-S" .role }}16{{ else }}18{{ end }}
+tile_font_tip_size  = {{ if has "monitor-S" .role }}17{{ else }}19{{ end }}
+tile_font_lbl_size  = {{ if has "monitor-S" .role }}16{{ else }}18{{ end }}
+
+tile_map_pixels = 0
+
+tile_font = JetBrainsMono Nerd Font Mono
+tile_font_stat = JetBrainsMono Nerd Font Mono
+tile_font_crt = JetBrainsMono Nerd Font Mono
+tile_font_label = JetBrainsMono Nerd Font Mono
+
+show_travel_trail = true

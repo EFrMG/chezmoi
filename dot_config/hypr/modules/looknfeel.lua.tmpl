@@ -119,11 +119,11 @@ hl.animation({
 -- Xcursor Sizes: 16 20 22 24 28 32 40 48 56 64 72 80 88 96
 -- 1.1 Set envs for apps
 hl.env("XCURSOR_THEME", "BreezeX-RosePine")
-hl.env("XCURSOR_SIZE", "32")
+hl.env("XCURSOR_SIZE", "{{ if has "monitor-S" .role }}28{{ else }}32{{ end }}")
 
 -- 1.2 Hyprcursor
 hl.env("HYPRCURSOR_THEME", "BreezeX-RosePine-Hyprcursor")
-hl.env("HYPRCURSOR_SIZE", "32")
+hl.env("HYPRCURSOR_SIZE", "{{ if has "monitor-S" .role }}28{{ else }}32{{ end }}")
 
 -- 2. Set pointer for the Hyprland compositor itself (it overrides!)
 -- o.launch_on_start("hyprctl setcursor BreezeX-RosePine-Hyprcursor 32")
