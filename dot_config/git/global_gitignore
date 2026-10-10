@@ -3,14 +3,10 @@
 **/build/
 **/dist/
 **/target/
-**/bin/
 **/packages/
-**/vendor/
 **/deps/
 **/third_party/
 **/out/
-**/lib/
-**/libs/
 **/Library/
 
 .env

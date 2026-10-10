@@ -1,0 +1,100 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+usage() {
+  printf 'Usage: %s [--yes] [PATH]\n\n' "${0##*/}"
+  cat <<'EOF'
+Empty a freedesktop-style trash directory that GIO does not recognize.
+PATH may be a mountpoint/directory containing the trash, or the trash directory itself. With no PATH, the current working directory is used.
+
+Recognized layouts:
+  PATH/.Trash-$UID/{files,info}
+  PATH/.Trash/$UID/{files,info}
+  PATH/{files,info}             (only if PATH is named .Trash-$UID or is the current UID beneath .Trash)
+
+The trash directory itself is preserved. Use --yes to skip confirmation.
+EOF
+}
+
+assume_yes=false
+
+case "${1-}" in
+  -h|--help)
+    usage
+    exit 0
+    ;;
+  -y|--yes)
+    assume_yes=true
+    shift
+    ;;
+esac
+
+if (( $# > 1 )); then
+  usage >&2
+  exit 2
+fi
+
+input=${1:-.}
+
+if [[ ! -d "$input" ]]; then
+  printf 'Error: not a directory: %s\n' "$input" >&2
+  exit 1
+fi
+
+input=$(realpath -- "$input")
+uid=$(id -u)
+
+is_named_trash=false
+if [[ $(basename -- "$input") == ".Trash-$uid" ]]; then
+  is_named_trash=true
+elif [[ $(basename -- "$input") == "$uid" && $(basename -- "$(dirname -- "$input")") == .Trash ]]; then
+  is_named_trash=true
+fi
+
+if [[ "$is_named_trash" == true && -d "$input/files" && -d "$input/info" ]]; then
+  trash=$input
+elif [[ -d "$input/.Trash-$uid/files" && -d "$input/.Trash-$uid/info" ]]; then
+  trash=$input/.Trash-$uid
+elif [[ -d "$input/.Trash/$uid/files" && -d "$input/.Trash/$uid/info" ]]; then
+  trash=$input/.Trash/$uid
+else
+  printf 'Error: no supported trash layout found beneath: %s\n' "$input" >&2
+  exit 1
+fi
+
+files_dir=$trash/files
+info_dir=$trash/info
+
+# Refuse suspicious resolutions before invoking find -delete.
+case "$trash" in
+  /|/home|/root|/usr|/var|/etc|/mnt|/media)
+    printf 'Error: refusing unsafe trash path: %s\n' "$trash" >&2
+    exit 1
+    ;;
+esac
+
+count=$(find "$files_dir" "$info_dir" -mindepth 1 -maxdepth 1 -printf . | wc -c)
+
+if (( count == 0 )); then
+  printf 'Trash is already empty: %s\n' "$trash"
+  exit 0
+fi
+
+printf 'Trash directory: %s\n' "$trash"
+printf 'Top-level entries to delete: %d\n' "$count"
+
+if [[ "$assume_yes" != true ]]; then
+  if ! command -v gum >/dev/null 2>&1; then
+    printf 'Error: gum is required for confirmation (or use --yes).\n' >&2
+    exit 1
+  fi
+
+  if ! gum confirm "Empty trash containing $count top-level entries?"; then
+    printf 'Cancelled \e[31m󰜺\e[0m\n'
+    exit 0
+  fi
+fi
+
+find "$files_dir" "$info_dir" -mindepth 1 -delete
+printf 'Trash emptied: %s \e[90m󰩺\e[0m\n' "$trash"
