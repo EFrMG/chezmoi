@@ -27,3 +27,13 @@ gui:
 
 git:
   overrideGpg: true
+
+os:
+  copyToClipboardCmd: >-
+    if [ -n "$TMUX" ]; then
+      printf %s {{text}} | tmux load-buffer -w -
+    elif [ -n "$WAYLAND_DISPLAY" ] && command -v wl-copy >/dev/null 2>&1; then
+      printf %s {{text}} | wl-copy 2>/dev/null
+    else
+      printf '\033]52;c;%s\a' "$(printf %s {{text}} | base64 -w0)"
+    fi
