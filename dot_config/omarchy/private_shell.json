@@ -61,7 +61,7 @@
       ]
     },
     "position": "bottom",
-    "transparent": false
+    "transparent": true
   },
   "cloneSourceRestores": [
     "francisco.emojis",
