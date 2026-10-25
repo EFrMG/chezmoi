@@ -22,6 +22,7 @@ bind '"\C-x": "\ec"'  # Ctrl + X: CD widget
 # Clear and exit bindings
 bind '"\C-q": "exit\n"'
 bind '"\C-w": "clear\n"'
+bind '"\C-e": "n\n"'
 
 # Sourcing from a single directory
 if [[ -d "${HOME}/.bashrc.d" ]]; then
