@@ -151,7 +151,7 @@
   {
     "context": "AgentPanel",
     "bindings": {
-      "ctrl-t": "agent::ToggleNewThreadMenu"
+      "ctrl-shift-c": "agent::ToggleNewThreadMenu"
     }
   },
   {
@@ -3323,6 +3323,35 @@
     "context": "(vim_mode == helix_normal || vim_mode == helix_select) && !menu",
     "unbind": {
       "space p": "editor::Paste"
+    }
+  },
+  {
+    "context": "ProjectPanel && not_editing",
+    "bindings": {
+      "l": "project_panel::Open"
+    }
+  },
+  {
+    "context": "(vim_mode == helix_normal || vim_mode == helix_select) && !menu",
+    "unbind": {
+      "alt-shift-c": "vim::HelixDuplicateAbove"
+    }
+  },
+  {
+    "context": "!Terminal",
+    "bindings": {
+      "alt-shift-c": "collab_panel::ToggleFocus"
+    }
+  },
+  {
+    "context": "!Terminal",
+    "unbind": {
+      "ctrl-shift-c": "collab_panel::ToggleFocus"
+    }
+  },
+  {
+    "unbind": {
+      "ctrl-alt-i": "dev::ToggleInspector"
     }
   }
 ]
