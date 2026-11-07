@@ -1,0 +1,25 @@
+{
+  "autoVocabCaptureEnabled": false,
+  "cancelRecordingShortcut": "Escape",
+  "defaultPlaybackBehavior": "muffle",
+  "deviceSelectionCounts": {},
+  "enableSoundEffects": true,
+  "launchAtLogin": true,
+  "linux": {
+    "asrBackend": "auto",
+    "cleanupGpuLayers": 99,
+    "mousePushToTalkShortcut": "",
+    "vocabularyBackend": "auto"
+  },
+  "p2t": false,
+  "priorityInputDevices": {},
+  "pushToTalkShortcut": "",
+  "recordingIndicatorStyle": "pill",
+  "recordingPreservationPeriod": 604800,
+  "showRecordingIndicator": true,
+  "soundEffectVolume": 0.5,
+  "toggleRecordingShortcut": "Ctrl+Super+X",
+  "tone": "semi-formal",
+  "useDefaultInputDevice": true,
+  "userExcludedInputDevices": {}
+}
